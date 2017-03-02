@@ -1,0 +1,9 @@
+development:
+  clients:
+    default:
+      database: foundiesdb
+      hosts:
+        - ds157549.mlab.com:57549
+      options:
+        user: 'kyle.preston75'
+        password: 'shell2017'
