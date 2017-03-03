@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.mongodb.DB;
@@ -16,6 +17,14 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -23,13 +32,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView greeting = (TextView) findViewById(R.id.greetingView);
-        greeting.setText("booyah!");
+        final TextView greeting = (TextView) findViewById(R.id.greeting);
+        Button button = (Button) findViewById(R.id.button);
 
-        //TODO: need to protect login credentials
-        MongoClientURI uri = new MongoClientURI("mongodb://ds157549.mlab.com:57549/foundiesdb");
-        MongoClient client = new MongoClient(uri);
-        MongoDatabase db = client.getDatabase(uri.getDatabase());
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://pacific-tor-50594.herokuapp.com")
+                .build();
+
+        final HerokuService service = retrofit.create(HerokuService.class);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<ResponseBody> call = service.getUsers();
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> _,
+                                           Response<ResponseBody> response) {
+                        try {
+                            greeting.setText(response.body().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            greeting.setText(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> _, Throwable t) {
+                        t.printStackTrace();
+                        greeting.setText(t.getMessage());
+                    }
+                });
+            }
+        });
+
+    //    greeting.setText("booyah!");
+
+    //    MongoClientURI uri = new MongoClientURI("mongodb://ds157549.mlab.com:57549/foundiesdb");
+    //    MongoClient client = new MongoClient(uri);
+    //    MongoDatabase db = client.getDatabase(uri.getDatabase());
     //    boolean auth = db.authenticate("kyle.preston75", "shell2017".toCharArray());
 
     //    if (auth) {
