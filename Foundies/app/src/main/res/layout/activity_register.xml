@@ -81,7 +81,6 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberPassword"
             android:ems="10"
             android:id="@+id/password_field"
             android:background="#FFFFFF"
@@ -92,7 +91,8 @@
             android:textColor="#737477"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:inputType="textPassword" />
 
         <Button
             android:text="Register"
