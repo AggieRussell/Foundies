@@ -96,10 +96,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return b;
     }
 
+    //Retrieve Data from SQLite DB
     public Cursor getData(){
         db = this.getReadableDatabase();
         Cursor results = db.rawQuery("select * from " + TABLE_CONTACTS,  null);
         return results;
+    }
+
+    public void updateData(Contact c){
+        db = this.getWritableDatabase();
+        ContentValues values  = new ContentValues();
+        String query = "select * from contacts";
+        Cursor cursor = db.rawQuery(query, null);
+        values.put(COLUMN_EMAIL, c.getEmail());
+        values.put(COLUMN_PASSWORD, c.getPass());
+        db.update(TABLE_CONTACTS, values, "Email = ?" , new String[] {c.getEmail()});
+    }
+
+    //Delete Entry
+    public Integer deleteData (String email){
+        db = this.getWritableDatabase();
+        return db.delete(TABLE_CONTACTS, "EMAIL = ?", new String[] {email});
     }
 
     //SQL Create Tables

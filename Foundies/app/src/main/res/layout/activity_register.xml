@@ -86,7 +86,7 @@
             android:background="#FFFFFF"
             android:layout_marginBottom="10dp"
             android:textColorHint="#dcdfe5"
-            android:hint="435345"
+            android:hint="password"
             android:padding="10dp"
             android:textColor="#737477"
             android:layout_marginTop="20dp"

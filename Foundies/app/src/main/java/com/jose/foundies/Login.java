@@ -24,6 +24,10 @@ public class Login extends AppCompatActivity {
 
         final Button login = (Button) findViewById(R.id.login_button);
         final Button view = (Button) findViewById(R.id.view_button);
+        final Button delete = (Button) findViewById(R.id.delete_button);
+        final Button update = (Button) findViewById(R.id.update_button);
+
+
         final EditText email = (EditText) findViewById(R.id.email_field);
         final EditText password = (EditText) findViewById(R.id.password_field);
 
@@ -51,6 +55,27 @@ public class Login extends AppCompatActivity {
                 //Show all data
 
                 showMessage("Data", buffer.toString());
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Integer deleteRow = helper.deleteData(email.getText().toString());
+                if (deleteRow > 0 )
+                    Toast.makeText(getApplicationContext(), "Data Deleted", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getApplicationContext(), "Data not deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        update.setOnClickListener(new View.OnClickListener() {
+            Contact c = new Contact();
+            public void onClick(View view) {
+                Contact c = new Contact();
+                c.setEmail(email.getText().toString());
+                c.setPassword(password.getText().toString());
+                helper.updateData(c);
+                Toast.makeText(getApplicationContext(), "Data updated", Toast.LENGTH_SHORT).show();
             }
         });
 
