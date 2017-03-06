@@ -2,27 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1ea74aa-d6c9-4214-9eae-38a183c6483b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/.gitignore" afterPath="$PROJECT_DIR$/Foundies/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/.idea/compiler.xml" afterPath="$PROJECT_DIR$/Foundies/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/.idea/encodings.xml" afterPath="$PROJECT_DIR$/Foundies/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/.idea/gradle.xml" afterPath="$PROJECT_DIR$/Foundies/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/.idea/misc.xml" afterPath="$PROJECT_DIR$/Foundies/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/.idea/modules.xml" afterPath="$PROJECT_DIR$/Foundies/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/.idea/runConfigurations.xml" afterPath="$PROJECT_DIR$/Foundies/.idea/runConfigurations.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/app/.gitignore" afterPath="$PROJECT_DIR$/Foundies/app/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/app/build.gradle" afterPath="$PROJECT_DIR$/Foundies/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/app/proguard-rules.pro" afterPath="$PROJECT_DIR$/Foundies/app/proguard-rules.pro" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/app/src/main/java/com/jose/foundies/Login.java" afterPath="$PROJECT_DIR$/Foundies/app/src/main/java/com/jose/foundies/Login.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/app/src/main/res/layout/activity_login.xml" afterPath="$PROJECT_DIR$/Foundies/app/src/main/res/layout/activity_login.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/app/src/main/res/layout/activity_lost_qs.xml" afterPath="$PROJECT_DIR$/Foundies/app/src/main/res/layout/activity_lost_qs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/build.gradle" afterPath="$PROJECT_DIR$/Foundies/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/gradle.properties" afterPath="$PROJECT_DIR$/Foundies/gradle.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/gradle/wrapper/gradle-wrapper.properties" afterPath="$PROJECT_DIR$/Foundies/gradle/wrapper/gradle-wrapper.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/gradlew" afterPath="$PROJECT_DIR$/Foundies/gradlew" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/gradlew.bat" afterPath="$PROJECT_DIR$/Foundies/gradlew.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Foundies/settings.gradle" afterPath="$PROJECT_DIR$/Foundies/settings.gradle" />
     </list>
     <ignored path="Foundies.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -402,7 +382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1488702812404</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="You can now view contacts database">
+      <created>1488758637197</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1488758637197</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -441,7 +428,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added functionality to Login usign SQLite" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added functionality to Login usign SQLite" />
+    <MESSAGE value="You can now view contacts database" />
+    <option name="LAST_COMMIT_MESSAGE" value="You can now view contacts database" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
