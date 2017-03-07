@@ -96,67 +96,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void loadViewContent() {
-        out.println("Starting load content...");
-        ids.clear();
-        firstnames.clear();
-        lastnames.clear();
-        usernames.clear();
-        ids.add((TextView) findViewById(R.id.id1));
-        ids.add((TextView) findViewById(R.id.id2));
-        ids.add((TextView) findViewById(R.id.id3));
-        ids.add((TextView) findViewById(R.id.id4));
-        ids.add((TextView) findViewById(R.id.id5));
-        firstnames.add((TextView) findViewById(R.id.firstname1));
-        firstnames.add((TextView) findViewById(R.id.firstname2));
-        firstnames.add((TextView) findViewById(R.id.firstname3));
-        firstnames.add((TextView) findViewById(R.id.firstname4));
-        firstnames.add((TextView) findViewById(R.id.firstname5));
-        lastnames.add((TextView) findViewById(R.id.lastname1));
-        lastnames.add((TextView) findViewById(R.id.lastname2));
-        lastnames.add((TextView) findViewById(R.id.lastname3));
-        lastnames.add((TextView) findViewById(R.id.lastname4));
-        lastnames.add((TextView) findViewById(R.id.lastname5));
-        usernames.add((TextView) findViewById(R.id.username1));
-        usernames.add((TextView) findViewById(R.id.username2));
-        usernames.add((TextView) findViewById(R.id.username3));
-        usernames.add((TextView) findViewById(R.id.username4));
-        usernames.add((TextView) findViewById(R.id.username5));
-        for (int i=0; i<ids.size(); ++i) {
-            ids.get(i).setVisibility(View.GONE);
-            firstnames.get(i).setVisibility(View.GONE);
-            lastnames.get(i).setVisibility(View.GONE);
-            usernames.get(i).setVisibility(View.GONE);
-        }
-        out.println("Finished load content...");
-    }
-
-    public void updateDisplay() {
-        out.println("Starting update display...");
-        for(int i=0; i<dbResults.size(); ++i) {
-            ArrayList<String> curr = dbResults.get(i);
-            int j=0;
-            if (curr.get(j).charAt(0)!='{') {
-                ids.get(i).setText(curr.get(j));
-                ids.get(i).setVisibility(View.VISIBLE);
-            }
-            else {
-                ids.get(i).setText("--");
-                ids.get(i).setVisibility(View.VISIBLE);
-            }
-            ++j;
-            firstnames.get(i).setText(curr.get(j));
-            firstnames.get(i).setVisibility(View.VISIBLE);
-            ++j;
-            lastnames.get(i).setText(curr.get(j));
-            lastnames.get(i).setVisibility(View.VISIBLE);
-            ++j;
-            usernames.get(i).setText(curr.get(j));
-            usernames.get(i).setVisibility(View.VISIBLE);
-        }
-        out.println("Ending update display...");
-    }
-
     public void createDisplay() {
         out.println("Starting create display...");
         ids.clear();
@@ -229,6 +168,69 @@ public class MainActivity extends AppCompatActivity {
             greeting.setText(e.getMessage());
         }
         out.println("Ending parse JSON...");
+    }
+
+    // TODO: remove loadViewContent before submitting final app
+    public void loadViewContent() {
+        out.println("Starting load content...");
+        ids.clear();
+        firstnames.clear();
+        lastnames.clear();
+        usernames.clear();
+        ids.add((TextView) findViewById(R.id.id1));
+        ids.add((TextView) findViewById(R.id.id2));
+        ids.add((TextView) findViewById(R.id.id3));
+        ids.add((TextView) findViewById(R.id.id4));
+        ids.add((TextView) findViewById(R.id.id5));
+        firstnames.add((TextView) findViewById(R.id.firstname1));
+        firstnames.add((TextView) findViewById(R.id.firstname2));
+        firstnames.add((TextView) findViewById(R.id.firstname3));
+        firstnames.add((TextView) findViewById(R.id.firstname4));
+        firstnames.add((TextView) findViewById(R.id.firstname5));
+        lastnames.add((TextView) findViewById(R.id.lastname1));
+        lastnames.add((TextView) findViewById(R.id.lastname2));
+        lastnames.add((TextView) findViewById(R.id.lastname3));
+        lastnames.add((TextView) findViewById(R.id.lastname4));
+        lastnames.add((TextView) findViewById(R.id.lastname5));
+        usernames.add((TextView) findViewById(R.id.username1));
+        usernames.add((TextView) findViewById(R.id.username2));
+        usernames.add((TextView) findViewById(R.id.username3));
+        usernames.add((TextView) findViewById(R.id.username4));
+        usernames.add((TextView) findViewById(R.id.username5));
+        for (int i=0; i<ids.size(); ++i) {
+            ids.get(i).setVisibility(View.GONE);
+            firstnames.get(i).setVisibility(View.GONE);
+            lastnames.get(i).setVisibility(View.GONE);
+            usernames.get(i).setVisibility(View.GONE);
+        }
+        out.println("Finished load content...");
+    }
+
+    // TODO: remove updateDisplay before submitting final app
+    public void updateDisplay() {
+        out.println("Starting update display...");
+        for(int i=0; i<dbResults.size(); ++i) {
+            ArrayList<String> curr = dbResults.get(i);
+            int j=0;
+            if (curr.get(j).charAt(0)!='{') {
+                ids.get(i).setText(curr.get(j));
+                ids.get(i).setVisibility(View.VISIBLE);
+            }
+            else {
+                ids.get(i).setText("--");
+                ids.get(i).setVisibility(View.VISIBLE);
+            }
+            ++j;
+            firstnames.get(i).setText(curr.get(j));
+            firstnames.get(i).setVisibility(View.VISIBLE);
+            ++j;
+            lastnames.get(i).setText(curr.get(j));
+            lastnames.get(i).setVisibility(View.VISIBLE);
+            ++j;
+            usernames.get(i).setText(curr.get(j));
+            usernames.get(i).setVisibility(View.VISIBLE);
+        }
+        out.println("Ending update display...");
     }
 
 }
