@@ -163,7 +163,9 @@ public class MainActivity extends AppCompatActivity {
         firstnames.clear();
         lastnames.clear();
         usernames.clear();
+        tableRows.clear();
         TableLayout tableLayout = (TableLayout) findViewById(R.id.tableDBResults);
+        tableLayout.removeAllViews();
         for (int i=0; i<dbResults.size(); ++i) {
             ArrayList<String> curr = dbResults.get(i);
             int j=0;
@@ -204,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void parseJSON() {
         out.println("Starting parse JSON...");
+        dbResults.clear();
         try {
             jObject = new JSONObject(response_str);
             jArray = jObject.getJSONArray("users");
