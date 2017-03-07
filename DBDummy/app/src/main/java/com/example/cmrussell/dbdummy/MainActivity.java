@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.mongodb.DB;
@@ -39,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
     JSONObject jObject;
     JSONArray jArray;
     TextView greeting;
+    Button button;
     ArrayList<ArrayList<String>> dbResults = new ArrayList<ArrayList<String>>();
+    ArrayList<TableRow> tableRows = new ArrayList<>();
     ArrayList<TextView> ids = new ArrayList<>();
     ArrayList<TextView> firstnames = new ArrayList<>();
     ArrayList<TextView> lastnames = new ArrayList<>();
@@ -49,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         out.println("Starting onCreate...");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_2);
 
-        Button button = (Button) findViewById(R.id.button);
+        button = (Button) findViewById(R.id.button);
         greeting = (TextView) findViewById(R.id.greeting);
 
-        loadViewContent();
+        //loadViewContent();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://pacific-tor-50594.herokuapp.com")
@@ -152,6 +157,51 @@ public class MainActivity extends AppCompatActivity {
         out.println("Ending update display...");
     }
 
+    public void createDisplay() {
+        out.println("Starting create display...");
+        ids.clear();
+        firstnames.clear();
+        lastnames.clear();
+        usernames.clear();
+        TableLayout tableLayout = (TableLayout) findViewById(R.id.tableDBResults);
+        for (int i=0; i<dbResults.size(); ++i) {
+            ArrayList<String> curr = dbResults.get(i);
+            int j=0;
+            TableRow tableRow = new TableRow(this);
+            TextView id = new TextView(this);
+            TextView firstname = new TextView(this);
+            TextView lastname = new TextView(this);
+            TextView username = new TextView(this);
+            if (curr.get(j).charAt(0)!='{') {
+                id.setText(curr.get(j));
+                ids.add(id);
+                tableRow.addView(id);
+            }
+            else {
+                id.setText("---");
+                ids.add(id);
+                tableRow.addView(id);
+            }
+            ++j;
+            firstname.setText(curr.get(j));
+            firstnames.add(firstname);
+            tableRow.addView(firstname);
+            ++j;
+            lastname.setText(curr.get(j));
+            lastnames.add(lastname);
+            tableRow.addView(lastname);
+            ++j;
+            username.setText(curr.get(j));
+            usernames.add(username);
+            tableRow.addView(username);
+            tableRows.add(tableRow);
+            tableLayout.addView(tableRow);
+        }
+        //tableRows.get(2).setVisibility(View.GONE);
+        tableLayout.removeView(tableRows.get(2));
+        out.println("Ending create display...");
+    }
+
     public void parseJSON() {
         out.println("Starting parse JSON...");
         try {
@@ -167,8 +217,9 @@ public class MainActivity extends AppCompatActivity {
                 newUser.add(curr.getString("last_name"));
                 newUser.add(curr.getString("username"));
                 dbResults.add(newUser);
-                updateDisplay();
+                //updateDisplay();
             }
+            createDisplay();
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -177,40 +228,4 @@ public class MainActivity extends AppCompatActivity {
         out.println("Ending parse JSON...");
     }
 
-    //    greeting.setText("booyah!");
-
-    //    MongoClientURI uri = new MongoClientURI("mongodb://ds157549.mlab.com:57549/foundiesdb");
-    //    MongoClient client = new MongoClient(uri);
-    //    MongoDatabase db = client.getDatabase(uri.getDatabase());
-    //    boolean auth = db.authenticate("kyle.preston75", "shell2017".toCharArray());
-
-    //    if (auth) {
-    //        System.out.println("Successfully logged in to MongoDB!");
-    //    } else {
-    //        System.out.println("Invalid username/password");
-    //    }
-        // mongodb://kyle.preston75:shell2017@ds157549.mlab.com:57549/foundiesdb
-        //
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
