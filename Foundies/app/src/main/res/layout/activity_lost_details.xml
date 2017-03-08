@@ -35,8 +35,8 @@
                 android:layout_centerHorizontal="true"
                 android:id="@+id/radioButton22"
                 android:layout_marginTop="20dp"
-                android:textColor="#737477"
-                app:buttonTint="#FFFFFF" />
+                android:textColor="#737477"/>
+                <!--app:buttonTint="#FFFFFF"-->
 
             <RadioButton
                 android:text="RadioButton"
@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/lost_button"
                 android:layout_margin="20dp"
-                android:text="FInd item" />
+                android:text="Find item" />
         </LinearLayout>
 
     </LinearLayout>
