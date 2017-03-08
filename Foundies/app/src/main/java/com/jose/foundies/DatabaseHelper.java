@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         "firstname text not null, lastname text not null, email text not null, password integer not null);";
 
     //Creates Found postings Table
-    private static final String CREATE_TABLE_FOUND_ITEMS ="create table found (id integer primary key not null autoincrement, " +
+    private static final String CREATE_TABLE_FOUND_ITEMS ="create table found (id integer primary key not null, " +
             "type text not null, color text not null, year text not null);";
 
 
