@@ -1,5 +1,6 @@
 package com.example.cmrussell.dbdummy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     JSONObject jObject;
     JSONArray jArray;
     TextView greeting;
-    Button button;
+    Button button, post_button;
     ArrayList<ArrayList<String>> dbResults = new ArrayList<ArrayList<String>>();
     ArrayList<TableRow> tableRows = new ArrayList<>();
     ArrayList<TextView> ids = new ArrayList<>();
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_2);
 
         button = (Button) findViewById(R.id.button);
+        post_button = (Button) findViewById(R.id.post_button);
         greeting = (TextView) findViewById(R.id.greeting);
 
         //loadViewContent();
@@ -94,6 +96,14 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+        post_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainActivity = new Intent(MainActivity.this, post_example.class);
+                startActivity(mainActivity);
+            }
+          });
     }
 
     public void createDisplay() {
