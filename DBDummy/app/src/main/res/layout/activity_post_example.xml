@@ -14,23 +14,26 @@
         android:layout_height="67dp"
         android:text="Post new user" />
 
-    <EditText android:text="@+id/username"
+    <EditText
         android:id="@+id/username"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_width="fill_parent">
+        android:layout_width="fill_parent"
+        android:hint="Username">
     </EditText>
-    <EditText android:text="@+id/firstname"
+    <EditText
         android:id="@+id/firstname"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_width="fill_parent">
+        android:layout_width="fill_parent"
+        android:hint="First Name">
     </EditText>
-    <EditText android:text="@+id/lastname"
+    <EditText
         android:id="@+id/lastname"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_width="fill_parent">
+        android:layout_width="fill_parent"
+        android:hint="Last Name">
     </EditText>
 
 </LinearLayout>
