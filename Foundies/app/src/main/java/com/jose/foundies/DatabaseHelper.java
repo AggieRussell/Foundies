@@ -28,6 +28,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TYPE = "type";
     private static final String COLUMN_COLOR = "color";
     private static final String COLUMN_YEAR = "year";
+    private static final String COLUMN_LAT = "lat";
+    private static final String COLUMN_LNG = "lng";
 
     SQLiteDatabase db;
 
@@ -71,6 +73,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TYPE, i.getType());
         values.put(COLUMN_COLOR, i.getColor());
         values.put(COLUMN_YEAR, i.getYear());
+        values.put(COLUMN_LAT, i.getLat());
+        values.put(COLUMN_LNG, i.getLng());
         db.insert(TABLE_CONTACTS, null, values);
         db.close();
     }
