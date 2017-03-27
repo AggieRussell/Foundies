@@ -6,22 +6,13 @@
     android:orientation="vertical">
 
     <fragment
-        android:layout_width="287dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="Search for item"
         android:ems="10"
         android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
         android:id="@+id/address" />
-
-    <Button
-        android:text="Find"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_gravity="right"
-        android:layout_toRightOf="@+id/address"
-        android:id="@+id/button3"
-        android:onClick="onSearch" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
