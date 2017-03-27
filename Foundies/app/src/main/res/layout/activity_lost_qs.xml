@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.jose.foundies.FoundItem"
+    tools:context="com.jose.foundies.LostQs"
     android:background="#e4e5e7">
 
     <LinearLayout

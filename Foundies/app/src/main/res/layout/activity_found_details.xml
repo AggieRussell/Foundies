@@ -35,8 +35,8 @@
                 android:layout_centerHorizontal="true"
                 android:id="@+id/radioButton22"
                 android:layout_marginTop="20dp"
-                android:textColor="#737477"
-                app:buttonTint="#FFFFFF" />
+                android:textColor="#737477"/>
+                <!--app:buttonTint="#FFFFFF"-->
 
             <RadioButton
                 android:text="RadioButton"
@@ -193,10 +193,10 @@
                 android:gravity="start" />
 
             <Button
-                android:text="Post item"
+                android:text="Next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/post_button"
+                android:id="@+id/next_button"
                 android:layout_margin="20dp" />
         </LinearLayout>
 
