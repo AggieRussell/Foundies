@@ -22,7 +22,11 @@
         </activity>
         <activity
             android:name=".post_example"
-            android:label="@string/title_activity_post_example"></activity>
+            android:label="@string/title_activity_post_example" />
+        <activity
+            android:name=".delete_example"
+            android:label="@string/title_activity_delete_example"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

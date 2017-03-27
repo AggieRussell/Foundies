@@ -1,5 +1,6 @@
 package com.example.cmrussell.dbdummy;
 
+import android.content.Intent;
 import android.os.StrictMode;
 
 import java.io.IOException;
@@ -50,4 +51,28 @@ public final class Utility {
         }
     }
 
+    public static void deleteToAPI(String username) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://pacific-tor-50594.herokuapp.com")
+                .build();
+
+        final HerokuService service = retrofit.create(HerokuService.class);
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            Call<ResponseBody> call = service.deleteUser(username);
+            try {
+                Response<ResponseBody> response = call.execute();
+                if (response.isSuccessful()) {
+                    String strResponseBody = response.body().string();
+                }
+            } catch (IOException e) {
+                // ...
+            }
+        }
+    }
 }

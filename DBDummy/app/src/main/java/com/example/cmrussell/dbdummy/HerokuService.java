@@ -11,6 +11,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -27,4 +28,7 @@ public interface HerokuService {
     //FormUrlEncoded
     @POST("/users")
     Call<ResponseBody> createUser(@Body RequestBody user);
+
+    @DELETE("/user/{id}")
+    Call<ResponseBody> deleteUser(@Path("id") String username);
 }
