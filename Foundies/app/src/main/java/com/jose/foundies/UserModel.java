@@ -27,16 +27,29 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class UserModel {
+
+    private Contact user;
+    private int numOfSearches;
     
-    public void UserModel(){}
+    public void UserModel(){
+        numOfSearches = 0;
+    }
 
     //Creates a json object to add user to the mongo database
-    public static String jsonUserPost(Contact c){
+    public String jsonUserPost(Contact c){
         String jsonPost  = "{ \"user\": { \"_id\": \"" + Utility.uniqueID() + "\", \"username\":\"" + c.getEmail() + "\", \"first_name\":\"" + c.getFname() + "\", \"last_name\":\"" + c.getLname() + "\" } }";
         return jsonPost;
     }
 
-    public static ArrayList<FoundItem> getFoundItems(){
+    public boolean createUser(String first_name, String last_name, String email, String password) {
+        user = new Contact(first_name, last_name, email, password);
+        String userJson = jsonUserPost(user);
+        postToAPI(userJson);
+
+        return true;
+    }
+
+    public ArrayList<FoundItem> getFoundItems(){
 
         final HerokuService service = Utility.connectAPI();
 
@@ -60,7 +73,7 @@ public class UserModel {
         return null;
     }
 
-    public static ArrayList<FoundItem> parseJSON(String response_str) {
+    public ArrayList<FoundItem> parseJSON(String response_str) {
         JSONObject jObject;
         JSONArray jArray;
         try {
@@ -90,7 +103,7 @@ public class UserModel {
 
 
         //Added user to database
-    public static void postToAPI(String jsonPost){
+    public void postToAPI(String jsonPost){
 
         final HerokuService service = Utility.connectAPI();
 
@@ -114,7 +127,7 @@ public class UserModel {
     }
 
     //Delete user from database
-    public static void deleteToAPI(String username) {
+    public void deleteToAPI(String username) {
 
         final HerokuService service = Utility.connectAPI();
 

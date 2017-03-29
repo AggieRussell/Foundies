@@ -42,11 +42,9 @@ public class Login extends AppCompatActivity {
                     buffer.append("Last Name: " + results.getString(2) + "\n");
                     buffer.append("Email: " + results.getString(3) + "\n");
                     buffer.append("Password: " + results.getString(4) + "\n\n");
-
                 }
 
                 //Show all data
-
                 showMessage("Data", buffer.toString());
             }
         });

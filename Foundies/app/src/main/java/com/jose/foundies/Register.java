@@ -13,23 +13,18 @@ import android.widget.Toast;
 public class Register extends AppCompatActivity {
     DatabaseHelper helper = new DatabaseHelper(this);
 
-    UserController controller = new UserController();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        UserModel.getFoundItems();
 
-
-
+        final Controller controller = (Controller) getApplicationContext();
 
         final Button register = (Button) findViewById(R.id.register_button);
         final EditText fname = (EditText) findViewById(R.id.firstname_field);
         final EditText lname = (EditText) findViewById(R.id.lastname_field);
         final EditText email = (EditText) findViewById(R.id.email_field);
         final EditText password = (EditText) findViewById(R.id.password_field);
-
-
 
         register.setOnClickListener(new View.OnClickListener() {
             private boolean isEmptyField(EditText fname, EditText lname, EditText email, EditText pass) {

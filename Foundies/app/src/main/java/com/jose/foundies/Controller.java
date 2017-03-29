@@ -8,16 +8,12 @@ import android.app.Application;
 
 public class Controller extends Application {
 
-    Model m = new Model();
+    UserModel um = new UserModel();
     LostModel lm = new LostModel();
     FoundModel fm = new FoundModel();
 
-    public void setUser(String user) {
-        m.setUser(user);
-    }
-
-    public String getUser() {
-        return m.getUser();
+    public boolean createUser(String first_name, String last_name, String email, String password){
+        return um.createUser(first_name, last_name, email, password);
     }
 
 }
