@@ -25,6 +25,9 @@ public interface HerokuService {
     @GET("/users")
     Call<ResponseBody> getUsers();
 
+    @GET("/items/found")
+    Call<ResponseBody> getFoundItems();
+
     //FormUrlEncoded
     @POST("/users")
     Call<ResponseBody> createUser(@Body RequestBody user);
