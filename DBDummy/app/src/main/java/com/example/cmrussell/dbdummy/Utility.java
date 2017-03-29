@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.StrictMode;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -20,8 +21,14 @@ public final class Utility {
     private Utility() {
     }
 
+    private static String uniqueId(){
+        String uniqueID = UUID.randomUUID().toString();
+        return uniqueID;
+    }
+
     public static String jsonUserPost(String username, String firstName, String lastName){
-        String jsonPost  = "{ \"user\": { \"username\":\"" + username + "\", \"first_name\":\"" + firstName + "\", \"last_name\":\"" + lastName + "\" } }";
+        String jsonPost  = "{ \"user\": { \"_id\": \"" + uniqueId() + "\", \"username\":\"" + username + "\", \"first_name\":\"" + firstName + "\", \"last_name\":\"" + lastName + "\" } }";
+        System.out.println("\n \n \n " + uniqueId() + "\n \n ");
         return jsonPost;
     }
 
