@@ -18,21 +18,14 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
-
+        final Controller controller = (Controller) getApplicationContext();
 
         final Button login = (Button) findViewById(R.id.login_button);
         final Button view = (Button) findViewById(R.id.view_button);
         final Button delete = (Button) findViewById(R.id.delete_button);
         final Button update = (Button) findViewById(R.id.update_button);
-
-
         final EditText email = (EditText) findViewById(R.id.email_field);
         final EditText password = (EditText) findViewById(R.id.password_field);
-
-
-
 
         view.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

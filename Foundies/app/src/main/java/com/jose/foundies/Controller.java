@@ -9,6 +9,8 @@ import android.app.Application;
 public class Controller extends Application {
 
     Model m = new Model();
+    LostModel lm = new LostModel();
+    FoundModel fm = new FoundModel();
 
     public void setUser(String user) {
         m.setUser(user);
