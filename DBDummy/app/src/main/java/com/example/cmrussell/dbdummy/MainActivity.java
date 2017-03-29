@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             TextView lastname = new TextView(this);
             TextView username = new TextView(this);
             if (curr.get(j).charAt(0)!='{') {
-                id.setText(curr.get(j));
+                id.setText("---");
                 ids.add(id);
                 tableRow.addView(id);
             }
