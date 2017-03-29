@@ -20,8 +20,6 @@ public class Login extends AppCompatActivity {
 
 
 
-
-
         final Button login = (Button) findViewById(R.id.login_button);
         final Button view = (Button) findViewById(R.id.view_button);
         final Button delete = (Button) findViewById(R.id.delete_button);

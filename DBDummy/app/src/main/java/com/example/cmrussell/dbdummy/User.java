@@ -7,16 +7,31 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class User {
-    String username;
+    public User() {
+    }
 
-    String first_name;
+    String id, username, first_name, last_name, password;
 
-    String last_name;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public User(String userName, String firstName, String lastName){
         this.username = userName;
         this.first_name = firstName;
         this.last_name = lastName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUserName(){

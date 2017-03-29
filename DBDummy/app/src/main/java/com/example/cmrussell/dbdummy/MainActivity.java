@@ -109,7 +109,9 @@ public class MainActivity extends AppCompatActivity {
         delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainActivity = new Intent(MainActivity.this, delete_example.class);
+                FoundItem f = new FoundItem( Utility.uniqueId(), "purse", "hat", "monkey", "20.122", "19.2", "03292017", "kpreston");
+                Utility.postToFound(Utility.jsonFoundPost(f));
+                Intent mainActivity = new Intent(MainActivity.this, FoundItems.class);
                 startActivity(mainActivity);
             }
         });
