@@ -12,11 +12,13 @@ import android.widget.Toast;
 
 public class Register extends AppCompatActivity {
     DatabaseHelper helper = new DatabaseHelper(this);
+
+    UserController controller = new UserController();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        UserModel.getFoundItems();
 
 
 
@@ -65,12 +67,7 @@ public class Register extends AppCompatActivity {
                 else {
 
                     //Send details to database
-                    Contact c = new Contact();
-                    c.setFname(fnamestr);
-                    c.setLname(lnamestr);
-                    c.setEmail(emailstr);
-                    c.setPassword(passstr);
-                    helper.insertContact(c);
+                    controller.createUser(fnamestr, lnamestr, emailstr, passstr);
 
                     //Go to lost or found
                     Intent i = new Intent(getBaseContext(), LostorFound.class);
@@ -79,7 +76,6 @@ public class Register extends AppCompatActivity {
 
                 }
             }
-
 
         });
     }

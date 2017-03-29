@@ -6,6 +6,15 @@ package com.jose.foundies;
 
 public class Contact {
 
+    public Contact(String first_name, String last_name, String email, String password){
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.pass = password;
+    }
+
+    public Contact(){}
+
     int id;
     String first_name, last_name, email, pass;
 

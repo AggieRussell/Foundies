@@ -54,7 +54,7 @@ public class post_example extends AppCompatActivity {
                 String lastNameStr = lastName.getText().toString();
                 String firstNameStr = firstName.getText().toString();
                 //Utility Class is a helper class creating the json text
-                String strRequestBody = Utility.jsonUserPost(userNameStr, lastNameStr, firstNameStr);
+                String strRequestBody = Utility.jsonUserPost(userNameStr, firstNameStr, lastNameStr);
                 Utility.postToAPI(strRequestBody);
                 Intent mainActivity = new Intent(post_example.this, MainActivity.class);
                 startActivity(mainActivity);
