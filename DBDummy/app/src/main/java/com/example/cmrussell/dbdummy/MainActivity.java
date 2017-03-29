@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     JSONObject jObject;
     JSONArray jArray;
     TextView greeting;
-    Button button, post_button;
+    Button button, post_button, delete_button;
     ArrayList<ArrayList<String>> dbResults = new ArrayList<ArrayList<String>>();
     ArrayList<TableRow> tableRows = new ArrayList<>();
     ArrayList<TextView> ids = new ArrayList<>();
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         button = (Button) findViewById(R.id.button);
         post_button = (Button) findViewById(R.id.post_button);
+        delete_button = (Button) findViewById(R.id.delete_button);
         greeting = (TextView) findViewById(R.id.greeting);
 
         //loadViewContent();
@@ -104,6 +105,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(mainActivity);
             }
           });
+
+        delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainActivity = new Intent(MainActivity.this, delete_example.class);
+                startActivity(mainActivity);
+            }
+        });
     }
 
     public void createDisplay() {

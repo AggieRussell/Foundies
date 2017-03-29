@@ -35,6 +35,15 @@
             android:text="Post Button" />
     </TableRow>
 
+    <TableRow>
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="4"
+            android:text="Delete Button" />
+    </TableRow>
+
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"

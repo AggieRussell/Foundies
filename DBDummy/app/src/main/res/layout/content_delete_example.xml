@@ -6,34 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.example.cmrussell.dbdummy.post_example">
+    tools:context="com.example.cmrussell.dbdummy.delete_example">
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonDelete"
         android:layout_width="match_parent"
         android:layout_height="67dp"
-        android:text="Post new user" />
+        android:text="Delete user" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/usernameDelete"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:hint="Username">
     </EditText>
-    <EditText
-        android:id="@+id/firstname"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_width="fill_parent"
-        android:hint="First Name">
-    </EditText>
-    <EditText
-        android:id="@+id/lastname"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_width="fill_parent"
-        android:hint="Last Name">
-    </EditText>
+
 
 </LinearLayout>
