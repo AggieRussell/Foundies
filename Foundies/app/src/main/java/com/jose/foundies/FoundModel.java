@@ -29,7 +29,6 @@ public class FoundModel {
                 + f.getCategory3() + "\", \"username\":\"" + f.getUser() + "\", \"timestamp\":\""
                 + f.getTimestamp() + "\", \"latitude\":\""
                 + f.getLat() + "\", \"longitude\":\"" + f.getLng() + "\" } }";
-        System.out.println("\n \n \n " + f.getCategory2() + "\n \n ");
         return jsonPost;
     }
 
@@ -44,15 +43,19 @@ public class FoundModel {
             for (int i = 0; i < jArray.length(); ++i) {
                 FoundItem found = new FoundItem();
                 JSONObject curr = new JSONObject(jArray.getString(i));
-                found.setId(curr.getString("_id"));
-                found.setCategory1(curr.getString("category1"));
-                found.setCategory2(curr.getString("category2"));
-                found.setCategory3(curr.getString("category3"));
-                found.setLat(curr.getString("latitude"));
-                found.setLng(curr.getString("longitude"));
-                found.setTimestamp(curr.getString("timestamp"));
-                found.setUser(curr.getString("username"));
-                foundItems.add(found);
+                if(curr.getString("_id").isEmpty()){
+                    return null;
+                }else {
+                    found.setId(curr.getString("_id"));
+                    found.setCategory1(curr.getString("category1"));
+                    found.setCategory2(curr.getString("category2"));
+                    found.setCategory3(curr.getString("category3"));
+                    found.setLat(curr.getString("latitude"));
+                    found.setLng(curr.getString("longitude"));
+                    found.setTimestamp(curr.getString("timestamp"));
+                    found.setUser(curr.getString("username"));
+                    foundItems.add(found);
+                }
             }
             return foundItems;
         } catch (JSONException e) {
@@ -77,9 +80,6 @@ public class FoundModel {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
                     String strResponseBody = response.body().string();
-                    System.out.println("\n \n \n Here I am \n\n\n");
-                    System.out.println(strResponseBody);
-                    System.out.println("\n \n \n Now look at me \n \n \n ");
                     return parseJSON(strResponseBody);
                 }
             } catch (IOException e) {

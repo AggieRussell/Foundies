@@ -76,8 +76,12 @@ public class UserModel {
         JSONArray jArray;
         try {
             jObject = new JSONObject(response_str);
+            System.out.println("response string   " + jObject.toString());
             jArray = jObject.getJSONArray("user");
             Contact user = new Contact();
+            if(jArray.isNull(0)){
+                return null;
+            }
             JSONObject curr = new JSONObject(jArray.getString(0));
             user.setId(curr.getString("_id"));
             user.setEmail(curr.getString("username"));
@@ -106,7 +110,7 @@ public class UserModel {
                 .build();
 
         final HerokuService service = retrofit.create(HerokuService.class);
-
+        System.out.println("made it here");
         //Used for connecting to the network so that Post can go through
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
@@ -115,12 +119,19 @@ public class UserModel {
             StrictMode.setThreadPolicy(policy);
             RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), jsonPost);
             Call<ResponseBody> call = service.createUser(requestBody);
+            System.out.println("made it here 3 print json: " + jsonPost);
+
             try {
                 Response<ResponseBody> response = call.execute();
+                System.out.println("made it here 22");
+
                 if (response.isSuccessful()) {
                     String strResponseBody = response.body().string();
+                    System.out.println("made it here with response: " + strResponseBody);
                 }
             } catch (IOException e) {
+                System.out.println("made it here bad ");
+
                 // ...
             }
         }
