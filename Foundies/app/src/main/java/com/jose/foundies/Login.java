@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
     DatabaseHelper helper = new DatabaseHelper(this);
+    UserController controller = new UserController();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +36,7 @@ public class Login extends AppCompatActivity {
         view.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Cursor results = helper.getData();
-                if (results.getCount()==0){
-                    //show message
-                    showMessage("Error" , "Nothing Found");
-                    return;
-                }
+
                 StringBuffer buffer = new StringBuffer();
                 while(results.moveToNext()){
                     buffer.append("Id: " + results.getString(0) + "\n");
@@ -79,20 +76,17 @@ public class Login extends AppCompatActivity {
 
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if(view.getId()== R.id.login_button) {
-                    String emailstr = email.getText().toString();
-                    String passstr = password.getText().toString();
+            if(view.getId()== R.id.login_button) {
 
-
-                    String passCheck = helper.searchPass(emailstr);
-                    if (passstr.equals(passCheck)) {
-                        Intent i = new Intent(getBaseContext(), LostorFound.class);
-                        startActivity(i);
-                        finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Email and Password don't match", Toast.LENGTH_SHORT).show();
-                    }
+                String check = controller.checkCredentials(email, password);
+                if (check != null) {
+                    Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent i = new Intent(getBaseContext(), LostorFound.class);
+                    startActivity(i);
+                    finish();
                 }
+            }
             }
         });
     }

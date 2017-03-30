@@ -49,5 +49,19 @@ public class UserController {
         }
     }
 
+    public String checkCredentials(EditText email, EditText password){
+        String emailstr = email.getText().toString();
+        String passstr = password.getText().toString();
+
+        Contact user = model.getUserByUsername(emailstr);
+        if(user == null){
+            return "No one by this email";
+        }else if(user.getPass().equals(passstr)){
+            return null;
+        }else{
+            return "Password does not match email";
+        }
+    }
+
 
 }
