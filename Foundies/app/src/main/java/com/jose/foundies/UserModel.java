@@ -45,11 +45,8 @@ public class UserModel {
 
     //Looking up a user by their username
     public Contact getUserByUsername(String id){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://pacific-tor-50594.herokuapp.com")
-                .build();
 
-        final HerokuService service = retrofit.create(HerokuService.class);
+        final HerokuService service = Utility.connectAPI();
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
@@ -96,20 +93,11 @@ public class UserModel {
 
     }
 
-    public static void getUserById(String userId){
-
-    }
-
     //Added user to database
     public void postToAPI(String jsonPost){
 
-        //final HerokuService service = Utility.connectAPI();
+        final HerokuService service = Utility.connectAPI();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://pacific-tor-50594.herokuapp.com")
-                .build();
-
-        final HerokuService service = retrofit.create(HerokuService.class);
         System.out.println("made it here");
         //Used for connecting to the network so that Post can go through
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
