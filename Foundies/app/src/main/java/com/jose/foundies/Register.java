@@ -41,22 +41,16 @@ public class Register extends AppCompatActivity {
 
                 if (!(controller.isEmptyField(fname, lname, email, password))) {
                     Toast.makeText(getApplicationContext(), "Field Missing!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
 
                     //Send details to database
-                    if (controller.emailIsUnique(emailstr)) {
-                        if(controller.createUser(fnamestr, lnamestr, emailstr, passstr)){
-                            Toast.makeText(getApplicationContext(), "V GOOD to go", Toast.LENGTH_SHORT).show();
-
-                        }
-                        //Go to lost or found
+                    String checkEmail = controller.createUser(fnamestr, lnamestr, emailstr, passstr);
+                    if (checkEmail == null) {
                         Intent i = new Intent(getBaseContext(), LostorFound.class);
                         startActivity(i);
                         finish();
-
                     } else {
-                        Toast.makeText(getApplicationContext(), "Email Already has been used!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), checkEmail, Toast.LENGTH_SHORT).show();
                     }
                 }
             }

@@ -12,13 +12,17 @@ public class UserController {
     //Where the data will be manipulated and sent to the views
     public void UserController(){}
 
-    public boolean createUser(String first_name, String last_name, String email, String password){
+    public String createUser(String first_name, String last_name, String email, String password){
+        if (this.isValidEmail(email) && this.emailIsUnique(email)) {
+            Contact c = new Contact(first_name, last_name, email, password);
+            String userJson = model.jsonUserPost(c);
+            model.postToAPI(userJson);
+            System.out.println("we have made it here in the creatuser");
+            return null;
+        }else {
+            return "Invalid Email";
+        }
 
-        Contact c = new Contact(first_name, last_name, email, password);
-        String userJson = model.jsonUserPost(c);
-        model.postToAPI(userJson);
-
-        return true;
     }
 
     public boolean isEmptyField( EditText fname, EditText lname, EditText email, EditText pass) {
@@ -60,6 +64,14 @@ public class UserController {
             return null;
         }else{
             return "Password does not match email";
+        }
+    }
+
+    private boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
     }
 
