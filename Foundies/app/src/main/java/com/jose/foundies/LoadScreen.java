@@ -14,10 +14,6 @@ public class LoadScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_screen);
 
-
-
-
-
         final Button join = (Button) findViewById(R.id.join_button);
         final TextView signin = (TextView) findViewById(R.id.signin_tv);
 

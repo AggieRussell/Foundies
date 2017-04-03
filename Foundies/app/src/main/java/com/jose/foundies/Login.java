@@ -13,28 +13,30 @@ import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
     DatabaseHelper helper = new DatabaseHelper(this);
+    Controller controller = new Controller();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final Controller controller = (Controller) getApplicationContext();
+
 
         final Button login = (Button) findViewById(R.id.login_button);
         final Button view = (Button) findViewById(R.id.view_button);
         final Button delete = (Button) findViewById(R.id.delete_button);
         final Button update = (Button) findViewById(R.id.update_button);
+
+
         final EditText email = (EditText) findViewById(R.id.email_field);
         final EditText password = (EditText) findViewById(R.id.password_field);
+
+
+
 
         view.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Cursor results = helper.getData();
-                if (results.getCount()==0){
-                    //show message
-                    showMessage("Error" , "Nothing Found");
-                    return;
-                }
+
                 StringBuffer buffer = new StringBuffer();
                 while(results.moveToNext()){
                     buffer.append("Id: " + results.getString(0) + "\n");
@@ -42,9 +44,11 @@ public class Login extends AppCompatActivity {
                     buffer.append("Last Name: " + results.getString(2) + "\n");
                     buffer.append("Email: " + results.getString(3) + "\n");
                     buffer.append("Password: " + results.getString(4) + "\n\n");
+
                 }
 
                 //Show all data
+
                 showMessage("Data", buffer.toString());
             }
         });
@@ -73,17 +77,14 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if(view.getId()== R.id.login_button) {
-                    String emailstr = email.getText().toString();
-                    String passstr = password.getText().toString();
 
-
-                    String passCheck = helper.searchPass(emailstr);
-                    if (passstr.equals(passCheck)) {
+                    String check = controller.checkCredentials(email, password);
+                    if (check != null) {
+                        Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
+                    } else {
                         Intent i = new Intent(getBaseContext(), LostorFound.class);
                         startActivity(i);
                         finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Email and Password don't match", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -99,3 +100,4 @@ public class Login extends AppCompatActivity {
         builder.show();
     }
 }
+

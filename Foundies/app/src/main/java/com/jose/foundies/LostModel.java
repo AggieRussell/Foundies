@@ -12,7 +12,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Created by christine on 3/27/17.
+ * Created by kylepreston on 3/27/17.
  */
 
 public class LostModel {
@@ -54,5 +54,7 @@ public class LostModel {
 
         return q;
     }
+
+    public void LostItemModel(){}
 
 }

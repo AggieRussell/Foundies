@@ -28,12 +28,19 @@ public interface HerokuService {
     @GET("/questions")
     Call<ResponseBody> getQuestions();
 
+    @GET("/user/{username}")
+    Call<ResponseBody> getUsersByUsername(@Path("username") String username);
+
     @GET("/items/found")
     Call<ResponseBody> getFoundItems();
 
     //FormUrlEncoded
     @POST("/users")
     Call<ResponseBody> createUser(@Body RequestBody user);
+
+    //FormUrlEncoded
+    @POST("/items/found")
+    Call<ResponseBody> createFoundItem(@Body RequestBody user);
 
     @DELETE("/user/{id}")
     Call<ResponseBody> deleteUser(@Path("id") String username);

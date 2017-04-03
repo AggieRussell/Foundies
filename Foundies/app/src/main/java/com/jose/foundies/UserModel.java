@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -35,21 +36,20 @@ public class UserModel {
         numOfSearches = 0;
     }
 
+    private String uniqueId(){
+        String uniqueID = UUID.randomUUID().toString();
+        return uniqueID;
+    }
+
     //Creates a json object to add user to the mongo database
     public String jsonUserPost(Contact c){
-        String jsonPost  = "{ \"user\": { \"_id\": \"" + Utility.uniqueID() + "\", \"username\":\"" + c.getEmail() + "\", \"first_name\":\"" + c.getFname() + "\", \"last_name\":\"" + c.getLname() + "\" } }";
+        String jsonPost  = "{ \"user\": { \"_id\": \"" + uniqueId() + "\", \"username\":\"" + c.getEmail() + "\", \"first_name\":\"" + c.getFname() + "\", \"last_name\":\"" + c.getLname()
+                + "\", \"password\":\"" + c.getPass() + "\" } }";
         return jsonPost;
     }
 
-    public boolean createUser(String first_name, String last_name, String email, String password) {
-        user = new Contact(first_name, last_name, email, password);
-        String userJson = jsonUserPost(user);
-        postToAPI(userJson);
-
-        return true;
-    }
-
-    public ArrayList<FoundItem> getFoundItems(){
+    //Looking up a user by their username
+    public Contact getUserByUsername(String id){
 
         final HerokuService service = Utility.connectAPI();
 
@@ -58,13 +58,13 @@ public class UserModel {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            Call<ResponseBody> call = service.getFoundItems();
+            Call<ResponseBody> call = service.getUsersByUsername(id);
             try {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
                     String strResponseBody = response.body().string();
                     System.out.println(strResponseBody);
-                    return parseJSON(strResponseBody);
+                    return parseJSONuser(strResponseBody);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -73,27 +73,23 @@ public class UserModel {
         return null;
     }
 
-    public ArrayList<FoundItem> parseJSON(String response_str) {
+    public Contact parseJSONuser(String response_str) {
         JSONObject jObject;
         JSONArray jArray;
         try {
             jObject = new JSONObject(response_str);
-            jArray = jObject.getJSONArray("items");
-            ArrayList<FoundItem> foundItems = new ArrayList<FoundItem>();
-            for (int i = 0; i < jArray.length(); ++i) {
-                FoundItem found = new FoundItem();
-                JSONObject curr = new JSONObject(jArray.getString(i));
-                found.setId(curr.getString("_id"));
-                found.setCategory1(curr.getString("category1"));
-                found.setCategory2(curr.getString("category2"));
-                found.setCategory3(curr.getString("category3"));
-                found.setLat(curr.getString("latitude"));
-                found.setLng(curr.getString("longitude"));
-                found.setTimestamp(curr.getString("timestamp"));
-                found.setUser(curr.getString("username"));
-                foundItems.add(found);
+            jArray = jObject.getJSONArray("user");
+            Contact user = new Contact();
+            if(jArray.isNull(0)){
+                return null;
             }
-            return foundItems;
+            JSONObject curr = new JSONObject(jArray.getString(0));
+            user.setId(curr.getString("_id"));
+            user.setEmail(curr.getString("username"));
+            user.setFname(curr.getString("first_name"));
+            user.setLname(curr.getString("last_name"));
+            user.setPassword(curr.getString("password"));
+            return user;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -101,8 +97,7 @@ public class UserModel {
 
     }
 
-
-        //Added user to database
+    //Added user to database
     public void postToAPI(String jsonPost){
 
         final HerokuService service = Utility.connectAPI();
@@ -115,8 +110,10 @@ public class UserModel {
             StrictMode.setThreadPolicy(policy);
             RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), jsonPost);
             Call<ResponseBody> call = service.createUser(requestBody);
+
             try {
                 Response<ResponseBody> response = call.execute();
+
                 if (response.isSuccessful()) {
                     String strResponseBody = response.body().string();
                 }
