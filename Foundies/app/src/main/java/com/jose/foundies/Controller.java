@@ -3,9 +3,6 @@ package com.jose.foundies;
 import android.app.Application;
 import android.widget.EditText;
 
-/**
- * Created by kylepreston on 4/3/17.
- */
 
 public class Controller extends Application {
 
@@ -15,7 +12,7 @@ public class Controller extends Application {
 
 
 
-/* --------------------------------- User Controller Functionality ------------------------------------ */
+    /* --------------------------------- User Controller Functionality ------------------------------------ */
     public String createUser(String first_name, String last_name, String email, String password){
         if (this.isValidEmail(email) && this.emailIsUnique(email)) {
             Contact c = new Contact(first_name, last_name, email, password);
@@ -81,4 +78,5 @@ public class Controller extends Application {
     /* --------------------------------- Found Controller Functionality ------------------------------------ */
 
     /* --------------------------------- Lost Controller Functionality ------------------------------------ */
+
 }

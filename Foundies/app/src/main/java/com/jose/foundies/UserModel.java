@@ -28,8 +28,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class UserModel {
+
+    private Contact user;
+    private int numOfSearches;
     
-    public void UserModel(){}
+    public void UserModel(){
+        numOfSearches = 0;
+    }
 
     private String uniqueId(){
         String uniqueID = UUID.randomUUID().toString();

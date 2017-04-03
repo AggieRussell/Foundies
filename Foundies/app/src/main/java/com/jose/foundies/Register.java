@@ -14,12 +14,11 @@ public class Register extends AppCompatActivity {
     DatabaseHelper helper = new DatabaseHelper(this);
 
     Controller controller = new Controller();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-
 
 
         final Button register = (Button) findViewById(R.id.register_button);
@@ -27,7 +26,6 @@ public class Register extends AppCompatActivity {
         final EditText lname = (EditText) findViewById(R.id.lastname_field);
         final EditText email = (EditText) findViewById(R.id.email_field);
         final EditText password = (EditText) findViewById(R.id.password_field);
-
 
 
         register.setOnClickListener(new View.OnClickListener() {

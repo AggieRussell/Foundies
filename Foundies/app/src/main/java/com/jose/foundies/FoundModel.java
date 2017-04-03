@@ -23,8 +23,8 @@ public class FoundModel {
     public FoundModel() {
     }
 
-    public static String jsonFoundPost(FoundItem f){
-        String jsonPost  = "{ \"found\": { \"_id\": \"" + Utility.uniqueID() + "\", \"category1\":\"" + f.getCategory1()
+    public static String jsonFoundPost(FoundItem f) {
+        String jsonPost = "{ \"found\": { \"_id\": \"" + Utility.uniqueID() + "\", \"category1\":\"" + f.getCategory1()
                 + "\", \"category2\":\"" + f.getCategory2() + "\", \"category3\":\""
                 + f.getCategory3() + "\", \"username\":\"" + f.getUser() + "\", \"timestamp\":\""
                 + f.getTimestamp() + "\", \"latitude\":\""
@@ -43,9 +43,9 @@ public class FoundModel {
             for (int i = 0; i < jArray.length(); ++i) {
                 FoundItem found = new FoundItem();
                 JSONObject curr = new JSONObject(jArray.getString(i));
-                if(curr.getString("_id").isEmpty()){
+                if (curr.getString("_id").isEmpty()) {
                     return null;
-                }else {
+                } else {
                     found.setId(curr.getString("_id"));
                     found.setCategory1(curr.getString("category1"));
                     found.setCategory2(curr.getString("category2"));
@@ -67,7 +67,7 @@ public class FoundModel {
 
 
     //Use to get found items from the database, Lat and Lng for Jason
-    public static ArrayList<FoundItem> getFoundItems(){
+    public static ArrayList<FoundItem> getFoundItems() {
         final HerokuService service = Utility.connectAPI();
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -90,7 +90,7 @@ public class FoundModel {
     }
 
 
-    public static void postToFound(String jsonPost){
+    public static void postToFound(String jsonPost) {
         final HerokuService service = Utility.connectAPI();
 
         //Used for connecting to the network so that Post can go through

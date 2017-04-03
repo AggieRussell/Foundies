@@ -76,17 +76,17 @@ public class Login extends AppCompatActivity {
 
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            if(view.getId()== R.id.login_button) {
+                if(view.getId()== R.id.login_button) {
 
-                String check = controller.checkCredentials(email, password);
-                if (check != null) {
-                    Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent i = new Intent(getBaseContext(), LostorFound.class);
-                    startActivity(i);
-                    finish();
+                    String check = controller.checkCredentials(email, password);
+                    if (check != null) {
+                        Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent i = new Intent(getBaseContext(), LostorFound.class);
+                        startActivity(i);
+                        finish();
+                    }
                 }
-            }
             }
         });
     }
@@ -100,3 +100,4 @@ public class Login extends AppCompatActivity {
         builder.show();
     }
 }
+
