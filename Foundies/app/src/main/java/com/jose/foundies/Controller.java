@@ -13,6 +13,7 @@ public class Controller extends Application {
 
 
     /* --------------------------------- User Controller Functionality ------------------------------------ */
+    
     public String createUser(String first_name, String last_name, String email, String password){
         if (this.isValidEmail(email) && this.emailIsUnique(email)) {
             Contact c = new Contact(first_name, last_name, email, password);
