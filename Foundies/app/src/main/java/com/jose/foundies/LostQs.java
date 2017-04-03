@@ -6,12 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 public class LostQs extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_qs);
+
+        final Controller controller = (Controller) getApplicationContext();
+
+        ArrayList<String> questions = controller.getQuestions();
 
         final Button next = (Button) findViewById(R.id.next_button);
 

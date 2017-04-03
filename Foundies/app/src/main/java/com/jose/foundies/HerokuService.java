@@ -25,6 +25,9 @@ public interface HerokuService {
     @GET("/users")
     Call<ResponseBody> getUsers();
 
+    @GET("/questions")
+    Call<ResponseBody> getQuestions();
+
     @GET("/items/found")
     Call<ResponseBody> getFoundItems();
 
