@@ -6,14 +6,22 @@ package com.jose.foundies;
 
 public class Contact {
 
-    int id;
-    String first_name, last_name, email, pass;
+    public Contact(String first_name, String last_name, String email, String password){
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.pass = password;
+    }
+
+    public Contact(){}
+
+    String first_name, last_name, email, pass, id;
 
     //User ID
-    public void setId(int id){
+    public void setId(String id){
         this.id = id;
     }
-    public int getId(){
+    public String getId(){
         return this.id;
     }
 

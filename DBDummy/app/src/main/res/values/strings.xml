@@ -146,4 +146,9 @@
     <color name="NFLBlue">#013369</color>
     <color name="NFLRed">#d50a0a</color>
     <color name="HeaderBlue">#012348</color>
+    <string name="title_activity_post_example">post_example</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_delete_example">delete_example</string>
 </resources>

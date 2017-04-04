@@ -12,13 +12,13 @@ import android.widget.Toast;
 
 public class Register extends AppCompatActivity {
     DatabaseHelper helper = new DatabaseHelper(this);
+
+    Controller controller = new Controller();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-
-
 
 
         final Button register = (Button) findViewById(R.id.register_button);
@@ -28,29 +28,7 @@ public class Register extends AppCompatActivity {
         final EditText password = (EditText) findViewById(R.id.password_field);
 
 
-
         register.setOnClickListener(new View.OnClickListener() {
-            private boolean isEmptyField(EditText fname, EditText lname, EditText email, EditText pass) {
-                if (fname.getText().toString().length() <= 0) {
-                    Toast.makeText(getApplicationContext(), "First name missing!", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                else if (lname.getText().toString().length() <= 0) {
-                    Toast.makeText(getApplicationContext(), "Last name missing!", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                else if (email.getText().toString().length() <= 0) {
-                    Toast.makeText(getApplicationContext(), "Email address missing!", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                else if (pass.getText().toString().length() <= 0) {
-                    Toast.makeText(getApplicationContext(), "Password missing!", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                else {
-                    return true;
-                }
-            }
 
             public void onClick(View v) {
 
@@ -59,27 +37,21 @@ public class Register extends AppCompatActivity {
                 String emailstr = email.getText().toString();
                 String passstr = password.getText().toString();
 
-                if (!isEmptyField(fname, lname, email, password)) {
-                // Fill all
-                }
-                else {
+                if (!(controller.isEmptyField(fname, lname, email, password))) {
+                    Toast.makeText(getApplicationContext(), "Field Missing!", Toast.LENGTH_SHORT).show();
+                } else {
 
                     //Send details to database
-                    Contact c = new Contact();
-                    c.setFname(fnamestr);
-                    c.setLname(lnamestr);
-                    c.setEmail(emailstr);
-                    c.setPassword(passstr);
-                    helper.insertContact(c);
-
-                    //Go to lost or found
-                    Intent i = new Intent(getBaseContext(), LostorFound.class);
-                    startActivity(i);
-                    finish();
-
+                    String checkEmail = controller.createUser(fnamestr, lnamestr, emailstr, passstr);
+                    if (checkEmail == null) {
+                        Intent i = new Intent(getBaseContext(), LostorFound.class);
+                        startActivity(i);
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), checkEmail, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
-
 
         });
     }
