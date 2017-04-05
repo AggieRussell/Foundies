@@ -1,17 +1,20 @@
 package com.jose.foundies;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class LostorFound extends AppCompatActivity {
+public class LostorFound extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lostor_found);
+
+        final Controller controller = (Controller) getApplicationContext();
 
         final Button found = (Button) findViewById(R.id.found_button);
         final Button lost = (Button) findViewById(R.id.lost_button);

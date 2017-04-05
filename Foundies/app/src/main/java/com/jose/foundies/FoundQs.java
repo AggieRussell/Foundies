@@ -1,17 +1,20 @@
 package com.jose.foundies;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class FoundQs extends AppCompatActivity {
+public class FoundQs extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found_qs);
+
+        final Controller controller = (Controller) getApplicationContext();
 
         final Button next = (Button) findViewById(R.id.next_button);
 

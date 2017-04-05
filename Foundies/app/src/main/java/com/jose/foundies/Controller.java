@@ -8,9 +8,19 @@ import android.widget.EditText;
 
 public class Controller extends Application {
 
-    UserModel um = new UserModel();
-    LostModel lm = new LostModel();
-    FoundModel fm = new FoundModel();
+    UserModel um;
+    LostModel lm;
+    FoundModel fm;
+    QuestionModel qm;
+
+    public Controller(){
+        um = new UserModel();
+        lm = new LostModel();
+        fm = new FoundModel();
+        qm = new QuestionModel();
+        // pre-load all question combinations from database
+        qm.getQuestions();
+    }
 
 
     /* --------------------------------- User Controller Functionality ------------------------------------ */
@@ -55,10 +65,6 @@ public class Controller extends Application {
         }
     }
 
-    public ArrayList<String> getQuestions() {
-        out.println("Made it to controller");
-        return lm.getQuestions();
-    }
 
     public String checkCredentials(EditText email, EditText password){
         String emailstr = email.getText().toString();
@@ -81,6 +87,33 @@ public class Controller extends Application {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
     }
+
+    /* --------------------------------- Question Controller Functionality --------------------------------- */
+
+    public ArrayList<String> getCategories() {
+        return qm.getCategories();
+    }
+
+    public ArrayList<String> getSubcategories(String category) {
+        return qm.getSubcategories(category);
+    }
+
+    public void sendSelections(String category, String subcategory) {
+        qm.setSelections(category, subcategory);
+    }
+
+    public ArrayList<String> getKinds() {
+        return qm.getKinds();
+    }
+
+    public ArrayList<String> getNames() {
+        return qm.getNames();
+    }
+
+    public ArrayList<ArrayList<String>> getChoices() {
+        return qm.getChoices();
+    }
+
 
     /* --------------------------------- Found Controller Functionality ------------------------------------ */
 
