@@ -17,6 +17,7 @@ public class FoundDetails extends AppCompatActivity {
 
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                FoundMap.setIsLost(false);
                 Intent i = new Intent(getBaseContext(), FoundMap.class);
                 startActivity(i);
                 finish();

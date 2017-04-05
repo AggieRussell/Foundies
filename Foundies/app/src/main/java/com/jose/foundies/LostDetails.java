@@ -17,6 +17,7 @@ public class LostDetails extends AppCompatActivity {
 
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                FoundMap.setIsLost(true);
                 Intent i = new Intent(getBaseContext(), FoundMap.class);
                 startActivity(i);
                 finish();
