@@ -44,7 +44,7 @@ public class UserModel {
     //Creates a json object to add user to the mongo database
     public String jsonUserPost(Contact c){
         String jsonPost  = "{ \"user\": { \"_id\": \"" + uniqueId() + "\", \"username\":\"" + c.getEmail() + "\", \"first_name\":\"" + c.getFname() + "\", \"last_name\":\"" + c.getLname()
-                + "\", \"password\":\"" + c.getPass() + "\" } }";
+               + "\", \"password\":\"" + c.getPass() + "\" } }";
         return jsonPost;
     }
 
@@ -63,7 +63,6 @@ public class UserModel {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
                     String strResponseBody = response.body().string();
-                    System.out.println(strResponseBody);
                     return parseJSONuser(strResponseBody);
                 }
             } catch (IOException e) {
@@ -98,9 +97,10 @@ public class UserModel {
     }
 
     //Added user to database
-    public void postToAPI(String jsonPost){
+    public void postToAPI(Contact contact){
 
         final HerokuService service = Utility.connectAPI();
+        String jsonPost = jsonUserPost(contact);
 
         //Used for connecting to the network so that Post can go through
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -145,4 +145,6 @@ public class UserModel {
             }
         }
     }
+
+
 }
