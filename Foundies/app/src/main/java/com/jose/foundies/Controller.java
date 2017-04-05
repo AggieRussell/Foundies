@@ -99,6 +99,7 @@ public class Controller extends Application {
     }
 
     public void sendSelections(String category, String subcategory) {
+        out.println("SENT SELECTIONS TO QUESTION MODEL");
         qm.setSelections(category, subcategory);
     }
 

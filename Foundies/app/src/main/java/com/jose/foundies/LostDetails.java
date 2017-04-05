@@ -5,11 +5,17 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static java.lang.System.out;
 
 public class LostDetails extends Activity {
 
@@ -30,6 +36,8 @@ public class LostDetails extends Activity {
         choices = controller.getChoices();
 
         linearLayout = (LinearLayout) findViewById(R.id.lostDetailsLinearLayout);
+
+        out.println("MADE IT TO LOST DETAILS");
 
         // create the XML objects for each question
         displayQuestions();
@@ -62,11 +70,41 @@ public class LostDetails extends Activity {
     }
 
     protected void createDrop(int i) {
-
+        LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.HORIZONTAL);
+        TextView t = new TextView(this);
+        t.setText(names.get(i));
+        t.setPadding(convertToDps(10), convertToDps(5), convertToDps(10), convertToDps(5));
+        ll.addView(t);
+        ArrayList<String> c = choices.get(i);
+        Spinner s = new Spinner(this);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, c);
+        s.setAdapter(adapter);
+        ll.addView(s);
+        questions.add(s);
+        linearLayout.addView(ll);
     }
 
     protected void createRadio(int i) {
-        //RadioGroup rg = new RadioGroup();
+        RadioGroup rg = new RadioGroup(this);
+        rg.setPadding(convertToDps(10), convertToDps(5), convertToDps(10), convertToDps(5));
+        rg.setOrientation(LinearLayout.HORIZONTAL);
+        TextView t = new TextView(this);
+        t.setText(names.get(i)+ ":  ");
+        rg.addView(t);
+        ArrayList<String> c = choices.get(i);
+        for (int j=0; j<c.size(); ++j) {
+            RadioButton rb = new RadioButton(this);
+            rb.setText(c.get(j).replaceAll("_", " "));
+            rg.addView(rb);
+        }
+        questions.add(rg);
+        linearLayout.addView(rg);
+    }
 
+    protected int convertToDps(int x) {
+        final float scale = getResources().getDisplayMetrics().density;
+        int padding_in_px = (int) (x * scale + 0.5f);
+        return padding_in_px;
     }
 }

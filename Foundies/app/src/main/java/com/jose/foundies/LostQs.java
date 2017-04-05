@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static java.lang.System.out;
+
 public class LostQs extends Activity {
 
     String cat;
@@ -32,8 +34,7 @@ public class LostQs extends Activity {
         ArrayList<String> categories = controller.getCategories();
         // set categories in question 1
         if (categories != null) {
-            String[] c = categories.toArray(new String[categories.size()]);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, c);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categories);
             spinnerCategory.setAdapter(adapter);
         }
         // find which category was selected
