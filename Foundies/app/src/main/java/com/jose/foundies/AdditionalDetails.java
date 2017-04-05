@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import static java.lang.System.out;
 
-public class LostDetails extends Activity {
+public class AdditionalDetails extends Activity {
 
     ArrayList<String> kinds;
     ArrayList<String> names;
@@ -28,23 +28,30 @@ public class LostDetails extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lost_details);
+        setContentView(R.layout.activity_additional_details);
 
         final Controller controller = (Controller) getApplicationContext();
         kinds = controller.getKinds();
         names = controller.getNames();
         choices = controller.getChoices();
 
-        linearLayout = (LinearLayout) findViewById(R.id.lostDetailsLinearLayout);
-
-        out.println("MADE IT TO LOST DETAILS");
+        linearLayout = (LinearLayout) findViewById(R.id.AddionalDetailsLinearLayout);
 
         // create the XML objects for each question
         displayQuestions();
 
-        final Button next = (Button) findViewById(R.id.lost_button);
+        final Button next = (Button) findViewById(R.id.button);
+        final Button back = (Button) findViewById(R.id.backButton);
 
         next.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent i = new Intent(getBaseContext(), FoundMap.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent i = new Intent(getBaseContext(), FoundMap.class);
                 startActivity(i);
@@ -104,7 +111,6 @@ public class LostDetails extends Activity {
 
     protected int convertToDps(int x) {
         final float scale = getResources().getDisplayMetrics().density;
-        int padding_in_px = (int) (x * scale + 0.5f);
-        return padding_in_px;
+        return (int) (x * scale + 0.5f);
     }
 }

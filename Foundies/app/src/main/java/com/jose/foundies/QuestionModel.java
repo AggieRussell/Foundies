@@ -142,4 +142,12 @@ public class QuestionModel {
         selectedCategory = category;
         selectedSubcategory = subcategory;
     }
+
+    public void setCategory(String c) {
+        selectedCategory = c;
+    }
+
+    public void setSubcategory(String s) {
+        selectedSubcategory = s;
+    }
 }

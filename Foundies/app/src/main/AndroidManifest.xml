@@ -34,19 +34,13 @@
         </activity>
         <activity android:name=".Register">
         </activity>
-        <activity android:name=".FoundQs">
+        <activity android:name=".AdditionalDetails">
         </activity>
-        <activity android:name=".LostQs">
+        <activity android:name=".Categories">
         </activity>
-        <activity android:name=".LostDetails">
-
+        <activity android:name=".SubCategories">
         </activity>
-        <activity android:name=".FoundDetails">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+        <activity android:name=".Qs">
         </activity>
 
         <!--
@@ -64,11 +58,6 @@
         <activity
             android:name=".FoundMap"
             android:label="@string/title_activity_found_map">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

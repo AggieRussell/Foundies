@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import static java.lang.System.out;
 
-public class LostQs extends Activity {
+public class Qs extends Activity {
 
     String cat;
     String subcat;
@@ -25,11 +25,11 @@ public class LostQs extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lost_qs);
+        setContentView(R.layout.activity_qs);
 
         final Controller controller = (Controller) getApplicationContext();
 
-        Spinner spinnerCategory = (Spinner) findViewById(R.id.lostCategory);
+        Spinner spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         spinnerCategory.setBackgroundColor(Color.DKGRAY);
         ArrayList<String> categories = controller.getCategories();
         // set categories in question 1
@@ -56,7 +56,7 @@ public class LostQs extends Activity {
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 controller.sendSelections(cat,subcat);
-                Intent i = new Intent(getBaseContext(), LostDetails.class);
+                Intent i = new Intent(getBaseContext(), AdditionalDetails.class);
                 startActivity(i);
                 finish();
             }
@@ -66,7 +66,7 @@ public class LostQs extends Activity {
 
     private void setSubcategories(ArrayList<String> subcategories) {
         // set subcategories based on choice in question 1
-        Spinner spinnerSubcategory = (Spinner) findViewById(R.id.lostSubcategories);
+        Spinner spinnerSubcategory = (Spinner) findViewById(R.id.spinnerSubcategory);
         spinnerSubcategory.setBackgroundColor(Color.DKGRAY);
         if (subcategories != null) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, subcategories);

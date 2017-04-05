@@ -12,6 +12,7 @@ public class Controller extends Application {
     LostModel lm;
     FoundModel fm;
     QuestionModel qm;
+    boolean queryType; // true is lost item; false is found item
 
     public Controller(){
         um = new UserModel();
@@ -20,8 +21,17 @@ public class Controller extends Application {
         qm = new QuestionModel();
         // pre-load all question combinations from database
         qm.getQuestions();
+        queryType=false;
     }
 
+    /* -------------------------------------- Define Query Type ------------------------------------------- */
+    public void setQueryTypeLost() {
+        queryType = true;
+    }
+
+    public void setQueryTypeFound() {
+        queryType = false;
+    }
 
     /* --------------------------------- User Controller Functionality ------------------------------------ */
     
@@ -101,6 +111,14 @@ public class Controller extends Application {
     public void sendSelections(String category, String subcategory) {
         out.println("SENT SELECTIONS TO QUESTION MODEL");
         qm.setSelections(category, subcategory);
+    }
+
+    public void setCategory(String c) {
+        qm.setCategory(c);
+    }
+
+    public void setSubcategory(String s) {
+        qm.setSubcategory(s);
     }
 
     public ArrayList<String> getKinds() {
