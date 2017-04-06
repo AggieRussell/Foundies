@@ -25,6 +25,9 @@ public interface HerokuService {
     @GET("/users")
     Call<ResponseBody> getUsers();
 
+    @GET("/questions")
+    Call<ResponseBody> getQuestions();
+
     @GET("/user/{username}")
     Call<ResponseBody> getUsersByUsername(@Path("username") String username);
 

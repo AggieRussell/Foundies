@@ -1,5 +1,6 @@
 package com.jose.foundies;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
@@ -11,15 +12,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Login extends AppCompatActivity {
+public class Login extends Activity {
     DatabaseHelper helper = new DatabaseHelper(this);
-    Controller controller = new Controller();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
+        final Controller controller = (Controller) getApplicationContext();
 
         final Button login = (Button) findViewById(R.id.login_button);
         final Button view = (Button) findViewById(R.id.view_button);

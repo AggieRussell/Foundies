@@ -3,6 +3,8 @@ package com.jose.foundies;
 import android.app.Application;
 import android.util.Base64;
 import android.util.Log;
+import static java.lang.System.out;
+import java.util.ArrayList;
 import android.widget.EditText;
 
 import java.io.IOException;
@@ -28,11 +30,30 @@ public class Controller extends Application {
     private String SHAHash;
     public static int NO_OPTIONS=0;
 
-    UserModel um = new UserModel();
-    LostModel lm = new LostModel();
-    FoundModel fm = new FoundModel();
+    UserModel um;
+    LostModel lm;
+    FoundModel fm;
+    QuestionModel qm;
+    boolean queryType; // true is lost item; false is found item
 
+    public Controller(){
+        um = new UserModel();
+        lm = new LostModel();
+        fm = new FoundModel();
+        qm = new QuestionModel();
+        // pre-load all question combinations from database
+        qm.getQuestions();
+        queryType=false;
+    }
 
+    /* -------------------------------------- Define Query Type ------------------------------------------- */
+    public void setQueryTypeLost() {
+        queryType = true;
+    }
+
+    public void setQueryTypeFound() {
+        queryType = false;
+    }
 
     /* --------------------------------- User Controller Functionality ------------------------------------ */
     
@@ -78,6 +99,7 @@ public class Controller extends Application {
         }
     }
 
+
     public String checkCredentials(EditText email, EditText password){
         String emailstr = email.getText().toString();
         String passstr = password.getText().toString();
@@ -102,7 +124,6 @@ public class Controller extends Application {
 
     private static String convertToHex(byte[] data) throws java.io.IOException
     {
-
 
         StringBuffer sb = new StringBuffer();
         String hex=null;
@@ -140,6 +161,43 @@ public class Controller extends Application {
         return SHAHash.trim();
 
     }
+
+
+    /* --------------------------------- Question Controller Functionality --------------------------------- */
+
+    public ArrayList<String> getCategories() {
+        return qm.getCategories();
+    }
+
+    public ArrayList<String> getSubcategories(String category) {
+        return qm.getSubcategories(category);
+    }
+
+    public void sendSelections(String category, String subcategory) {
+        out.println("SENT SELECTIONS TO QUESTION MODEL");
+        qm.setSelections(category, subcategory);
+    }
+
+    public void setCategory(String c) {
+        qm.setCategory(c);
+    }
+
+    public void setSubcategory(String s) {
+        qm.setSubcategory(s);
+    }
+
+    public ArrayList<String> getKinds() {
+        return qm.getKinds();
+    }
+
+    public ArrayList<String> getNames() {
+        return qm.getNames();
+    }
+
+    public ArrayList<ArrayList<String>> getChoices() {
+        return qm.getChoices();
+    }
+
 
     /* --------------------------------- Found Controller Functionality ------------------------------------ */
 

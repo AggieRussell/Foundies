@@ -8,11 +8,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.jose.foundies.LostQs"
+    tools:context="com.jose.foundies.Qs"
     android:background="#e4e5e7">
 
     <LinearLayout
-        android:id="@+id/linearLayoutLostQs"
+        android:id="@+id/linearLayoutQs"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/lostCategory"
+            android:id="@+id/spinnerCategory"
             android:spinnerMode="dropdown"
             android:layout_margin="30dp"
             android:background="#999999"
@@ -48,29 +48,11 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/lostSubcategories"
+            android:id="@+id/spinnerSubcategory"
             android:spinnerMode="dropdown"
             android:layout_margin="30dp"
             android:background="#999999"
             android:popupBackground="#999999" />
-
-        <TextView
-            android:text="Quesition 3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView5"
-            android:textColor="#000080"
-            android:layout_marginLeft="30dp"
-            android:visibility="gone"/>
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:id="@+id/lostq3"
-            android:layout_margin="30dp"
-            android:popupBackground="#FFFFFF"
-            android:background="#999999"
-            android:visibility="gone"/>
 
         <Button
             android:text="Next"

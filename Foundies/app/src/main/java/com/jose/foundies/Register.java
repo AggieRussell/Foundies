@@ -1,5 +1,6 @@
 package com.jose.foundies;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.annotation.BoolRes;
@@ -10,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Register extends AppCompatActivity {
+public class Register extends Activity {
     DatabaseHelper helper = new DatabaseHelper(this);
 
     Controller controller = (Controller) getApplicationContext();
@@ -20,6 +21,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        final Controller controller = (Controller) getApplicationContext();
 
         final Button register = (Button) findViewById(R.id.register_button);
         final EditText fname = (EditText) findViewById(R.id.firstname_field);
