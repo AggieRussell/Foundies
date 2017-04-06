@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="Search for item"
+        android:textColor = "#FFFFFF"
         android:ems="10"
         android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
         android:id="@+id/address" />

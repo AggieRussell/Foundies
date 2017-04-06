@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -12,7 +13,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -21,21 +25,76 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class FoundMap extends FragmentActivity implements OnMapReadyCallback {
+public class FoundMap extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
     private GoogleMap mMap;
     private PlaceAutocompleteFragment autocompleteFragment;
+    private GoogleApiClient mGoogleApiClient;
+    private Location myLocation;
+
+    public static boolean isLost() {
+        return isLost;
+    }
+
+    public static void setIsLost(boolean isLost) {
+        FoundMap.isLost = isLost;
+    }
+
+    private static boolean isLost = false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            myLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+        } else {
+            //TODO: Need to figure out how to ask user for permission
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found_map);
+        //final Controller controller = (Controller) getApplicationContext();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -45,56 +104,132 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-        } else {
-            //TODO: Need to figure out how to ask user for permission
-        }
 
-        autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.address);
-
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.i("FoundMap", "Place: " + place.getName());
-
-                LatLng locationText = place.getLatLng();
-                List<Address> addressList = null;
-                Address address = null;
-                if(locationText != null && !locationText.equals("")){
-                    try {
-                        LatLng dropPin = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
-                        mMap.addMarker(new MarkerOptions().position(dropPin).title(place.getName().toString()));
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dropPin, 15));
-                    }
-                    catch(NullPointerException e){
-                /*
-                    If there is no data in the address string.
-                 */
-                        Context context = getApplicationContext();
-                        CharSequence text = "No Results!";
-                        int duration = Toast.LENGTH_SHORT;
+            public boolean onMarkerClick(Marker marker) {
 
                 /*
-                    Print out "No results!" to device
-                 */
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                        e.printStackTrace();
-                        System.out.println("No results");
-                    }
-                }
-            }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i("FoundMap", "An error occurred: " + status);
+                   Print out "No results!" to device if no address was found
+                */
+                Toast toast = Toast.makeText(getApplicationContext(), "Marker Clicked!", Toast.LENGTH_SHORT);
+                toast.show();
+                return false;
             }
         });
 
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+
+        } else {
+            //TODO: Need to figure out how to ask user for permission
+        }
+        autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.address);
+
+        if(isLost) {
+
+            autocompleteFragment.setHint("Search Location");
+            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(Place place) {
+                    // TODO: Get info about the selected place.
+                    Log.i("FoundMap", "Place: " + place.getName());
+
+                    LatLng locationText = place.getLatLng();
+                    List<Address> addressList = null;
+                    Address address = null;
+                    Location center = new Location("");
+                    if(locationText != null && !locationText.equals("")){
+                        try {
+                            LatLng dropPin = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
+                            center.setLatitude(dropPin.latitude);
+                            center.setLongitude(dropPin.longitude);
+                            lostItems(center);
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dropPin, 13));
+                        }
+                        catch(NullPointerException e){
+
+                            /*
+                                Print out "No results!" to device if no address was found
+                             */
+                            Toast toast = Toast.makeText(getApplicationContext(), "No Results!", Toast.LENGTH_SHORT);
+                            toast.show();
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(Status status) {
+                    // TODO: Handle the error.
+                    Log.i("FoundMap", "An error occurred: " + status);
+                }
+            });
+        }
+        else{
+
+            autocompleteFragment.setHint("Select Location");
+            autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(Place place) {
+                    // TODO: Get info about the selected place.
+                    Log.i("FoundMap", "Place: " + place.getName());
+
+                    LatLng locationText = place.getLatLng();
+                    List<Address> addressList = null;
+                    Address address = null;
+                    if(locationText != null && !locationText.equals("")){
+                        try {
+                            LatLng dropPin = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
+                            mMap.addMarker(new MarkerOptions().position(dropPin).title(place.getName().toString()));
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dropPin, 15));
+                        }
+                        catch(NullPointerException e){
+                            /*
+                                Print out "No results!" to device if no address was found
+                             */
+                            Toast toast = Toast.makeText(getApplicationContext(), "No Results!", Toast.LENGTH_SHORT);
+                            toast.show();
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(Status status) {
+                    // TODO: Handle the error.
+                    Log.i("FoundMap", "An error occurred: " + status);
+                }
+            });
+        }
+
+
+
+
+
+    }
+    public void lostItems(Location loc)
+    {
+        ArrayList<FoundItem> itemsFound = FoundModel.getFoundItems();
+        for(FoundItem item : itemsFound){
+            LatLng dropPin = new LatLng(Double.parseDouble(item.getLat()), Double.parseDouble(item.getLng()));
+            Location location = new Location("");
+            location.setLatitude(dropPin.latitude);
+            location.setLongitude(dropPin.longitude);
+            double distanceBetween = loc.distanceTo(location) / 1000 * 0.62137;
+            if(distanceBetween < 500) {
+                mMap.addMarker(new MarkerOptions().position(dropPin).title(Double.toString(distanceBetween)));
+            }
+            if(myLocation != null) {
+                LatLng currentLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+            }
+            else{
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dropPin, 1));
+            }
+
+        }
     }
 }
