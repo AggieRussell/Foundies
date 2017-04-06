@@ -55,6 +55,8 @@ public class Controller extends Application {
         queryType = false;
     }
 
+    public boolean getQueryType() { return queryType; }
+
     /* --------------------------------- User Controller Functionality ------------------------------------ */
     
     public String createUser(String first_name, String last_name, String email, String password){
@@ -184,6 +186,14 @@ public class Controller extends Application {
 
     public void setSubcategory(String s) {
         qm.setSubcategory(s);
+    }
+
+    public void setAnswers(ArrayList<String> answers) {
+        qm.setAnswers(answers);
+        out.println("ANSWERS: ");
+        for (int i=0; i<answers.size(); ++i){
+            out.println(answers.get(i));
+        }
     }
 
     public ArrayList<String> getKinds() {
