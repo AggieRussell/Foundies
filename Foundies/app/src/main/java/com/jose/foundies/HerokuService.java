@@ -17,6 +17,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface HerokuService {
     @GET("/hello")
@@ -27,6 +28,9 @@ public interface HerokuService {
 
     @GET("/questions")
     Call<ResponseBody> getQuestions();
+
+    @GET("/questions/qs?")
+    Call<ResponseBody> getQuestionsWithQs(@Query("q1") String q1, @Query("q2") String q2);
 
     @GET("/user/{username}")
     Call<ResponseBody> getUsersByUsername(@Path("username") String username);

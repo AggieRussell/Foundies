@@ -51,6 +51,30 @@ public class QuestionModel {
         }
     }
 
+    public void getQuestionsWithQs(String q1, String q2) {
+
+        final HerokuService service = Utility.connectAPI();
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Call<ResponseBody> call = service.getQuestionsWithQs(q1, q2);
+            try {
+                Response<ResponseBody> response = call.execute();
+                if (response.isSuccessful()) {
+                    strResponseBody = response.body().string();
+                    parseJSON();
+                    out.println("RESPONSE FROM SERVER: ");
+                    out.println(strResponseBody);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void parseJSON() {
         out.println("Starting parse JSON...");
         questions.clear();
