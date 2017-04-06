@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class Register extends AppCompatActivity {
     DatabaseHelper helper = new DatabaseHelper(this);
 
-    Controller controller = new Controller();
+    Controller controller = (Controller) getApplicationContext();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
