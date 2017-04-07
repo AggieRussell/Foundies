@@ -14,8 +14,6 @@ import android.widget.Toast;
 public class Register extends Activity {
     DatabaseHelper helper = new DatabaseHelper(this);
 
-    Controller controller = (Controller) getApplicationContext();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
