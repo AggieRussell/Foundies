@@ -57,7 +57,9 @@
 
         <activity
             android:name=".FoundMap"
-            android:label="@string/title_activity_found_map">
+            android:label="@string/title_activity_found_map"
+            android:screenOrientation="portrait">
+
         </activity>
     </application>
 

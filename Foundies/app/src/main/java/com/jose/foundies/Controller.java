@@ -34,6 +34,7 @@ public class Controller extends Application {
     LostModel lm;
     FoundModel fm;
     QuestionModel qm;
+
     boolean queryType; // true is lost item; false is found item
 
     public Controller(){

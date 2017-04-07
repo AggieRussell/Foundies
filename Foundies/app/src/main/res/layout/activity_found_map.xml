@@ -5,24 +5,88 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Search for item"
-        android:textColor = "#FFFFFF"
-        android:ems="10"
-        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-        android:id="@+id/address" />
-
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/address"
-        tools:context="jdev.maptest.MapsActivity" />
+        android:layout_marginTop="50dp"
+        tools:context="com.jose.foundies.FoundMap" />
+
+    <RelativeLayout xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+
+            android:hint="Search for item"
+            android:textColor = "#FFFFFF"
+            android:ems="10"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:id="@+id/address" />
+        <TextView
+            android:id="@+id/changeRadius"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/address"
+            android:gravity="center_vertical"
+            android:background="#444444"
+            android:textSize="18sp"
+            android:text= "Change Radius" />
+
+        <RelativeLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="65dp"
+                android:layout_marginStart="120dp"
+             />
+            <TextView
+                android:id="@+id/mileValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="75dp"
+                android:layout_marginTop="67dp"
+                android:textSize="18sp"
+                android:text="10 mi" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="2dp"
+        android:text="Back" />
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="2dp"
+        android:text="Next" />
+
 
 </RelativeLayout>
 

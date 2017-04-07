@@ -1,7 +1,9 @@
 package com.jose.foundies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -10,7 +12,10 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,6 +44,11 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     private PlaceAutocompleteFragment autocompleteFragment;
     private GoogleApiClient mGoogleApiClient;
     private Location myLocation;
+    private int radiusValue = 10;
+    private SeekBar radius;
+    private TextView radiusText;
+    private LatLng centerLatLng;
+    Location center = new Location("");
 
     public static boolean isLost() {
         return isLost;
@@ -48,7 +58,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
         FoundMap.isLost = isLost;
     }
 
-    private static boolean isLost = false;
+    private static boolean isLost = true;
 
     @Override
     protected void onStart() {
@@ -89,7 +99,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found_map);
-        //final Controller controller = (Controller) getApplicationContext();
+        final Controller controller = (Controller) getApplicationContext();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -112,9 +122,17 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 /*
                    Print out "No results!" to device if no address was found
                 */
-                Toast toast = Toast.makeText(getApplicationContext(), "Marker Clicked!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Marker Clicked!", Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+            }
+        });
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Window Clicked!", Toast.LENGTH_SHORT);
                 toast.show();
-                return false;
             }
         });
 
@@ -127,8 +145,56 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
         }
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.address);
+        autocompleteFragment.getView().setBackgroundColor(Color.DKGRAY);
+        radius = (SeekBar) findViewById(R.id.seekBar);
+        radius.setProgress(100);
+        radiusText = (TextView) findViewById(R.id.changeRadius);
+        final TextView mileValue = (TextView) findViewById(R.id.mileValue);
+        radius.setVisibility(View.GONE);
+        radiusText.setVisibility(View.GONE);
+        mileValue.setVisibility(View.GONE);
+
+        Button backButton = (Button) findViewById(R.id.backButton);
+        Button nextButton = (Button) findViewById(R.id.nextButton);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "TODO: Confirmation Page", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getBaseContext(), AdditionalDetails.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         if(isLost) {
+
+            radius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                    radiusValue = i / 10;
+                    String text = radiusValue + " mi";
+                    mileValue.setText(text);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    mMap.clear();
+                    lostItems(center);
+                    //Toast.makeText(getApplicationContext(), String.valueOf(radiusValue),Toast.LENGTH_LONG).show();
+                }
+            });
 
             autocompleteFragment.setHint("Search Location");
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -137,17 +203,20 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                     // TODO: Get info about the selected place.
                     Log.i("FoundMap", "Place: " + place.getName());
 
+                    radius.setVisibility(View.VISIBLE);
+                    radiusText.setVisibility(View.VISIBLE);
+                    mileValue.setVisibility(View.VISIBLE);
+
                     LatLng locationText = place.getLatLng();
                     List<Address> addressList = null;
                     Address address = null;
-                    Location center = new Location("");
                     if(locationText != null && !locationText.equals("")){
                         try {
-                            LatLng dropPin = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
-                            center.setLatitude(dropPin.latitude);
-                            center.setLongitude(dropPin.longitude);
+                            centerLatLng = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
+                            center.setLatitude(centerLatLng.latitude);
+                            center.setLongitude(centerLatLng.longitude);
                             lostItems(center);
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dropPin, 13));
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerLatLng, 13));
                         }
                         catch(NullPointerException e){
 
@@ -169,7 +238,6 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
             });
         }
         else{
-
             autocompleteFragment.setHint("Select Location");
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
@@ -219,16 +287,16 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
             location.setLatitude(dropPin.latitude);
             location.setLongitude(dropPin.longitude);
             double distanceBetween = loc.distanceTo(location) / 1000 * 0.62137;
-            if(distanceBetween < 500) {
+            if(distanceBetween < radiusValue) {
                 mMap.addMarker(new MarkerOptions().position(dropPin).title(Double.toString(distanceBetween)));
             }
-            if(myLocation != null) {
+            /*if(myLocation != null) {
                 LatLng currentLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 10));
             }
             else{
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dropPin, 1));
-            }
+            }*/
 
         }
     }
