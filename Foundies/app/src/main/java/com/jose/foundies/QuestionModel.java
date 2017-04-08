@@ -31,6 +31,8 @@ public class QuestionModel {
     private Double latitude = 0.0;
     private Double longitude = 0.0;
 
+    public ArrayList<Question> getQs(){ return questions; }
+
     public void getQuestions() {
 
         final HerokuService service = Utility.connectAPI();
@@ -145,6 +147,8 @@ public class QuestionModel {
     public double getLatitude() { return latitude; }
 
     public double getLongitude() { return longitude; }
+
+    public ArrayList<String> getSelectedAnswers() { return selectedAnswers; }
 
     public void setSelections(String category, String subcategory) {
         selectedCategory = category;

@@ -48,6 +48,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     private SeekBar radius;
     private TextView radiusText;
     private LatLng centerLatLng;
+    Place chosenLocation;
     Location center = new Location("");
 
     public static boolean isLost() {
@@ -58,7 +59,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
         FoundMap.isLost = isLost;
     }
 
-    private static boolean isLost = true;
+    private static boolean isLost = false;
 
     @Override
     protected void onStart() {
@@ -99,7 +100,6 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found_map);
-        final Controller controller = (Controller) getApplicationContext();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -113,12 +113,13 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
+        final Controller controller = (Controller) getApplicationContext();
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-
                 /*
                    Print out "No results!" to device if no address was found
                 */
@@ -157,13 +158,6 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
         Button backButton = (Button) findViewById(R.id.backButton);
         Button nextButton = (Button) findViewById(R.id.nextButton);
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "TODO: Confirmation Page", Toast.LENGTH_LONG).show();
-            }
-        });
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,10 +191,14 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
             });
 
             autocompleteFragment.setHint("Search Location");
+
+
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(Place place) {
                     // TODO: Get info about the selected place.
+                    mMap.clear();
+                    chosenLocation = place;
                     Log.i("FoundMap", "Place: " + place.getName());
 
                     radius.setVisibility(View.VISIBLE);
@@ -236,15 +234,38 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                     Log.i("FoundMap", "An error occurred: " + status);
                 }
             });
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "TODO: Decide what's after lost map", Toast.LENGTH_SHORT);
+                        toast.show();
+                }
+            });
         }
         else{
+
+            nextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(chosenLocation != null) {
+                        Intent i = new Intent(getBaseContext(), FoundConfirmation.class);
+                        startActivity(i);
+                        finish();
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(), "Select Location", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
+            });
+
             autocompleteFragment.setHint("Select Location");
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(Place place) {
                     // TODO: Get info about the selected place.
                     Log.i("FoundMap", "Place: " + place.getName());
-
+                    chosenLocation = place;
                     LatLng locationText = place.getLatLng();
                     List<Address> addressList = null;
                     Address address = null;
@@ -252,6 +273,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                         try {
                             LatLng dropPin = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
                             mMap.addMarker(new MarkerOptions().position(dropPin).title(place.getName().toString()));
+                            controller.setLatLong(dropPin.latitude, dropPin.longitude);
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dropPin, 15));
                         }
                         catch(NullPointerException e){

@@ -10,13 +10,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name="com.jose.foundies.Controller"
+        android:name=".Controller"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-
         <activity android:name=".LoadScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,22 +25,15 @@
         </activity>
         <activity
             android:name=".Login"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".LostorFound"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".Register">
-        </activity>
-        <activity android:name=".AdditionalDetails">
-        </activity>
-        <activity android:name=".Categories">
-        </activity>
-        <activity android:name=".SubCategories">
-        </activity>
-        <activity android:name=".Qs">
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Register"></activity>
+        <activity android:name=".AdditionalDetails"></activity>
+        <activity android:name=".Categories"></activity>
+        <activity android:name=".SubCategories"></activity>
+        <activity android:name=".Qs"></activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -58,9 +50,11 @@
         <activity
             android:name=".FoundMap"
             android:label="@string/title_activity_found_map"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".FoundConfirmation"
+            android:label="@string/title_activity_found_confirmation"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 
 </manifest>

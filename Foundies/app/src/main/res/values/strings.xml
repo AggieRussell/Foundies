@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Foundies</string>
     <string name="title_activity_found_map">FoundMap</string>
+    <string name="title_activity_found_confirmation">FoundConfirmation</string>
 </resources>

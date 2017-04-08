@@ -50,10 +50,12 @@ public class Controller extends Application {
     /* -------------------------------------- Define Query Type ------------------------------------------- */
     public void setQueryTypeLost() {
         queryType = true;
+        FoundMap.setIsLost(true);
     }
 
     public void setQueryTypeFound() {
         queryType = false;
+        FoundMap.setIsLost(false);
     }
 
     public boolean getQueryType() { return queryType; }
@@ -172,6 +174,8 @@ public class Controller extends Application {
         return qm.getCategories();
     }
 
+    public ArrayList<Question> getQuestions() { return qm.getQs(); }
+
     public ArrayList<String> getSubcategories(String category) {
         return qm.getSubcategories(category);
     }
@@ -197,6 +201,10 @@ public class Controller extends Application {
         }
     }
 
+    public void setLatLong(Double lat, Double lng){
+        qm.setLatLong(lat, lng);
+    }
+
     public ArrayList<String> getKinds() {
         return qm.getKinds();
     }
@@ -208,6 +216,12 @@ public class Controller extends Application {
     public ArrayList<ArrayList<String>> getChoices() {
         return qm.getChoices();
     }
+
+    public Double getLatitude(){ return qm.getLatitude(); }
+
+    public Double getLongitude(){ return qm.getLongitude(); }
+
+    public ArrayList<String> getAnswers(){ return qm.getSelectedAnswers(); }
 
 
     /* --------------------------------- Found Controller Functionality ------------------------------------ */
