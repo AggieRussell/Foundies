@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -46,7 +47,7 @@ public class AdditionalDetails extends Activity {
 
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.setAnswers(getAnswers());
+                controller.setAnswers(getAnswers(), getExtraDetails());
                 Intent i = new Intent(getBaseContext(), FoundMap.class);
                 startActivity(i);
                 finish();
@@ -136,5 +137,10 @@ public class AdditionalDetails extends Activity {
             }
         }
         return answers;
+    }
+
+    protected String getExtraDetails() {
+        EditText extraDetails = (EditText) findViewById(R.id.extraDetails);
+        return extraDetails.getText().toString();
     }
 }

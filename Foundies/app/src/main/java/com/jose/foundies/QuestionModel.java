@@ -24,12 +24,6 @@ public class QuestionModel {
 
     private String strResponseBody = "";
     private ArrayList<Question> questions = new ArrayList<Question>();
-    private String selectedCategory;
-    private String selectedSubcategory;
-    private ArrayList<String> selectedAnswers = new ArrayList<String>();
-    private String extraDetails;
-    private Double latitude = 0.0;
-    private Double longitude = 0.0;
 
     public ArrayList<Question> getQs(){ return questions; }
 
@@ -111,62 +105,37 @@ public class QuestionModel {
         return q2s;
     }
 
-    public ArrayList<String> getKinds() {
+    public ArrayList<String> getKinds(String category, String subcategory) {
         ArrayList<String> q3kinds = new ArrayList<String>();
         for (int i=0; i<questions.size(); ++i) {
             Question curr = questions.get(i);
-            if (curr.getQ1().equals(selectedCategory) && curr.getQ2().equals(selectedSubcategory)) {
+            if (curr.getQ1().equals(category) && curr.getQ2().equals(subcategory)) {
                 q3kinds.add(curr.getKind());
             }
         }
         return q3kinds;
     }
 
-    public ArrayList<String> getNames() {
+    public ArrayList<String> getNames(String category, String subcategory) {
         ArrayList<String> q3names = new ArrayList<String>();
         for (int i=0; i<questions.size(); ++i) {
             Question curr = questions.get(i);
-            if (curr.getQ1().equals(selectedCategory) && curr.getQ2().equals(selectedSubcategory)) {
+            if (curr.getQ1().equals(category) && curr.getQ2().equals(subcategory)) {
                 q3names.add(curr.getName());
             }
         }
         return q3names;
     }
 
-    public ArrayList<ArrayList<String>> getChoices() {
+    public ArrayList<ArrayList<String>> getChoices(String category, String subcategory) {
         ArrayList<ArrayList<String>> q3choices = new ArrayList<ArrayList<String>>();
         for (int i=0; i<questions.size(); ++i) {
             Question curr = questions.get(i);
-            if (curr.getQ1().equals(selectedCategory) && curr.getQ2().equals(selectedSubcategory)) {
+            if (curr.getQ1().equals(category) && curr.getQ2().equals(subcategory)) {
                 q3choices.add(curr.getChoices());
             }
         }
         return q3choices;
     }
 
-    public double getLatitude() { return latitude; }
-
-    public double getLongitude() { return longitude; }
-
-    public ArrayList<String> getSelectedAnswers() { return selectedAnswers; }
-
-    public void setSelections(String category, String subcategory) {
-        selectedCategory = category;
-        selectedSubcategory = subcategory;
-    }
-
-    public void setCategory(String c) {
-        selectedCategory = c;
-    }
-
-    public void setSubcategory(String s) {
-        selectedSubcategory = s;
-    }
-
-    public void setAnswers(ArrayList<String> answers) { selectedAnswers = answers; }
-
-    public void setLatLong(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
 }
