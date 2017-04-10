@@ -26,6 +26,12 @@ public class QuestionModel {
     private ArrayList<Question> questions = new ArrayList<Question>();
     private String selectedCategory;
     private String selectedSubcategory;
+    private ArrayList<String> selectedAnswers = new ArrayList<String>();
+    private String extraDetails;
+    private Double latitude = 0.0;
+    private Double longitude = 0.0;
+
+    public ArrayList<Question> getQs(){ return questions; }
 
     public void getQuestions() {
 
@@ -162,6 +168,12 @@ public class QuestionModel {
         return q3choices;
     }
 
+    public double getLatitude() { return latitude; }
+
+    public double getLongitude() { return longitude; }
+
+    public ArrayList<String> getSelectedAnswers() { return selectedAnswers; }
+
     public void setSelections(String category, String subcategory) {
         selectedCategory = category;
         selectedSubcategory = subcategory;
@@ -173,5 +185,12 @@ public class QuestionModel {
 
     public void setSubcategory(String s) {
         selectedSubcategory = s;
+    }
+
+    public void setAnswers(ArrayList<String> answers) { selectedAnswers = answers; }
+
+    public void setLatLong(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }

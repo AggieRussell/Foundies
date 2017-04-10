@@ -31,6 +31,7 @@ public class AdditionalDetails extends Activity {
         setContentView(R.layout.activity_additional_details);
 
         final Controller controller = (Controller) getApplicationContext();
+
         kinds = controller.getKinds();
         names = controller.getNames();
         choices = controller.getChoices();
@@ -45,6 +46,7 @@ public class AdditionalDetails extends Activity {
 
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                controller.setAnswers(getAnswers());
                 Intent i = new Intent(getBaseContext(), FoundMap.class);
                 startActivity(i);
                 finish();
@@ -53,7 +55,7 @@ public class AdditionalDetails extends Activity {
 
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent i = new Intent(getBaseContext(), FoundMap.class);
+                Intent i = new Intent(getBaseContext(), Qs.class);
                 startActivity(i);
                 finish();
             }
@@ -112,5 +114,27 @@ public class AdditionalDetails extends Activity {
     protected int convertToDps(int x) {
         final float scale = getResources().getDisplayMetrics().density;
         return (int) (x * scale + 0.5f);
+    }
+
+    protected ArrayList<String> getAnswers() {
+        ArrayList<String> answers = new ArrayList<String>();
+        out.println("GET_SIMPLE_NAME:");
+        for (int i=0; i<questions.size(); ++i) {
+            switch (questions.get(i).getClass().getSimpleName()) {
+                case "Spinner" :
+                    Spinner spinner = (Spinner) questions.get(i);
+                    answers.add(spinner.getSelectedItem().toString());
+                    break;
+                case "RadioGroup" :
+                    RadioGroup radioGroup = (RadioGroup) questions.get(i);
+                    int radioButtonID = radioGroup.getCheckedRadioButtonId();
+                    RadioButton radioButton = (RadioButton) radioGroup.findViewById(radioButtonID);
+                    answers.add(radioButton.getText().toString());
+                    break;
+                default:
+                    break;
+            }
+        }
+        return answers;
     }
 }
