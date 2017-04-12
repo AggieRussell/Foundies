@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class FoundMap extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -105,6 +106,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+        mGoogleApiClient.connect();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -114,20 +116,13 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        if(myLocation != null) {
+            LatLng currentLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 10));
+        }
+
         mMap = googleMap;
         final Controller controller = (Controller) getApplicationContext();
-
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                /*
-                   Print out "No results!" to device if no address was found
-                */
-            Toast toast = Toast.makeText(getApplicationContext(), "Marker Clicked!", Toast.LENGTH_SHORT);
-            toast.show();
-            return false;
-            }
-        });
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -169,6 +164,18 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
 
         if(isLost) {
 
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    ItemDialog dialogBox = new ItemDialog();
+                    dialogBox.setContext(getApplicationContext());
+                    dialogBox.setAddress(chosenLocation.getAddress().toString());
+                    dialogBox.show(getFragmentManager(), "test");
+                    controller.setLatLong(marker.getPosition().latitude, marker.getPosition().longitude);
+                    return false;
+                }
+            });
+
             radius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -190,7 +197,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 }
             });
 
-            autocompleteFragment.setHint("Search Location");
+            autocompleteFragment.setHint("Select Location");
 
 
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -264,6 +271,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 @Override
                 public void onPlaceSelected(Place place) {
                     // TODO: Get info about the selected place.
+                    mMap.clear();
                     Log.i("FoundMap", "Place: " + place.getName());
                     chosenLocation = place;
                     LatLng locationText = place.getLatLng();
@@ -308,9 +316,20 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
             Location location = new Location("");
             location.setLatitude(dropPin.latitude);
             location.setLongitude(dropPin.longitude);
+            Geocoder geocoder;
+            List<Address> addresses = null;
+            geocoder = new Geocoder(this, Locale.getDefault());
+            try{
+                addresses = geocoder.getFromLocation(dropPin.latitude, dropPin.longitude, 1);
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
+
+
             double distanceBetween = loc.distanceTo(location) / 1000 * 0.62137;
             if(distanceBetween < radiusValue) {
-                mMap.addMarker(new MarkerOptions().position(dropPin).title(Double.toString(distanceBetween)));
+                mMap.addMarker(new MarkerOptions().position(dropPin).title(addresses.get(0).getFeatureName()));
             }
             /*if(myLocation != null) {
                 LatLng currentLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());

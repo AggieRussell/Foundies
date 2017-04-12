@@ -25,15 +25,15 @@
         </activity>
         <activity
             android:name=".Login"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LostorFound"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Register"></activity>
-        <activity android:name=".AdditionalDetails"></activity>
-        <activity android:name=".Categories"></activity>
-        <activity android:name=".SubCategories"></activity>
-        <activity android:name=".Qs"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Register" />
+        <activity android:name=".AdditionalDetails" />
+        <activity android:name=".Categories" />
+        <activity android:name=".SubCategories" />
+        <activity android:name=".Qs" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -50,10 +50,14 @@
         <activity
             android:name=".FoundMap"
             android:label="@string/title_activity_found_map"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".FoundConfirmation"
             android:label="@string/title_activity_found_confirmation"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".LostConfirmation"
+            android:label="@string/title_activity_lost_confirmation"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 
