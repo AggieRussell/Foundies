@@ -83,6 +83,7 @@ public class Login extends Activity {
                     if (check != null) {
                         Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
                     } else {
+                        controller.um.setUserID(email.getText().toString());
                         Intent i = new Intent(getBaseContext(), LostorFound.class);
                         startActivity(i);
                         finish();

@@ -30,6 +30,8 @@ public class Controller extends Application {
     private String SHAHash;
     public static int NO_OPTIONS=0;
 
+    //TODO: Set an item object
+
     UserModel um;
     LostModel lm;
     FoundModel fm;

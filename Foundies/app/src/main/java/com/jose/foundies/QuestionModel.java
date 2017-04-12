@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -22,6 +24,8 @@ import static java.lang.System.out;
 
 public class QuestionModel {
 
+    //TODO: questions and strResponseBody stay, the rest needs to be moved
+
     private String strResponseBody = "";
     private ArrayList<Question> questions = new ArrayList<Question>();
     private String selectedCategory;
@@ -32,6 +36,7 @@ public class QuestionModel {
     private Double longitude = 0.0;
 
     public ArrayList<Question> getQs(){ return questions; }
+
 
     public void getQuestions() {
 
@@ -77,6 +82,29 @@ public class QuestionModel {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+
+    public static void postItem(String jsonPost) {
+        final HerokuService service = Utility.connectAPI();
+
+        //Used for connecting to the network so that Post can go through
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), jsonPost);
+            Call<ResponseBody> call = service.createFoundItem(requestBody);
+            try {
+                Response<ResponseBody> response = call.execute();
+                if (response.isSuccessful()) {
+                    String strResponseBody = response.body().string();
+                }
+            } catch (IOException e) {
+                // ...
             }
         }
     }
