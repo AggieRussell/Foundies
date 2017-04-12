@@ -311,9 +311,9 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     }
     public void lostItems(Location loc)
     {
-        ArrayList<FoundItem> itemsFound = controller.getFoundItems();
-        for(FoundItem item : itemsFound){
-            LatLng dropPin = new LatLng(Double.parseDouble(item.getLat()), Double.parseDouble(item.getLng()));
+        ArrayList<Item> itemsFound = controller.getFoundItems();
+        for(Item item : itemsFound){
+            LatLng dropPin = new LatLng(item.getLatitude(), item.getLongitude());
             Location location = new Location("");
             location.setLatitude(dropPin.latitude);
             location.setLongitude(dropPin.longitude);

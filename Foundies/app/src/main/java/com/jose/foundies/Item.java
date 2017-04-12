@@ -17,6 +17,7 @@ public class Item {
     private String extraDetails;
     private Double latitude = 0.0;
     private Double longitude = 0.0;
+    private String timestamp;
 
     //TODO: add date to the Item class
 
@@ -51,6 +52,10 @@ public class Item {
 
     public double getLongitude() { return longitude; }
 
+    public String getTimestamp() { return timestamp; }
+
+    public void setItemID(String itemID) { this.itemID = itemID; }
+
     public void setUserID(String userID) { this.userID = userID; }
 
     public void setSelections(String category, String subcategory) {
@@ -60,12 +65,27 @@ public class Item {
 
     public void setAnswers(ArrayList<String> answers) { this.answers = answers; }
 
+    public void setAnswers(String answers) {
+        String[] splitAnswers = answers.split(",");
+        ArrayList<String> newAnswers = new ArrayList<String>();
+        for(int i=0; i<splitAnswers.length; ++i) {
+            newAnswers.add(splitAnswers[i]);
+        }
+        this.answers = newAnswers;
+    }
+
     public void setExtraDetails(String details) { extraDetails = details;}
 
     public void setLatLong(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public void setLatitude(String latitude) { this.latitude = Double.parseDouble(latitude); }
+
+    public void setLongitude(String longitude) { this.longitude = Double.parseDouble(longitude); }
+
+    public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
 
     public void printItem() {
         out.printf("%s\n%s\n%s\n%s\n%s\n%f\n%f\n",itemID, userID, category, subcategory, getAnswersAsString(), latitude, longitude);

@@ -15,11 +15,16 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static java.lang.System.out;
+
 /**
  * Created by kylepreston on 3/29/17.
  */
 
 public class FoundModel {
+
+    private String strResponseBody = "";
+
     public FoundModel() {
     }
 
@@ -34,27 +39,27 @@ public class FoundModel {
     }
 
 
-    public static ArrayList<FoundItem> parseJSON(String response_str) {
+    public static ArrayList<Item> parseJSON(String response_str) {
         JSONObject jObject;
         JSONArray jArray;
         try {
             jObject = new JSONObject(response_str);
             jArray = jObject.getJSONArray("items");
-            ArrayList<FoundItem> foundItems = new ArrayList<FoundItem>();
+            ArrayList<Item> foundItems = new ArrayList<Item>();
             for (int i = 0; i < jArray.length(); ++i) {
-                FoundItem found = new FoundItem();
+                Item found = new Item();
                 JSONObject curr = new JSONObject(jArray.getString(i));
                 if (curr.getString("_id").isEmpty()) {
                     return null;
                 } else {
-                    found.setId(curr.getString("_id"));
-                    found.setCategory1(curr.getString("category1"));
-                    found.setCategory2(curr.getString("category2"));
-                    found.setCategory3(curr.getString("category3"));
-                    found.setLat(curr.getString("latitude"));
-                    found.setLng(curr.getString("longitude"));
+                    found.setItemID(curr.getString("_id"));
+                    found.setCategory(curr.getString("category1"));
+                    found.setSubcategory(curr.getString("category2"));
+                    found.setAnswers(curr.getString("category3"));
+                    found.setLatitude(curr.getString("latitude"));
+                    found.setLongitude(curr.getString("longitude"));
                     found.setTimestamp(curr.getString("timestamp"));
-                    found.setUser(curr.getString("username"));
+                    found.setUserID(curr.getString("username"));
                     foundItems.add(found);
                 }
             }
@@ -68,7 +73,7 @@ public class FoundModel {
 
 
     //Use to get found items from the database, Lat and Lng for Jason
-    public static ArrayList<FoundItem> getFoundItems() {
+    public static ArrayList<Item> getAllFoundItems() {
         final HerokuService service = Utility.connectAPI();
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -88,6 +93,30 @@ public class FoundModel {
             }
         }
         return null;
+    }
+
+    public void getMatchingItems(String q1, String q2) {
+
+        final HerokuService service = Utility.connectAPI();
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Call<ResponseBody> call = service.getQuestionsWithQs(q1, q2);
+            try {
+                Response<ResponseBody> response = call.execute();
+                if (response.isSuccessful()) {
+                    strResponseBody = response.body().string();
+                //    parseJSON();
+                    out.println("RESPONSE FROM SERVER: ");
+                    out.println(strResponseBody);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
