@@ -28,8 +28,7 @@ public class FoundModel {
     public FoundModel() {
     }
 
-    public static String jsonFoundPost(Item f) {
-        //TODO: Change F to item
+    public String jsonFoundPost(Item f) {
         String jsonPost = "{ \"found\": { \"_id\": \"" + f.getItemID() + "\", \"category1\":\"" + f.getCategory()
                 + "\", \"category2\":\"" + f.getSubcategory() + "\", \"category3\":\""
                 + f.getAnswersAsString() + "\", \"username\":\"" + f.getUserID() + "\", \"timestamp\":\""
@@ -39,12 +38,12 @@ public class FoundModel {
     }
 
 
-    public static ArrayList<Item> parseJSON(String response_str) {
+    public ArrayList<Item> parseJSON() {
         JSONObject jObject;
         JSONArray jArray;
         try {
-            jObject = new JSONObject(response_str);
-            jArray = jObject.getJSONArray("items");
+            jObject = new JSONObject(strResponseBody);
+            jArray = jObject.getJSONArray("found");
             ArrayList<Item> foundItems = new ArrayList<Item>();
             for (int i = 0; i < jArray.length(); ++i) {
                 Item found = new Item();
@@ -71,9 +70,8 @@ public class FoundModel {
 
     }
 
-
     //Use to get found items from the database, Lat and Lng for Jason
-    public static ArrayList<Item> getAllFoundItems() {
+    public ArrayList<Item> getAllFoundItems() {
         final HerokuService service = Utility.connectAPI();
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -85,8 +83,8 @@ public class FoundModel {
             try {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
-                    String strResponseBody = response.body().string();
-                    return parseJSON(strResponseBody);
+                    strResponseBody = response.body().string();
+                    return parseJSON();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -95,8 +93,8 @@ public class FoundModel {
         return null;
     }
 
-    public void getMatchingItems(String q1, String q2) {
-
+    // use to get found items in matching Category and Subcategory
+    public ArrayList<Item> getFoundItemWithCategories(Item item) {
         final HerokuService service = Utility.connectAPI();
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -104,23 +102,23 @@ public class FoundModel {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            Call<ResponseBody> call = service.getMatchingItems(q1, q2);
+            Call<ResponseBody> call = service.getFoundItemWithCategories(item.getCategory(), item.getSubcategory());
             try {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
                     strResponseBody = response.body().string();
-                //    parseJSON();
-                    out.println("RESPONSE FROM SERVER: ");
-                    out.println(strResponseBody);
+                    out.println("    RESPONSE FOR getFoundItemWithCategories:" + strResponseBody);
+                    return findMatches(parseJSON(), item);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 
 
-    public static void postToFound(String jsonPost) {
+    public void postToFound(String jsonPost) {
         final HerokuService service = Utility.connectAPI();
 
         //Used for connecting to the network so that Post can go through
@@ -140,5 +138,27 @@ public class FoundModel {
                 // ...
             }
         }
+    }
+
+    public ArrayList<Item> findMatches(ArrayList<Item> items, Item itemToMatch) {
+        ArrayList<String> answers = itemToMatch.getAnswers();
+        for (int i=items.size()-1; i>=0; --i) {
+            ArrayList<String> currentAnswers = items.get(i).getAnswers();
+            int matches = 0;
+            for(int j=0; j<answers.size(); ++j) {
+                if(answers.get(j).equals(currentAnswers.get(j)) || answers.get(j).equals("Other") ||
+                        currentAnswers.get(j).equals("Other")) {
+                    ++matches;
+                }
+            }
+            if ((double)(matches/answers.size()) < 0.75)
+                items.remove(i);
+        }
+        out.println("\n\nMATCHING ITEMS\n");
+        for (int i=0; i<items.size(); ++i) {
+            out.println("\n");
+            items.get(i).printItem();
+        }
+        return items;
     }
 }

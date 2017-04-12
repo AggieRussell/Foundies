@@ -32,12 +32,12 @@ public class Controller extends Application {
 
     //TODO: Set an item object
 
-    UserModel um;
-    LostModel lm;
-    FoundModel fm;
-    QuestionModel qm;
-    Contact user;
-    Item currentItem;
+    private UserModel um;
+    private LostModel lm;
+    private FoundModel fm;
+    private QuestionModel qm;
+    private Contact user;
+    private Item currentItem;
 
     boolean queryType; // true is lost item; false is found item
 
@@ -250,11 +250,16 @@ public class Controller extends Application {
     }
 
     public ArrayList<Item> getFoundItems(){
-        return fm.getAllFoundItems();
+        return fm.getFoundItemWithCategories(currentItem);
     }
 
     /* --------------------------------- Lost Controller Functionality ------------------------------------ */
 
 
 
+    /* --------------------------------- Item Controller Functionality ------------------------------------ */
+
+    public void setUserID(String userID) {
+        currentItem.setUserID(userID);
+    }
 }

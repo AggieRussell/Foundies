@@ -29,10 +29,10 @@ import java.util.List;
 class CustomExpandableList extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<FoundItem> listHeader;
-    private HashMap<FoundItem, List<String>> listChild;
+    private List<Item> listHeader;
+    private HashMap<Item, List<String>> listChild;
 
-    public CustomExpandableList(Context cntx, List<FoundItem> header, HashMap<FoundItem, List<String>> child){
+    public CustomExpandableList(Context cntx, List<Item> header, HashMap<Item, List<String>> child){
         context = cntx;
         listHeader = header;
         listChild = child;
@@ -118,12 +118,12 @@ public class LostConfirmation extends AppCompatActivity {
 
     private CustomExpandableList adapter;
     private ExpandableListView expList;
-    private HashMap<FoundItem, List<String>> itemInfo = new HashMap<FoundItem, List<String>>();
-    private List<FoundItem> items = new ArrayList<>();
+    private HashMap<Item, List<String>> itemInfo = new HashMap<Item, List<String>>();
+    private List<Item> items = new ArrayList<>();
     private Controller controller = null;
-    private List<FoundItem> unfilteredItems;
+    private List<Item> unfilteredItems;
     private static LatLng location;
-    private FoundItem itemSelected;
+    private Item itemSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +142,7 @@ public class LostConfirmation extends AppCompatActivity {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
                 itemSelected = items.get(i);
-                Toast toast = Toast.makeText(getApplicationContext(), "Item User: " + items.get(i).getUser(), Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Item User: " + items.get(i).getUserID(), Toast.LENGTH_SHORT);
                 toast.show();
                 return false;
             }
@@ -162,7 +162,7 @@ public class LostConfirmation extends AppCompatActivity {
 
                     /* Fill it with Data */
                     email.setType("plain/text");
-                    email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{itemSelected.getUser()});
+                    email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{itemSelected.getUserID()});
                     email.putExtra(android.content.Intent.EXTRA_SUBJECT, "Foundies item match!");
 
                     /* Send it off to the Activity-Chooser */
@@ -185,8 +185,8 @@ public class LostConfirmation extends AppCompatActivity {
         });
 
         for(int i = 0; i < unfilteredItems.size(); i++){
-            if(Double.parseDouble(unfilteredItems.get(i).getLat()) == controller.getLatitude() &&
-                    Double.parseDouble(unfilteredItems.get(i).getLng()) == controller.getLongitude()){
+            if(unfilteredItems.get(i).getLatitude() == controller.getLatitude() &&
+                    unfilteredItems.get(i).getLongitude() == controller.getLongitude()){
                 items.add(unfilteredItems.get(i));
             }
         }
@@ -199,9 +199,9 @@ public class LostConfirmation extends AppCompatActivity {
     {
         for(int i = 0; i < items.size(); ++i){
             List<String> itemList = new ArrayList<>();
-            itemList.add(items.get(i).getCategory1());
-            itemList.add(items.get(i).getCategory2());
-            itemList.add(items.get(i).getCategory3());
+            itemList.add(items.get(i).getCategory());
+            itemList.add(items.get(i).getSubcategory());
+            itemList.add(items.get(i).getAnswersAsString());
             itemList.add(items.get(i).getTimestamp());
             itemInfo.put(items.get(i), itemList);
         }

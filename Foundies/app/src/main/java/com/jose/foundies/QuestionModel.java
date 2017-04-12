@@ -47,7 +47,6 @@ public class QuestionModel {
                 if (response.isSuccessful()) {
                     strResponseBody = response.body().string();
                     parseJSON();
-                    out.println("RESPONSE FROM SERVER: ");
                     out.println(strResponseBody);
                 }
             } catch (IOException e) {
