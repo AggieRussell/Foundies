@@ -80,7 +80,16 @@ public class FoundConfirmation extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "TODO: Post to database", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "POSTED TO DATABASE", Toast.LENGTH_SHORT);
+                //TODO: Get rid of print statements
+                System.out.println("This is the user: " + controller.getUserId());
+                System.out.println("This is the lat: " + controller.getLatitude().toString());
+                System.out.println("This is the long: " + controller.getLongitude().toString());
+                System.out.println("This is the answers: " + controller.getAnswersString());
+                System.out.println("This is the category: " + controller.getCategory());
+                System.out.println("This is the suncategory: " + controller.getSubcategory());
+                System.out.println("This is the time: " + Utility.getDate());
+                controller.postFoundItem();
                 toast.show();
             }
         });

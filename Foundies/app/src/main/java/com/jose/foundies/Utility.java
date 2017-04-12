@@ -1,5 +1,7 @@
 package com.jose.foundies;
 
+import java.security.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 import retrofit2.Retrofit;
@@ -27,5 +29,10 @@ public final class Utility {
     public static String uniqueID(){
         String uniqueID = UUID.randomUUID().toString();
         return uniqueID;
+    }
+
+    public static String getDate(){
+        Date date = new Date();
+        return date.toString();
     }
 }

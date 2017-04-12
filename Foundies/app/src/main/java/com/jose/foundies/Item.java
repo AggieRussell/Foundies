@@ -18,6 +18,8 @@ public class Item {
     private Double latitude = 0.0;
     private Double longitude = 0.0;
 
+    //TODO: add date to the Item class
+
     public Item() {
         itemID = Utility.uniqueID();
     }

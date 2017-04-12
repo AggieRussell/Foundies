@@ -212,6 +212,14 @@ public class Controller extends Application {
         currentItem.setSelections(category, subcategory);
     }
 
+    public String getSubcategory() { return currentItem.getSubcategory(); }
+
+    public String getCategory() { return currentItem.getCategory(); }
+
+    public String getAnswersString() { return currentItem.getAnswersAsString(); }
+
+    public String getUserId() { return currentItem.getUserID(); }
+
     /*----- Not currently being used, but may be used in the future if graphic buttons are used
             instead of spinners -- Only being used by Categories class, which is not being used -----*/
     public void setCategory(String c) { currentItem.setCategory(c); }
@@ -236,6 +244,11 @@ public class Controller extends Application {
 
 
     /* --------------------------------- Found Controller Functionality ------------------------------------ */
+
+    public void postFoundItem(){
+        String jsonPost = fm.jsonFoundPost(currentItem);
+        fm.postToFound(jsonPost);
+    }
 
     /* --------------------------------- Lost Controller Functionality ------------------------------------ */
 

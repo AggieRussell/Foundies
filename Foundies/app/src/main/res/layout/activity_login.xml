@@ -75,28 +75,4 @@
 
     </LinearLayout>
 
-    <Button
-        android:text="View Data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/view_button" />
-
-    <Button
-        android:text="Delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/delete_button"
-        android:layout_below="@+id/linearLayout"
-        android:layout_toEndOf="@+id/view_button" />
-
-    <Button
-        android:text="UPDATE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/update_button"
-        android:layout_below="@+id/linearLayout"
-        android:layout_toStartOf="@+id/view_button" />
-
 </RelativeLayout>

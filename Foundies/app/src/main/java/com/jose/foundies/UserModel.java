@@ -32,15 +32,6 @@ public class UserModel {
     private Contact user;
     private int numOfSearches;
     //Used for saving email to the database
-    private String userID;
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
 
     public void UserModel(){
         numOfSearches = 0;

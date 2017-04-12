@@ -23,12 +23,13 @@ public class FoundModel {
     public FoundModel() {
     }
 
-    public static String jsonFoundPost(FoundItem f) {
-        String jsonPost = "{ \"found\": { \"_id\": \"" + Utility.uniqueID() + "\", \"category1\":\"" + f.getCategory1()
-                + "\", \"category2\":\"" + f.getCategory2() + "\", \"category3\":\""
-                + f.getCategory3() + "\", \"username\":\"" + f.getUser() + "\", \"timestamp\":\""
-                + f.getTimestamp() + "\", \"latitude\":\""
-                + f.getLat() + "\", \"longitude\":\"" + f.getLng() + "\" } }";
+    public static String jsonFoundPost(Item f) {
+        //TODO: Change F to item
+        String jsonPost = "{ \"found\": { \"_id\": \"" + Utility.uniqueID() + "\", \"category1\":\"" + f.getCategory()
+                + "\", \"category2\":\"" + f.getSubcategory() + "\", \"category3\":\""
+                + f.getAnswersAsString() + "\", \"username\":\"" + f.getUserID() + "\", \"timestamp\":\""
+                + Utility.getDate() + "\", \"latitude\":\""
+                + f.getLatitude() + "\", \"longitude\":\"" + f.getLongitude() + "\" } }";
         return jsonPost;
     }
 
