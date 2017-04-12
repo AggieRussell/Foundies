@@ -32,6 +32,9 @@ public interface HerokuService {
     @GET("/questions/qs?")
     Call<ResponseBody> getQuestionsWithQs(@Query("q1") String q1, @Query("q2") String q2);
 
+    @GET("/items/found/bycategories?")
+    Call<ResponseBody> getFoundItemWithCategories(@Query("cc") String q1, @Query("sc") String q2);
+
     @GET("/user/{username}")
     Call<ResponseBody> getUsersByUsername(@Path("username") String username);
 
