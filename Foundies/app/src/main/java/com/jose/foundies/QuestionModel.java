@@ -56,6 +56,7 @@ public class QuestionModel {
         }
     }
 
+    // to get list of q3s that belong to the category & subcategory
     public void getQuestionsWithQs(String q1, String q2) {
 
         final HerokuService service = Utility.connectAPI();
@@ -80,7 +81,7 @@ public class QuestionModel {
         }
     }
 
-
+    // Not currently being used - for future use to add categories to db
     public static void postItem(String jsonPost) {
         final HerokuService service = Utility.connectAPI();
 
@@ -102,6 +103,7 @@ public class QuestionModel {
             }
         }
     }
+
 
     public void parseJSON() {
         out.println("Starting parse JSON...");

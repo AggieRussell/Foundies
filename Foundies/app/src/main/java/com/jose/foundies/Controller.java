@@ -229,7 +229,6 @@ public class Controller extends Application {
     public void setAnswers(ArrayList<String> answers, String extraDetails) {
         currentItem.setAnswers(answers);
         currentItem.setExtraDetails(extraDetails);
-        out.println("ANSWERS: ");
         for (int i=0; i<answers.size(); ++i){
             out.println(answers.get(i));
         }
@@ -250,10 +249,12 @@ public class Controller extends Application {
         fm.postToFound(jsonPost);
     }
 
+    public ArrayList<Item> getFoundItems(){
+        return fm.getAllFoundItems();
+    }
+
     /* --------------------------------- Lost Controller Functionality ------------------------------------ */
 
-    public ArrayList<FoundItem> getFoundItems(){
-        return fm.getFoundItems();
-    }
+
 
 }
