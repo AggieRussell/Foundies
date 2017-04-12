@@ -91,6 +91,9 @@ public class FoundConfirmation extends AppCompatActivity {
                 System.out.println("This is the time: " + Utility.getDate());
                 controller.postFoundItem();
                 toast.show();
+                Intent lostOrFound = new Intent(getBaseContext(), LostorFound.class);
+                startActivity(lostOrFound);
+                finish();
             }
         });
 
