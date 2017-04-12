@@ -74,7 +74,7 @@ class CustomExpandableList extends BaseExpandableListAdapter {
     }
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        FoundItem header = (FoundItem) getGroup(groupPosition);
+        Item header = (Item) getGroup(groupPosition);
         String headerTitle = header.getTimestamp();
 
         if (convertView == null) {
@@ -84,7 +84,7 @@ class CustomExpandableList extends BaseExpandableListAdapter {
 
         TextView listInformation = (TextView) convertView.findViewById(R.id.listItems);
         listInformation.setTypeface(null, Typeface.BOLD);
-        listInformation.setText("Found Item");
+        listInformation.setText("Item " + (groupPosition+1));
         listInformation.setTextColor(Color.WHITE);
 
         return convertView;
@@ -126,6 +126,16 @@ public class LostConfirmation extends AppCompatActivity {
     private Item itemSelected;
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == 1) {
+            Intent i = new Intent(getBaseContext(), LostorFound.class);
+            startActivity(i);
+            finish();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         controller = (Controller) getApplicationContext();
         super.onCreate(savedInstanceState);
@@ -136,15 +146,21 @@ public class LostConfirmation extends AppCompatActivity {
 
         expList = (ExpandableListView) findViewById(R.id.matchResponses);
         adapter = new CustomExpandableList(this, items, itemInfo);
+        final TextView selectedItem = (TextView) findViewById(R.id.selectedItem);
         expList.setAdapter(adapter);
 
-        expList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+        expList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+            public void onGroupExpand(int i) {
                 itemSelected = items.get(i);
-                Toast toast = Toast.makeText(getApplicationContext(), "Item User: " + items.get(i).getUserID(), Toast.LENGTH_SHORT);
-                toast.show();
-                return false;
+                selectedItem.setText("Selected Item -  Item " + (i+1));
+            }
+        });
+        expList.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int i) {
+                itemSelected = null;
+                selectedItem.setText("Selected Item -");
             }
         });
 
@@ -155,8 +171,6 @@ public class LostConfirmation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(itemSelected != null) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "TODO: Contact User", Toast.LENGTH_SHORT);
-                    toast.show();
                     /* Create the Intent */
                     Intent email = new Intent(android.content.Intent.ACTION_SEND);
 
@@ -165,8 +179,7 @@ public class LostConfirmation extends AppCompatActivity {
                     email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{itemSelected.getUserID()});
                     email.putExtra(android.content.Intent.EXTRA_SUBJECT, "Foundies item match!");
 
-                    /* Send it off to the Activity-Chooser */
-                    startActivity(Intent.createChooser(email, "Send email"));
+                    startActivityForResult(Intent.createChooser(email, "Send email"), 1);
                 }
                 else{
                     Toast toast = Toast.makeText(getApplicationContext(), "Select an item", Toast.LENGTH_SHORT);
@@ -199,9 +212,9 @@ public class LostConfirmation extends AppCompatActivity {
     {
         for(int i = 0; i < items.size(); ++i){
             List<String> itemList = new ArrayList<>();
-            itemList.add(items.get(i).getCategory());
-            itemList.add(items.get(i).getSubcategory());
-            itemList.add(items.get(i).getAnswersAsString());
+            for(int j = 0; j < items.get(i).getAnswers().size(); j++){
+                itemList.add(items.get(i).getAnswers().get(j));
+            }
             itemList.add(items.get(i).getTimestamp());
             itemInfo.put(items.get(i), itemList);
         }

@@ -330,7 +330,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
 
             double distanceBetween = loc.distanceTo(location) / 1000 * 0.62137;
             if(distanceBetween < radiusValue) {
-                mMap.addMarker(new MarkerOptions().position(dropPin).title(addresses.get(0).getFeatureName()));
+                mMap.addMarker(new MarkerOptions().position(dropPin).title(addresses.get(0).getAddressLine(0)));
             }
             /*if(myLocation != null) {
                 LatLng currentLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
