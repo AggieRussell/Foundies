@@ -119,20 +119,20 @@ public class LostConfirmation extends AppCompatActivity {
     private CustomExpandableList adapter;
     private ExpandableListView expList;
     private HashMap<FoundItem, List<String>> itemInfo = new HashMap<FoundItem, List<String>>();
-    private List<FoundItem> unfilteredItems = FoundModel.getFoundItems();
     private List<FoundItem> items = new ArrayList<>();
+    private Controller controller = null;
+    private List<FoundItem> unfilteredItems;
     private static LatLng location;
     private FoundItem itemSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final Controller controller = (Controller) getApplicationContext();
+        controller = (Controller) getApplicationContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_confirmation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
+        unfilteredItems = controller.getFoundItems();
 
         expList = (ExpandableListView) findViewById(R.id.matchResponses);
         adapter = new CustomExpandableList(this, items, itemInfo);

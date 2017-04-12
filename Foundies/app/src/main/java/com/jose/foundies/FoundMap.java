@@ -49,6 +49,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     private SeekBar radius;
     private TextView radiusText;
     private LatLng centerLatLng;
+    private Controller controller = null;
     Place chosenLocation;
     Location center = new Location("");
 
@@ -122,7 +123,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
         }
 
         mMap = googleMap;
-        final Controller controller = (Controller) getApplicationContext();
+        controller = (Controller) getApplicationContext();
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -310,7 +311,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     }
     public void lostItems(Location loc)
     {
-        ArrayList<FoundItem> itemsFound = FoundModel.getFoundItems();
+        ArrayList<FoundItem> itemsFound = controller.getFoundItems();
         for(FoundItem item : itemsFound){
             LatLng dropPin = new LatLng(Double.parseDouble(item.getLat()), Double.parseDouble(item.getLng()));
             Location location = new Location("");
