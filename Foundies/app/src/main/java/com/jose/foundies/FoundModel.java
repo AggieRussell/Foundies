@@ -104,7 +104,7 @@ public class FoundModel {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            Call<ResponseBody> call = service.getQuestionsWithQs(q1, q2);
+            Call<ResponseBody> call = service.getMatchingItems(q1, q2);
             try {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
