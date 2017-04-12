@@ -25,7 +25,7 @@ public class FoundModel {
 
     public static String jsonFoundPost(Item f) {
         //TODO: Change F to item
-        String jsonPost = "{ \"found\": { \"_id\": \"" + Utility.uniqueID() + "\", \"category1\":\"" + f.getCategory()
+        String jsonPost = "{ \"found\": { \"_id\": \"" + f.getItemID() + "\", \"category1\":\"" + f.getCategory()
                 + "\", \"category2\":\"" + f.getSubcategory() + "\", \"category3\":\""
                 + f.getAnswersAsString() + "\", \"username\":\"" + f.getUserID() + "\", \"timestamp\":\""
                 + Utility.getDate() + "\", \"latitude\":\""
