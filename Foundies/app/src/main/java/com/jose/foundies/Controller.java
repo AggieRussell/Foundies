@@ -36,6 +36,8 @@ public class Controller extends Application {
     LostModel lm;
     FoundModel fm;
     QuestionModel qm;
+    Contact user;
+    Item currentItem;
 
     boolean queryType; // true is lost item; false is found item
 
@@ -46,6 +48,7 @@ public class Controller extends Application {
         qm = new QuestionModel();
         // pre-load all question combinations from database
         qm.getQuestions();
+        currentItem = new Item();
         queryType=false;
     }
 
@@ -115,6 +118,8 @@ public class Controller extends Application {
         if(user == null){
             return "No one by this email";
         }else if(user.getPass().equals(hashedPassword)){
+            this.user = user;
+            currentItem.setUserID(user.getId());
             return null;
         }else{
             return "Password does not match email";
@@ -182,48 +187,52 @@ public class Controller extends Application {
         return qm.getSubcategories(category);
     }
 
+    public ArrayList<String> getKinds() {
+        return qm.getKinds(currentItem.getCategory(), currentItem.getSubcategory());
+    }
+
+    public ArrayList<String> getNames() {
+        return qm.getNames(currentItem.getCategory(), currentItem.getSubcategory());
+    }
+
+    public ArrayList<ArrayList<String>> getChoices() {
+        return qm.getChoices(currentItem.getCategory(), currentItem.getSubcategory());
+    }
+
+
+    /* --------------------------------- Item Controller Functionality ------------------------------------ */
+
+    public Double getLatitude(){ return currentItem.getLatitude(); }
+
+    public Double getLongitude(){ return currentItem.getLongitude(); }
+
+    public ArrayList<String> getAnswers(){ return currentItem.getAnswers(); }
+
     public void sendSelections(String category, String subcategory) {
-        out.println("SENT SELECTIONS TO QUESTION MODEL");
-        qm.setSelections(category, subcategory);
+        currentItem.setSelections(category, subcategory);
     }
 
-    public void setCategory(String c) {
-        qm.setCategory(c);
-    }
+    /*----- Not currently being used, but may be used in the future if graphic buttons are used
+            instead of spinners -- Only being used by Categories class, which is not being used -----*/
+    public void setCategory(String c) { currentItem.setCategory(c); }
 
-    public void setSubcategory(String s) {
-        qm.setSubcategory(s);
-    }
+    public void setSubcategory(String s) { currentItem.setSubcategory(s); }
 
-    public void setAnswers(ArrayList<String> answers) {
-        qm.setAnswers(answers);
+    public void setAnswers(ArrayList<String> answers, String extraDetails) {
+        currentItem.setAnswers(answers);
+        currentItem.setExtraDetails(extraDetails);
         out.println("ANSWERS: ");
         for (int i=0; i<answers.size(); ++i){
             out.println(answers.get(i));
         }
+        currentItem.printItem();
     }
 
     public void setLatLong(Double lat, Double lng){
-        qm.setLatLong(lat, lng);
+        currentItem.setLatLong(lat, lng);
+        currentItem.printItem();
     }
 
-    public ArrayList<String> getKinds() {
-        return qm.getKinds();
-    }
-
-    public ArrayList<String> getNames() {
-        return qm.getNames();
-    }
-
-    public ArrayList<ArrayList<String>> getChoices() {
-        return qm.getChoices();
-    }
-
-    public Double getLatitude(){ return qm.getLatitude(); }
-
-    public Double getLongitude(){ return qm.getLongitude(); }
-
-    public ArrayList<String> getAnswers(){ return qm.getSelectedAnswers(); }
 
 
     /* --------------------------------- Found Controller Functionality ------------------------------------ */

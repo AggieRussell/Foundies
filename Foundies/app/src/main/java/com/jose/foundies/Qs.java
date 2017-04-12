@@ -52,6 +52,7 @@ public class Qs extends Activity {
         });
 
         final Button next = (Button) findViewById(R.id.next_button);
+        final Button back = (Button) findViewById(R.id.backButton);
 
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -62,6 +63,13 @@ public class Qs extends Activity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent i = new Intent(getBaseContext(), LostorFound.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     private void setSubcategories(ArrayList<String> subcategories) {
