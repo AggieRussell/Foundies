@@ -62,6 +62,7 @@
             android:text="Next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
             android:id="@+id/next_button"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
@@ -70,6 +71,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
             android:id="@+id/backButton"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"

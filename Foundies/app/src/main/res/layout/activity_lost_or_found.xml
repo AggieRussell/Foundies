@@ -47,6 +47,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/button_selector"
             android:layout_marginTop="100dp"
             android:text="View Notifications"
             android:textSize="12sp" />
@@ -75,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
+            android:background="@drawable/button_selector"
             android:layout_marginTop="100dp"
             android:text="Post Found Item"
             android:textSize="12sp" />
@@ -105,6 +107,7 @@
             android:layout_height="wrap_content"
             android:text="Search Lost Item"
             android:textAlignment="center"
+            android:background="@drawable/button_selector"
             android:layout_marginTop="150dp"
             android:textSize="12sp"
             android:layout_centerHorizontal="true" />

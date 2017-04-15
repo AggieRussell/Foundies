@@ -44,14 +44,14 @@ public class ItemDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Was the item lost at " + address + "?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage("Was the item lost at " + address + "?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent i = new Intent(ItemDialog.this.getContext(), LostConfirmation.class);
                         startActivity(i);
                     }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ItemDialog.this.getDialog().cancel();
                     }

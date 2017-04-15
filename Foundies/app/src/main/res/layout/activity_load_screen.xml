@@ -16,15 +16,19 @@
         android:text="JOIN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_selector"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="121dp"
-        android:id="@+id/join_button" />
+        android:id="@+id/join_button"
+        android:shadowColor="#D3D3D3"
+        />
 
     <Button
         android:text="Sign In"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_selector"
         android:layout_marginTop="48dp"
         android:id="@+id/signin_tv"
         android:layout_alignTop="@+id/join_button"
