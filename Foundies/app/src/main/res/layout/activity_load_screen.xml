@@ -21,14 +21,12 @@
         android:layout_marginBottom="121dp"
         android:id="@+id/join_button" />
 
-    <TextView
+    <Button
         android:text="Sign In"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:id="@+id/signin_tv"
-        android:textColor="#000099"
-        android:clickable="true"
         android:layout_alignTop="@+id/join_button"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

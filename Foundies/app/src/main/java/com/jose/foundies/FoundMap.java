@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -142,7 +143,6 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
         }
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.address);
-        autocompleteFragment.getView().setBackgroundColor(Color.DKGRAY);
         radius = (SeekBar) findViewById(R.id.seekBar);
         radius.setProgress(100);
         radiusText = (TextView) findViewById(R.id.changeRadius);
@@ -170,7 +170,17 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 public boolean onMarkerClick(Marker marker) {
                     ItemDialog dialogBox = new ItemDialog();
                     dialogBox.setContext(getApplicationContext());
-                    dialogBox.setAddress(chosenLocation.getAddress().toString());
+                    LatLng chosenMarker = marker.getPosition();
+                    Location location = new Location(LocationManager.GPS_PROVIDER);
+                    List<Address> addresses = null;
+                    Geocoder geocoder = new Geocoder(FoundMap.this, Locale.getDefault());
+                    try{
+                        addresses = geocoder.getFromLocation(chosenMarker.latitude, chosenMarker.longitude, 1);
+                    }
+                    catch(IOException e){
+                        e.printStackTrace();
+                    }
+                    dialogBox.setAddress(addresses.get(0).getAddressLine(0));
                     dialogBox.show(getFragmentManager(), "test");
                     controller.setLatLong(marker.getPosition().latitude, marker.getPosition().longitude);
                     return false;

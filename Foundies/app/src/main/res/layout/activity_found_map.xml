@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/small_back">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +12,8 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:background="@drawable/small_back"
+        android:layout_marginTop="55dp"
         tools:context="com.jose.foundies.FoundMap" />
 
     <RelativeLayout xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -26,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-
             android:hint="Select Location"
             android:textColor = "#FFFFFF"
             android:ems="10"
@@ -40,7 +41,7 @@
             android:layout_marginTop="5dp"
             android:layout_below="@+id/address"
             android:gravity="center_vertical"
-            android:background="#444444"
+            android:background="@drawable/small_back"
             android:textSize="18sp"
             android:text= "Search Radius" />
 

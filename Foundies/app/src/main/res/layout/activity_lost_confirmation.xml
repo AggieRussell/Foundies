@@ -19,7 +19,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/PopupOverlay"
-            app:title="Lost Confirmation" />
+            app:title="Choose the item that you lost" />
 
     </android.support.design.widget.AppBarLayout>
 

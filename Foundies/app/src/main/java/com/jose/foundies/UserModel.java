@@ -30,6 +30,15 @@ import retrofit2.Retrofit;
 public class UserModel {
 
     private Contact user;
+
+    public Contact getUser() {
+        return user;
+    }
+
+    public void setUser(Contact user) {
+        this.user = user;
+    }
+
     private int numOfSearches;
     //Used for saving email to the database
 

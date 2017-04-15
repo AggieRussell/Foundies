@@ -32,6 +32,14 @@ public class Controller extends Application {
 
     //TODO: Set an item object
 
+    public UserModel getUm() {
+        return um;
+    }
+
+    public void setUm(UserModel um) {
+        this.um = um;
+    }
+
     private UserModel um;
     private LostModel lm;
     private FoundModel fm;

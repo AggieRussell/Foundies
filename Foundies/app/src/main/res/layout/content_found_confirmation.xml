@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jose.foundies.FoundConfirmation"
-    tools:showIn="@layout/activity_found_confirmation">
+    tools:showIn="@layout/activity_found_confirmation"
+    android:background="@drawable/small_back">
 
     <ListView
         android:id="@+id/confirmList"

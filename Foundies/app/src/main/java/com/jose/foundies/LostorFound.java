@@ -2,9 +2,20 @@ package com.jose.foundies;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.opengl.EGL14;
+import android.opengl.EGLDisplay;
+import android.opengl.GLES10;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import javax.microedition.khronos.opengles.GL10;
 
 public class LostorFound extends Activity {
 
@@ -34,5 +45,7 @@ public class LostorFound extends Activity {
                 finish();
             }
         });
+        TextView welcomeText = (TextView) findViewById(R.id.textView6);
+        welcomeText.setText("Welcome " + controller.getUserId() + "!");
     }
 }
