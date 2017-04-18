@@ -46,6 +46,6 @@ public class LostorFound extends Activity {
             }
         });
         TextView welcomeText = (TextView) findViewById(R.id.textView6);
-        welcomeText.setText("Welcome " + controller.getUserId() + "!");
+        welcomeText.setText("Welcome " + controller.getNameOfUser() + "!");
     }
 }
