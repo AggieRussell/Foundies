@@ -45,6 +45,7 @@ public class Register extends Activity {
                     String checkEmail = controller.createUser(fnamestr, lnamestr, emailstr, passstr);
                     if (checkEmail == null) {
                         controller.setUserID(emailstr);
+                        controller.setCurrentUser(emailstr);
                         Intent i = new Intent(getBaseContext(), LostorFound.class);
                         startActivity(i);
                         finish();

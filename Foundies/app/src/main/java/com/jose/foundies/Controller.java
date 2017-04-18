@@ -182,6 +182,15 @@ public class Controller extends Application {
 
     }
 
+    public void setCurrentUser(String username){
+        Contact user = um.getUserByUsername(username);
+        this.user = user;
+    }
+
+    public String getNameOfUser(){
+        return user.first_name + " " + user.last_name;
+    }
+
 
     /* --------------------------------- Question Controller Functionality --------------------------------- */
 
