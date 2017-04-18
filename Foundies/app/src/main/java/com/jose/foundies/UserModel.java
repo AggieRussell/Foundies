@@ -46,10 +46,14 @@ public class UserModel {
         numOfSearches = 0;
     }
 
+    public String getUserEmail(){ return user.getEmail();}
+
     private String uniqueId(){
         String uniqueID = UUID.randomUUID().toString();
         return uniqueID;
     }
+
+
 
     //Creates a json object to add user to the mongo database
     public String jsonUserPost(Contact c){

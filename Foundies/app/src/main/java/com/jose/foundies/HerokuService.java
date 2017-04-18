@@ -16,6 +16,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -41,6 +42,9 @@ public interface HerokuService {
     @GET("/items/found")
     Call<ResponseBody> getFoundItems();
 
+    @GET("/items/lost/username")
+    Call<ResponseBody> getItemsByUser(@Path("username") String username);
+
     //FormUrlEncoded
     @POST("/users")
     Call<ResponseBody> createUser(@Body RequestBody user);
@@ -51,4 +55,8 @@ public interface HerokuService {
 
     @DELETE("/user/{id}")
     Call<ResponseBody> deleteUser(@Path("id") String username);
+
+    //Where the update for the user accessed date will be
+    @PUT("/user/{username}?")
+    Call<ResponseBody> updateAccessedDate(@Path("username") String username);
 }
