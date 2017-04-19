@@ -88,7 +88,7 @@ public class Item {
     public void setTimestamp(String timestamp) { this.timestamp = timestamp; }
 
     public void printItem() {
-        out.printf("%s\n%s\n%s\n%s\n%s\n%f\n%f\n",itemID, userID, category, subcategory, getAnswersAsString(), latitude, longitude);
+        out.printf("%s\n%s\n%s\n%s\n%s\n%f\n%f\n%s\n",itemID, userID, category, subcategory, getAnswersAsString(), latitude, longitude, timestamp);
     }
 
     /*----- Not currently being used, but may be used in the future if graphic buttons are used

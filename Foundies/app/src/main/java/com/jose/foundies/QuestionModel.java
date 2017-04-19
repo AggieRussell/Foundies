@@ -103,7 +103,6 @@ public class QuestionModel {
         }
     }
 
-
     public void parseJSON() {
         out.println("Starting parse JSON...");
         questions.clear();
