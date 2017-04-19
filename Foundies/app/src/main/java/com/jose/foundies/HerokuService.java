@@ -45,8 +45,8 @@ public interface HerokuService {
     @GET("/items/found/{username}")
     Call<ResponseBody> getFoundItemsByUser(@Path("username") String username);
 
-    @GET("/items/lost/username")
-    Call<ResponseBody> getItemsByUser(@Path("username") String username);
+    @GET("/items/lost/{username}")
+    Call<ResponseBody> getLostItemsByUser(@Path("username") String username);
 
     //FormUrlEncoded
     @POST("/users")

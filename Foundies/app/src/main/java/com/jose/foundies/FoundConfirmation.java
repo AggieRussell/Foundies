@@ -62,8 +62,8 @@ public class FoundConfirmation extends AppCompatActivity {
         datum = new HashMap<String,String>(2);
         datum.put("Question", "Address");
         datum.put("Answer", addresses.get(0).getAddressLine(0) + " " +
-                            addresses.get(0).getLocality() + ", " +
-                            addresses.get(0).getAdminArea());
+                addresses.get(0).getLocality() + ", " +
+                addresses.get(0).getAdminArea());
         data.add(datum);
 
         SimpleAdapter listAdapter = new SimpleAdapter(this, data, android.R.layout.simple_list_item_2,
