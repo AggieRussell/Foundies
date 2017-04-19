@@ -37,7 +37,7 @@ public class FoundModel {
         return jsonPost;
     }
 
-
+//TODO: add null exception handling
     public ArrayList<Item> parseJSON() {
         JSONObject jObject;
         JSONArray jArray;

@@ -273,7 +273,7 @@ public class Controller extends Application {
     /* --------------------------------- Lost Controller Functionality ------------------------------------ */
 
     public ArrayList<Item> getUsersLostItems(){
-        return lm.getItemsByUsername(um.getUserEmail());
+        return lm.getItemsByUsername(user.getEmail());
     }
 
 
