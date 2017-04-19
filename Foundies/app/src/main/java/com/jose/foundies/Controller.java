@@ -147,11 +147,10 @@ public class Controller extends Application {
     }
 
     public void updateLastAccessed(){
-        System.out.println("THis is the check: " + !(user.last_accessed.equals(Utility.getDate())));
-        if(!(user.last_accessed.equals(Utility.getDate()))) {
-            System.out.println("in side update");
-            um.updateLastAccessed(user.getEmail(), user.updateLastAccessed());
-        }
+        //System.out.println("THis is the check: ");
+        //if(!(user.last_accessed.equals(Utility.getDate()))) {
+        //System.out.println("in side update");
+        um.updateLastAccessed(user.getEmail(), user.updateLastAccessed());
     }
 
     private boolean isValidEmail(CharSequence target) {
@@ -209,7 +208,6 @@ public class Controller extends Application {
 
     public void setUserEmail(String email){
         user.setEmail(email);
-        System.out.println("user email after being reset:  " + user.getEmail());
     }
 
     public String getNameOfUser(){
@@ -302,7 +300,6 @@ public class Controller extends Application {
     /* --------------------------------- Lost Controller Functionality ------------------------------------ */
 
     public ArrayList<Item> getUsersLostItems(){
-        System.out.println("THis is the user email after: " + user.getEmail());
         return lm.getLostItemsByUsername(user.getEmail());
     }
 

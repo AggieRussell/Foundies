@@ -168,7 +168,7 @@ public class UserModel {
     public void updateLastAccessed(String username, Map<String, String> updatedParams){
 
         final HerokuService service = Utility.connectAPI();
-
+        System.out.println("THIS IS WHAT I NEED ");
         //Used for connecting to the network so that Post can go through
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {

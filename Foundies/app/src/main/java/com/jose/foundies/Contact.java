@@ -134,16 +134,16 @@ public class Contact {
 
     public Map<String, String> testForUsername(){
         Map<String, String> contactMap = new HashMap<>();
-        contactMap.put("first_name", "test_first_name");
-        contactMap.put("last_name", "test_last_name");
+        contactMap.put("query_count_found", "0");
+        contactMap.put("query_count_lost", "0");
         return contactMap;
     }
 
     public Map<String, String> updateLastAccessed(){
         Map<String, String> contactMap = new HashMap<>();
-        contactMap.put("last_accessed", Utility.getDate());
         contactMap.put("query_count_found", "0");
         contactMap.put("query_count_lost", "0");
+        contactMap.put("last_accessed", Utility.getDate());
         return contactMap;
     }
 

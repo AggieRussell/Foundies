@@ -71,16 +71,16 @@ public interface HerokuService {
     @PUT("/user/{username}?")
     Call<ResponseBody> updateUser(@Path("username") String username, @QueryMap Map<String, String> params);
 
-    @PUT("/user/queryLost/{:username?}")
+    @PUT("/user/queryLost/{username}?")
     Call<ResponseBody> updateUserQueryLost(@Path("username") String username, @QueryMap Map<String, String> params);
 
-    @PUT("/user/queryFound/{:username?}")
+    @PUT("/user/queryFound/{username}?")
     Call<ResponseBody> updateUserQueryFound(@Path("username") String username, @QueryMap Map<String, String> params);
 
     //Updates the query_lost_count, query_found_count, and the last_accessed fields in the database
     //Must sends ALL 3 in the Map<String, String> for it to work properly
     // PUT operation for updating the date the app was last accessed by a user
-    @PUT("/user/lastAccessed/{:username?}")
+    @PUT("/user/lastAccessed/{username}?")
     Call<ResponseBody> updateUserLastAccessed(@Path("username") String username, @QueryMap Map<String, String> params);
 
 
