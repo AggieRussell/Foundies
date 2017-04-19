@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
 import static java.lang.System.out;
 
 public class AdditionalDetails extends Activity {
@@ -70,8 +73,17 @@ public class AdditionalDetails extends Activity {
                 case "drop" :
                     createDrop(i);
                     break;
+                case "*drop" :
+                    createContingentDrop(i);
+                    break;
                 case "radio" :
                     createRadio(i);
+                    break;
+                case "*radio" :
+                    createContingentRadio(i);
+                    break;
+                case "check" :
+                    createCheck(i);
                     break;
                 default :
                     break;
@@ -95,6 +107,34 @@ public class AdditionalDetails extends Activity {
         linearLayout.addView(ll);
     }
 
+    protected void createContingentDrop(int i) {
+        final LinearLayout ll = new LinearLayout(this);
+        ll.setVisibility(GONE);
+        // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        // params.gravity = Gravity.CENTER;
+        // ll.setLayoutParams(params);
+        ll.setOrientation(LinearLayout.HORIZONTAL);
+        TextView t = new TextView(this);
+        t.setText(names.get(i));
+        t.setPadding(convertToDps(10), convertToDps(5), convertToDps(10), convertToDps(5));
+        ll.addView(t);
+        ArrayList<String> c = choices.get(i);
+        Spinner s = new Spinner(this);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, c);
+        s.setAdapter(adapter);
+        ll.addView(s);
+        ((CheckBox)questions.get(i-1)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (((CheckBox)view).isChecked())
+                    ll.setVisibility(View.VISIBLE);
+                else
+                    ll.setVisibility(GONE);
+            }
+        });
+        questions.add(s);
+        linearLayout.addView(ll);
+    }
+
     protected void createRadio(int i) {
         RadioGroup rg = new RadioGroup(this);
         rg.setPadding(convertToDps(10), convertToDps(5), convertToDps(10), convertToDps(5));
@@ -110,6 +150,39 @@ public class AdditionalDetails extends Activity {
         }
         questions.add(rg);
         linearLayout.addView(rg);
+    }
+
+    protected void createContingentRadio(int i) {
+        final RadioGroup rg = new RadioGroup(this);
+        rg.setVisibility(GONE);
+        rg.setPadding(convertToDps(10), convertToDps(5), convertToDps(10), convertToDps(5));
+        rg.setOrientation(LinearLayout.HORIZONTAL);
+        TextView t = new TextView(this);
+        t.setText(names.get(i)+ ":  ");
+        rg.addView(t);
+        ArrayList<String> c = choices.get(i);
+        for (int j=0; j<c.size(); ++j) {
+            RadioButton rb = new RadioButton(this);
+            rb.setText(c.get(j).replaceAll("_", " "));
+            rg.addView(rb);
+        }
+        ((CheckBox)questions.get(i-1)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (((CheckBox)view).isChecked())
+                    rg.setVisibility(View.VISIBLE);
+                else
+                    rg.setVisibility(GONE);
+            }
+        });
+        questions.add(rg);
+        linearLayout.addView(rg);
+    }
+
+    protected void createCheck(int i) {
+        CheckBox cb = new CheckBox(this);
+        cb.setText(names.get(i)+"? ");
+        questions.add(cb);
+        linearLayout.addView(cb);
     }
 
     protected int convertToDps(int x) {
@@ -132,6 +205,12 @@ public class AdditionalDetails extends Activity {
                     RadioButton radioButton = (RadioButton) radioGroup.findViewById(radioButtonID);
                     answers.add(radioButton.getText().toString());
                     break;
+                case "CheckBox" :
+                    CheckBox checkBox = (CheckBox) questions.get(i);
+                    if (checkBox.isChecked())
+                        answers.add("Yes");
+                    else
+                        answers.add("No");
                 default:
                     break;
             }
