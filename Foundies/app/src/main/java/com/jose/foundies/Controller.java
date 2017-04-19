@@ -236,6 +236,9 @@ public class Controller extends Application {
         return qm.getChoices(currentItem.getCategory(), currentItem.getSubcategory());
     }
 
+    public ArrayList<ArrayList<String>> getSubsequentChoices(int i) {
+        return qm.getSubsequentChoices(getChoices(), i);
+    }
 
     /* --------------------------------- Item Controller Functionality ------------------------------------ */
 
