@@ -32,7 +32,6 @@ public class ProfileTab3 extends Fragment{
             public void onClick(View view) {
                 controller.setQueryTypeLost();
                 Intent i = new Intent(ProfileTab3.this.getContext(), Qs.class);
-                if()
                 startActivity(i);
                 getActivity().finish();
             }
