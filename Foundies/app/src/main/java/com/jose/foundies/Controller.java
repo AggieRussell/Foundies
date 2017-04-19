@@ -44,7 +44,7 @@ public class Controller extends Application {
     private LostModel lm;
     private FoundModel fm;
     private QuestionModel qm;
-    private Contact user;
+    Contact user;
     private Item currentItem;
 
     boolean queryType; // true is lost item; false is found item
@@ -75,13 +75,14 @@ public class Controller extends Application {
 
     /* --------------------------------- User Controller Functionality ------------------------------------ */
     
-    public String createUser(String first_name, String last_name, String email, String password){
+    public String createUser(String first_name, String last_name, String email, String password, String last_accessed, String query_found, String query_lost){
         if (this.isValidEmail(email) && this.emailIsUnique(email)) {
 
             String passwordHash = computeSHAHash(password);
-            Contact c = new Contact(first_name, last_name, email, passwordHash);
-            PostClass post = new PostClass(c);
+            user = new Contact(first_name, last_name, email, passwordHash, Utility.uniqueID(), last_accessed, query_found, query_lost);
+            PostClass post = new PostClass(user);
             post.start();
+            System.out.println("THIS IS THE USER EMAIL: " + user.getEmail());
             //um.postToAPI(c);
             return null;
         }else {
@@ -99,10 +100,6 @@ public class Controller extends Application {
     public void updateUserInfo() {
         um.updateUserInfo(user.getEmail(), user.testForUsername());
         System.out.println("New user email = " + user.getEmail());
-    }
-
-    public void updatedLastAccessed(){
-        um.updateLastAccessed(user.getEmail(), user.updatedLastAccessed());
     }
 
     public boolean isEmptyField(EditText fname, EditText lname, EditText email, EditText pass) {
@@ -146,6 +143,14 @@ public class Controller extends Application {
             return null;
         }else{
             return "Password does not match email";
+        }
+    }
+
+    public void updateLastAccessed(){
+        System.out.println("THis is the check: " + !(user.last_accessed.equals(Utility.getDate())));
+        if(!(user.last_accessed.equals(Utility.getDate()))) {
+            System.out.println("in side update");
+            um.updateLastAccessed(user.getEmail(), user.updateLastAccessed());
         }
     }
 
@@ -297,6 +302,7 @@ public class Controller extends Application {
     /* --------------------------------- Lost Controller Functionality ------------------------------------ */
 
     public ArrayList<Item> getUsersLostItems(){
+        System.out.println("THis is the user email after: " + user.getEmail());
         return lm.getLostItemsByUsername(user.getEmail());
     }
 

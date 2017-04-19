@@ -1,5 +1,7 @@
 package com.jose.foundies;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +10,17 @@ import java.util.Map;
  */
 
 public class Contact {
+
+    public Contact(String first_name, String last_name, String email, String pass, String id, String last_accessed, String query_count_found, String query_count_lost) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.pass = pass;
+        this.id = id;
+        this.last_accessed = last_accessed;
+        this.query_count_found = query_count_found;
+        this.query_count_lost = query_count_lost;
+    }
 
     public Contact(String first_name, String last_name, String email, String password){
         this.first_name = first_name;
@@ -19,6 +32,7 @@ public class Contact {
     public Contact(){}
 
     String first_name, last_name, email, pass, id, last_accessed, query_count_found, query_count_lost;
+
 
     //User ID
     public void setId(String id){
@@ -99,12 +113,6 @@ public class Contact {
         return contactMap;
     }
 
-    public Map<String, String> updateLastAccessed(){
-        Map<String, String> contactMap = new HashMap<>();
-        contactMap.put("last_accessed", this.last_accessed);
-        return contactMap;
-    }
-
     public Map<String, String> updateQueryCounts(){
         Map<String, String> contactMap = new HashMap<>();
         contactMap.put("query_count_found", this.query_count_found);
@@ -131,7 +139,7 @@ public class Contact {
         return contactMap;
     }
 
-    public Map<String, String> updatedLastAccessed(){
+    public Map<String, String> updateLastAccessed(){
         Map<String, String> contactMap = new HashMap<>();
         contactMap.put("last_accessed", Utility.getDate());
         contactMap.put("query_count_found", "0");

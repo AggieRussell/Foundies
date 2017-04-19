@@ -172,7 +172,7 @@ public class FoundModel {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            Call<ResponseBody> call = service.getLostItemsByUser(username);
+            Call<ResponseBody> call = service.getFoundItemsByUser(username);
             try {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {

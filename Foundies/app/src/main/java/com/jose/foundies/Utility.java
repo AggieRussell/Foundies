@@ -1,7 +1,10 @@
 package com.jose.foundies;
 
 import java.security.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 import retrofit2.Retrofit;
@@ -32,7 +35,9 @@ public final class Utility {
     }
 
     public static String getDate(){
-        Date date = new Date();
-        return date.toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MMMMM.dd GGG hh:mm aaa", Locale.ENGLISH);
+        Date now = new Date();
+        String date = formatter.format(now);
+        return date;
     }
 }

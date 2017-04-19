@@ -58,8 +58,8 @@ public class UserModel {
 
     //Creates a json object to add user to the mongo database
     public String jsonUserPost(Contact c){
-        String jsonPost  = "{ \"user\": { \"_id\": \"" + uniqueId() + "\", \"username\":\"" + c.getEmail() + "\", \"first_name\":\"" + c.getFname() + "\", \"last_name\":\"" + c.getLname()
-               + "\", \"password\":\"" + c.getPass() + "\" } }";
+        String jsonPost  = "{ \"user\": { \"_id\": \"" + c.getId() + "\", \"username\":\"" + c.getEmail() + "\", \"first_name\":\"" + c.getFname() + "\", \"last_name\":\"" + c.getLname()
+                + "\", \"password\":\"" + c.getPass() + "\", \"query_count_lost\":\"" + c.getQuery_count_lost() + "\", \"query_count_found\":\"" + c.getQuery_count_found() + "\", \"last_accessed\":\"" + c.getLast_accessed() + "\" } }";
         return jsonPost;
     }
 
@@ -164,7 +164,7 @@ public class UserModel {
             }
         }
     }
-    //PUT operation for updating the date the app was last accessed by a user
+
     public void updateLastAccessed(String username, Map<String, String> updatedParams){
 
         final HerokuService service = Utility.connectAPI();
