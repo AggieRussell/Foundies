@@ -27,7 +27,7 @@
             android:name=".Login"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LostorFound"
+            android:name=".ProfilePage"
             android:screenOrientation="portrait" />
         <activity android:name=".Register" />
         <activity android:name=".AdditionalDetails" />

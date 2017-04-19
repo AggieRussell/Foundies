@@ -3,19 +3,14 @@ package com.jose.foundies;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-
-import static java.lang.System.out;
 
 public class Qs extends Activity {
 
@@ -65,7 +60,7 @@ public class Qs extends Activity {
 
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent i = new Intent(getBaseContext(), LostorFound.class);
+                Intent i = new Intent(getBaseContext(), ProfilePage.class);
                 startActivity(i);
                 finish();
             }

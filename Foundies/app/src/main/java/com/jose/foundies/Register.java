@@ -44,7 +44,7 @@ public class Register extends Activity {
                     //Send details to database
                     String checkEmail = controller.createUser(fnamestr, lnamestr, emailstr, passstr, Utility.getDate(), "0", "0");
                     if (checkEmail == null) {
-                        Intent i = new Intent(getBaseContext(), LostorFound.class);
+                        Intent i = new Intent(getBaseContext(), ProfilePage.class);
                         startActivity(i);
                         finish();
                     } else {
