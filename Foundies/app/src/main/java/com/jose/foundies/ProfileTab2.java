@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,8 +34,13 @@ public class ProfileTab2 extends Fragment{
             public void onClick(View view) {
                 controller.setQueryTypeFound();
                 Intent i = new Intent(ProfileTab2.this.getContext(), Qs.class);
-                startActivity(i);
-                getActivity().finish();
+                if(!controller.checkQueryFoundCount()){
+                    Toast toast = Toast.makeText(getActivity(), "OVER THE QUERY LIMIT", Toast.LENGTH_SHORT);
+                    toast.show();
+                }else {
+                    startActivity(i);
+                    getActivity().finish();
+                }
             }
         });
 

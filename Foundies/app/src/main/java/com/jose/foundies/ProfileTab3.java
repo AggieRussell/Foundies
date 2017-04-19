@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 public class ProfileTab3 extends Fragment{
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab3_lost_items, container, false);
 
@@ -32,9 +33,13 @@ public class ProfileTab3 extends Fragment{
             public void onClick(View view) {
                 controller.setQueryTypeLost();
                 Intent i = new Intent(ProfileTab3.this.getContext(), Qs.class);
-                if()
-                startActivity(i);
-                getActivity().finish();
+                if(!controller.checkQueryLostCount()){
+                    Toast toast = Toast.makeText(getActivity(), "OVER THE QUERY LIMIT", Toast.LENGTH_SHORT);
+                    toast.show();
+                }else {
+                    startActivity(i);
+                    getActivity().finish();
+                }
             }
         });
 

@@ -168,7 +168,6 @@ public class UserModel {
     public void updateLastAccessed(String username, Map<String, String> updatedParams){
 
         final HerokuService service = Utility.connectAPI();
-        System.out.println("THIS IS WHAT I NEED ");
         //Used for connecting to the network so that Post can go through
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {
@@ -176,6 +175,50 @@ public class UserModel {
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Call<ResponseBody> call = service.updateUserLastAccessed(username, updatedParams);
+            try {
+                Response<ResponseBody> response = call.execute();
+
+                if (response.isSuccessful()) {
+                    String strResponseBody = response.body().string();
+                }
+            } catch (IOException e) {
+                // ...
+            }
+        }
+    }
+
+    public void updateQueryCountLost(String username, Map<String, String> updatedParams){
+
+        final HerokuService service = Utility.connectAPI();
+        //Used for connecting to the network so that Post can go through
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Call<ResponseBody> call = service.updateUserQueryLost(username, updatedParams);
+            try {
+                Response<ResponseBody> response = call.execute();
+
+                if (response.isSuccessful()) {
+                    String strResponseBody = response.body().string();
+                }
+            } catch (IOException e) {
+                // ...
+            }
+        }
+    }
+
+    public void updateQueryCountFound(String username, Map<String, String> updatedParams){
+
+        final HerokuService service = Utility.connectAPI();
+        //Used for connecting to the network so that Post can go through
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Call<ResponseBody> call = service.updateUserQueryFound(username, updatedParams);
             try {
                 Response<ResponseBody> response = call.execute();
 

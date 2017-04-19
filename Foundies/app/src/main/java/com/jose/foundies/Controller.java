@@ -214,9 +214,34 @@ public class Controller extends Application {
         return user.first_name + " " + user.last_name;
     }
 
-    public Boolean checkQueryLostCount() { return Integer.parseInt(user.getQuery_count_lost()) < 3;}
+    public Boolean checkQueryLostCount() {
+        if(user.getQuery_count_lost() == null) {
+            user.setQuery_count_lost("0");
+            um.updateQueryCountLost(user.getEmail(), user.updateQueryCountLost());
+            return true;
+        }else if(Integer.parseInt(user.getQuery_count_lost()) < 3){
+            int count = Integer.parseInt(user.getQuery_count_lost()) + 1;
+            user.setQuery_count_lost(""+count);
+            um.updateQueryCountLost(user.getEmail(), user.updateQueryCountLost());
+            return true;
+        }else {
+            return false;
+        }
+    }
 
-    public Boolean checkQueryFoundCount() { return Integer.parseInt(user.getQuery_count_found()) < 3;}
+    public Boolean checkQueryFoundCount() {
+        if(user.getQuery_count_found() == null) {
+            user.setQuery_count_found("0");
+            um.updateQueryCountFound(user.getEmail(), user.updateQueryCountFound());
+            return true;
+        }else if(Integer.parseInt(user.getQuery_count_found()) < 3){
+            int count = Integer.parseInt(user.getQuery_count_found()) + 1;
+            user.setQuery_count_found(""+count);
+            um.updateQueryCountFound(user.getEmail(), user.updateQueryCountFound());
+            return true;
+        }
+        return false;
+    }
 
 
     /* --------------------------------- Question Controller Functionality --------------------------------- */
