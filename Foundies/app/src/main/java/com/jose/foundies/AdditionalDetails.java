@@ -1,6 +1,7 @@
 package com.jose.foundies;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,10 +53,18 @@ public class AdditionalDetails extends Activity {
 
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.setAnswers(getAnswers(), getExtraDetails());
-                Intent i = new Intent(getBaseContext(), FoundMap.class);
-                startActivity(i);
-                finish();
+                if (checkAllAnswersSelected()) {
+                    controller.setAnswers(getAnswers(), getExtraDetails());
+                    Intent i = new Intent(getBaseContext(), FoundMap.class);
+                    startActivity(i);
+                    finish();
+                }
+                else {
+                    String text = "Please select an answer for each question.";
+                    Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
             }
         });
 
@@ -191,6 +201,22 @@ public class AdditionalDetails extends Activity {
         return (int) (x * scale + 0.5f);
     }
 
+    protected boolean checkAllAnswersSelected() {
+        for (int i=0; i<questions.size(); ++i) {
+            switch (questions.get(i).getClass().getSimpleName()) {
+                case "RadioGroup" :
+                    if (((RadioGroup)questions.get(i)).getCheckedRadioButtonId() == -1)
+                        return false;
+                case "CheckBox" :
+                    // If box isn't checked, don't check if next item is checked
+                    if (!((CheckBox)questions.get(i)).isChecked())
+                        while (kinds.get(i+1).charAt(0) == '*')
+                            ++i;
+            }
+        }
+        return true;
+    }
+
     protected ArrayList<String> getAnswers() {
         ArrayList<String> answers = new ArrayList<String>();
         out.println("GET_SIMPLE_NAME:");
@@ -210,8 +236,13 @@ public class AdditionalDetails extends Activity {
                     CheckBox checkBox = (CheckBox) questions.get(i);
                     if (checkBox.isChecked())
                         answers.add("Yes");
-                    else
+                    else {
                         answers.add("No");
+                        while (kinds.get(i+1).charAt(0) == '*') {
+                            answers.add("not applicable");
+                            ++i;
+                        }
+                    }
                 default:
                     break;
             }
