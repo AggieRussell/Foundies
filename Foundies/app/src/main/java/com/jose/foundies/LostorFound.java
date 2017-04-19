@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.SynchronousQueue;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -55,6 +56,8 @@ public class LostorFound extends Activity {
 
             ListView confirmList = (ListView) findViewById(R.id.lostList);
             confirmList.setAdapter(listAdapter);
+        }else{
+            System.out.println("NOTHING WAS BROUGHT IN");
         }
 
         found.setOnClickListener(new View.OnClickListener() {

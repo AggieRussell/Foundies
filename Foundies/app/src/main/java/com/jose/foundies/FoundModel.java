@@ -161,4 +161,60 @@ public class FoundModel {
         }
         return items;
     }
+
+
+    public ArrayList<Item> getFoundItemsByUsername(String username){
+
+        final HerokuService service = Utility.connectAPI();
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Call<ResponseBody> call = service.getLostItemsByUser(username);
+            try {
+                Response<ResponseBody> response = call.execute();
+                if (response.isSuccessful()) {
+                    String strResponseBody = response.body().string();
+                    System.out.println("This is the response body" + strResponseBody);
+                    return parseJSONUserFound(strResponseBody);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Item> parseJSONUserFound(String response_str) {
+        JSONObject jObject;
+        JSONArray jArray;
+        try {
+            jObject = new JSONObject(response_str);
+            jArray = jObject.getJSONArray("items");
+            ArrayList<Item> items = new ArrayList<Item>();
+            if(jArray.isNull(0)){
+                return null;
+            }
+            for(int i = 0; i < jArray.length(); i++) {
+                JSONObject curr = new JSONObject(jArray.getString(i));
+                Item item = new Item();
+                item.setItemID(curr.getString("_id"));
+                item.setUserID(curr.getString("username"));
+                item.setCategory(curr.getString("category1"));
+                item.setSubcategory(curr.getString("category2"));
+                item.setAnswers(curr.getString("category3"));
+                item.setLatitude(curr.getString("latitude"));
+                item.setLongitude(curr.getString("longitude"));
+                item.setTimestamp(curr.getString("timestamp"));
+                items.add(item);
+            }
+            return items;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 }

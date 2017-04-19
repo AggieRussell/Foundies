@@ -89,6 +89,17 @@ public class Controller extends Application {
         }
 
     }
+/*
+    public void updateUserInfo(){
+        um.updateUserInfo(user.getEmail(), user.testForUsername("jd@test.com"));
+        System.out.println("New user email = " + user.getEmail());
+    }
+*/
+
+    public void updateUserInfo() {
+        um.updateUserInfo(user.getEmail(), user.testForUsername());
+        System.out.println("New user email = " + user.getEmail());
+    }
 
     public boolean isEmptyField(EditText fname, EditText lname, EditText email, EditText pass) {
         if (fname.getText().toString().length() <= 0) {
@@ -187,6 +198,11 @@ public class Controller extends Application {
         this.user = user;
     }
 
+    public void setUserEmail(String email){
+        user.setEmail(email);
+        System.out.println("user email after being reset:  " + user.getEmail());
+    }
+
     public String getNameOfUser(){
         return user.first_name + " " + user.last_name;
     }
@@ -270,10 +286,19 @@ public class Controller extends Application {
         return fm.getFoundItemWithCategories(currentItem);
     }
 
+    public ArrayList<Item> getUsersFoundItems(){
+        return fm.getFoundItemsByUsername(user.getEmail());
+    }
+
     /* --------------------------------- Lost Controller Functionality ------------------------------------ */
 
     public ArrayList<Item> getUsersLostItems(){
         return lm.getLostItemsByUsername(user.getEmail());
+    }
+
+    public void postLostItem(){
+        String jsonPost = lm.jsonLostPost(currentItem);
+        lm.postToLost(jsonPost);
     }
 
 

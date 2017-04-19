@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 
 import okhttp3.MediaType;
@@ -125,6 +126,30 @@ public class UserModel {
             RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), jsonPost);
             Call<ResponseBody> call = service.createUser(requestBody);
 
+            try {
+                Response<ResponseBody> response = call.execute();
+
+                if (response.isSuccessful()) {
+                    String strResponseBody = response.body().string();
+                }
+            } catch (IOException e) {
+                // ...
+            }
+        }
+    }
+
+    //Added user to database
+    public void updateUserInfo(String username, Map<String, String> updatedParams){
+
+        final HerokuService service = Utility.connectAPI();
+
+        //Used for connecting to the network so that Post can go through
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Call<ResponseBody> call = service.updateUser(username, updatedParams);
             try {
                 Response<ResponseBody> response = call.execute();
 

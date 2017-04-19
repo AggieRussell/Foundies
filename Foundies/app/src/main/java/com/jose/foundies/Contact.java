@@ -1,5 +1,8 @@
 package com.jose.foundies;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by josec on 3/4/2017.
  */
@@ -15,7 +18,7 @@ public class Contact {
 
     public Contact(){}
 
-    String first_name, last_name, email, pass, id;
+    String first_name, last_name, email, pass, id, last_accessed, query_count_found, query_count_lost;
 
     //User ID
     public void setId(String id){
@@ -26,6 +29,33 @@ public class Contact {
     }
 
     //User Password
+
+    public String getQuery_count_found() {
+        return query_count_found;
+    }
+
+    public void setQuery_count_found(String query_count_found) {
+        this.query_count_found = query_count_found;
+    }
+
+    public String getLast_accessed() {
+
+        return last_accessed;
+    }
+
+    public void setLast_accessed(String last_accessed) {
+        this.last_accessed = last_accessed;
+    }
+
+    public String getQuery_count_lost() {
+
+        return query_count_lost;
+    }
+
+    public void setQuery_count_lost(String query_count_lost) {
+        this.query_count_lost = query_count_lost;
+    }
+
     public void setPassword(String pass){
         this.pass = pass;
     }
@@ -57,6 +87,49 @@ public class Contact {
         return this.email;
     }
 
+    public Map<String, String> createContactMap(){
+        Map<String, String> contactMap = new HashMap<>();
+        contactMap.put("first_name", this.first_name);
+        contactMap.put("last_name", this.last_name);
+        contactMap.put("username", this.email);
+        contactMap.put("password", this.pass);
+        contactMap.put("last_accessed", this.last_accessed);
+        contactMap.put("query_count_found", this.query_count_found);
+        contactMap.put("query_count_lost", this.query_count_lost);
+        return contactMap;
+    }
+
+    public Map<String, String> updateLastAccessed(){
+        Map<String, String> contactMap = new HashMap<>();
+        contactMap.put("last_accessed", this.last_accessed);
+        return contactMap;
+    }
+
+    public Map<String, String> updateQueryCounts(){
+        Map<String, String> contactMap = new HashMap<>();
+        contactMap.put("query_count_found", this.query_count_found);
+        contactMap.put("query_count_lost", this.query_count_lost);
+        return contactMap;
+    }
+
+    public Map<String, String> updateQueryCountLost(){
+        Map<String, String> contactMap = new HashMap<>();
+        contactMap.put("query_count_lost", this.query_count_lost);
+        return contactMap;
+    }
+
+    public Map<String, String> updateQueryCountFound(){
+        Map<String, String> contactMap = new HashMap<>();
+        contactMap.put("query_count_found", this.query_count_found);
+        return contactMap;
+    }
+
+    public Map<String, String> testForUsername(){
+        Map<String, String> contactMap = new HashMap<>();
+        contactMap.put("first_name", "test_first_name");
+        contactMap.put("last_name", "test_last_name");
+        return contactMap;
+    }
 
 
 }

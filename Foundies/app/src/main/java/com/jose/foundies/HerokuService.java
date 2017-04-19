@@ -4,6 +4,7 @@ package com.jose.foundies;
  * Created by kylepreston on 3/27/17.
  */
 
+import java.util.Map;
 import java.util.Observable;
 
 import okhttp3.RequestBody;
@@ -13,12 +14,15 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 public interface HerokuService {
     @GET("/hello")
@@ -42,6 +46,7 @@ public interface HerokuService {
     @GET("/items/found")
     Call<ResponseBody> getFoundItems();
 
+    //Todo: Finish implementing getFoundItemsByUser
     @GET("/items/found/{username}")
     Call<ResponseBody> getFoundItemsByUser(@Path("username") String username);
 
@@ -61,5 +66,18 @@ public interface HerokuService {
 
     //Where the update for the user accessed date will be
     @PUT("/user/{username}?")
-    Call<ResponseBody> updateAccessedDate(@Path("username") String username);
+    Call<ResponseBody> updateUser(@Path("username") String username, @QueryMap Map<String, String> params);
+
+    @PUT("/user/queryLost/{:username?}")
+    Call<ResponseBody> updateUserQueryLost(@Path("username") String username, @QueryMap Map<String, String> params);
+
+    @PUT("/user/queryFound/{:username?}")
+    Call<ResponseBody> updateUserQueryFound(@Path("username") String username, @QueryMap Map<String, String> params);
+
+    //Updates the query_lost_count, query_found_count, and the last_accessed fields in the database
+    //Must sends ALL 3 in the Map<String, String> for it to work properly 
+    @PUT("/user/lastAccessed/{:username?}")
+    Call<ResponseBody> updateUserLastAccessed(@Path("username") String username, @QueryMap Map<String, String> params);
+
+
 }

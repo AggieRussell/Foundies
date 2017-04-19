@@ -38,7 +38,7 @@ public class Login extends Activity {
                     } else {
                         //TODO: where the set the user id for the current Item
                         controller.setUserID(email.getText().toString());
-                        controller.setCurrentUser(email.getText().toString());
+                        controller.updateUserInfo();
                         Intent i = new Intent(getBaseContext(), LostorFound.class);
                         startActivity(i);
                         finish();
