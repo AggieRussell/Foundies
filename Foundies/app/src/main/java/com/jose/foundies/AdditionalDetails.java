@@ -209,7 +209,7 @@ public class AdditionalDetails extends Activity {
                         return false;
                 case "CheckBox" :
                     // If box isn't checked, don't check if next item is checked
-                    if (!((CheckBox)questions.get(i)).isChecked())
+                    if (!(((CheckBox)questions.get(i)).isChecked()))
                         while ((i+1)<kinds.size() && kinds.get(i+1).charAt(0) == '*')
                             ++i;
             }
