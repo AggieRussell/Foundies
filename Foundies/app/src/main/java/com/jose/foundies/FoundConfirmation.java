@@ -43,7 +43,7 @@ public class FoundConfirmation extends AppCompatActivity {
         Map<String,String> datum;
         for (int i = 0; i < controller.getAnswers().size(); ++i){
             datum = new HashMap<String,String>(2);
-            datum.put("Question", controller.getQuestions().get(i).getName());
+            datum.put("Question", controller.getNames().get(i));
             datum.put("Answer", controller.getAnswers().get(i));
             data.add(datum);
         }
