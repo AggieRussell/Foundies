@@ -190,4 +190,25 @@ public class QuestionModel {
         return q3choices;
     }
 
+    public ArrayList<ArrayList<String>> getSubsequentChoices(ArrayList<ArrayList<String>> choices, int questionIndex) {
+        ArrayList<ArrayList<String>> subsequentChoices = new ArrayList<ArrayList<String>>();
+        ArrayList<String> allChoices = choices.get(questionIndex);
+        String concat = "";
+        for (int i=0; i<allChoices.size(); ++i) {
+            concat += allChoices.get(i).replaceAll(" ", "_");
+            concat += " ";
+        }
+        out.println("CONCAT: " + concat);
+        String[] splitByPreviousChoice = concat.split(", ");
+        for (int i=0; i<splitByPreviousChoice.length; ++i) {
+            ArrayList<String> currSubsequentChoices = new ArrayList<String>();
+            out.println("CURRENT STRING: " + splitByPreviousChoice[i]);
+            String[] splitChoices = splitByPreviousChoice[i].split(" ");
+            for (int j=0; j<splitChoices.length; ++j) {
+                currSubsequentChoices.add(splitChoices[j].replaceAll("_"," "));
+            }
+            subsequentChoices.add(currSubsequentChoices);
+        }
+        return subsequentChoices;
+    }
 }

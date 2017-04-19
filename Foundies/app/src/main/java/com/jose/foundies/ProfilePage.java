@@ -42,12 +42,16 @@ public class ProfilePage extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private ArrayList<Item> foundItems;
+    private ArrayList<Item> lostItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
         final Controller controller = (Controller) getApplicationContext();
+        foundItems = controller.getUsersFoundItems();
+        lostItems = controller.getUsersLostItems();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("My Profile");
         setSupportActionBar(toolbar);
@@ -61,8 +65,6 @@ public class ProfilePage extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-
 
     }
 
@@ -110,9 +112,11 @@ public class ProfilePage extends AppCompatActivity {
                     return tab1;
                 case 1:
                     ProfileTab2 tab2 = new ProfileTab2();
+                    tab2.setFoundItems(foundItems);
                     return tab2;
                 case 2:
                     ProfileTab3 tab3 = new ProfileTab3();
+                    tab3.setLostItems(lostItems);
                     return tab3;
                 default:
                     return null;
