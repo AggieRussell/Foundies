@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,17 @@ import java.util.Map;
  */
 
 public class ProfileTab2 extends Fragment{
+
+    private ArrayList<Item> foundItems;
+
+    public ArrayList<Item> getFoundItems() {
+        return foundItems;
+    }
+
+    public void setFoundItems(ArrayList<Item> foundItems) {
+        this.foundItems = foundItems;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,12 +52,12 @@ public class ProfileTab2 extends Fragment{
 
         List<Map<String, String>> data = new ArrayList<Map<String, String>>();
         Map<String,String> datum2;
-        if(controller.getUsersFoundItems() !=null) {
-            for (int i = 0; i < controller.getUsersFoundItems().size(); ++i) {
-                System.out.println("SIZE: " + controller.getUsersFoundItems().size());
+        if(foundItems !=null) {
+            for (int i = 0; i < foundItems.size(); ++i) {
+                System.out.println("SIZE: " + foundItems.size());
                 datum2 = new HashMap<String, String>(2);
-                datum2.put("Question", controller.getUsersFoundItems().get(i).getCategory());
-                datum2.put("Answer", controller.getUsersFoundItems().get(i).getSubcategory());
+                datum2.put("Question", foundItems.get(i).getCategory());
+                datum2.put("Answer", foundItems.get(i).getSubcategory());
                 data.add(datum2);
             }
 

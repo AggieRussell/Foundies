@@ -20,6 +20,17 @@ import java.util.Map;
  */
 
 public class ProfileTab3 extends Fragment{
+
+    public ArrayList<Item> getLostItems() {
+        return lostItems;
+    }
+
+    public void setLostItems(ArrayList<Item> lostItems) {
+        this.lostItems = lostItems;
+    }
+
+    private ArrayList<Item> lostItems;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,12 +50,12 @@ public class ProfileTab3 extends Fragment{
 
         List<Map<String, String>> data = new ArrayList<Map<String, String>>();
         Map<String,String> datum2;
-        if(controller.getUsersLostItems() !=null) {
-            for (int i = 0; i < controller.getUsersLostItems().size(); ++i) {
-                System.out.println("SIZE: " + controller.getUsersLostItems().size());
+        if(lostItems !=null) {
+            for (int i = 0; i < lostItems.size(); ++i) {
+                System.out.println("SIZE: " + lostItems.size());
                 datum2 = new HashMap<String, String>(2);
-                datum2.put("Question", controller.getUsersLostItems().get(i).getCategory());
-                datum2.put("Answer", controller.getUsersLostItems().get(i).getSubcategory());
+                datum2.put("Question", lostItems.get(i).getCategory());
+                datum2.put("Answer", lostItems.get(i).getSubcategory());
                 data.add(datum2);
             }
 
