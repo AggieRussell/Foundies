@@ -36,8 +36,7 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:background="#999999"
-            android:popupBackground="#999999" />
+            android:background="#999999"/>
 
         <TextView
             android:text="Sub-Category"
@@ -55,8 +54,7 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:background="#999999"
-            android:popupBackground="#999999" />
+            android:background="#999999"/>
 
         <Button
             android:text="Next"
