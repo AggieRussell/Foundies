@@ -36,9 +36,7 @@ public class Login extends Activity {
                     if (check != null) {
                         Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
                     } else {
-                        //TODO: where the set the user id for the current Item
                         controller.setUserID(email.getText().toString());
-                        controller.updateUserInfo();
                         Intent i = new Intent(getBaseContext(), LostorFound.class);
                         startActivity(i);
                         finish();

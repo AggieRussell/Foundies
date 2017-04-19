@@ -101,6 +101,10 @@ public class Controller extends Application {
         System.out.println("New user email = " + user.getEmail());
     }
 
+    public void updatedLastAccessed(){
+        um.updateLastAccessed(user.getEmail(), user.updatedLastAccessed());
+    }
+
     public boolean isEmptyField(EditText fname, EditText lname, EditText email, EditText pass) {
         if (fname.getText().toString().length() <= 0) {
             return false;

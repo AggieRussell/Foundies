@@ -131,5 +131,13 @@ public class Contact {
         return contactMap;
     }
 
+    public Map<String, String> updatedLastAccessed(){
+        Map<String, String> contactMap = new HashMap<>();
+        contactMap.put("last_accessed", Utility.getDate());
+        contactMap.put("query_count_found", "0");
+        contactMap.put("query_count_lost", "0");
+        return contactMap;
+    }
+
 
 }

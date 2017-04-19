@@ -103,6 +103,9 @@ public class UserModel {
             user.setFname(curr.getString("first_name"));
             user.setLname(curr.getString("last_name"));
             user.setPassword(curr.getString("password"));
+            user.setLast_accessed(curr.getString("last_accessed"));
+            user.setQuery_count_found(curr.getString("query_count_found"));
+            user.setQuery_count_lost(curr.getString("query_count_lost"));
             return user;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -150,6 +153,29 @@ public class UserModel {
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Call<ResponseBody> call = service.updateUser(username, updatedParams);
+            try {
+                Response<ResponseBody> response = call.execute();
+
+                if (response.isSuccessful()) {
+                    String strResponseBody = response.body().string();
+                }
+            } catch (IOException e) {
+                // ...
+            }
+        }
+    }
+    //PUT operation for updating the date the app was last accessed by a user
+    public void updateLastAccessed(String username, Map<String, String> updatedParams){
+
+        final HerokuService service = Utility.connectAPI();
+
+        //Used for connecting to the network so that Post can go through
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Call<ResponseBody> call = service.updateUserLastAccessed(username, updatedParams);
             try {
                 Response<ResponseBody> response = call.execute();
 

@@ -37,8 +37,11 @@ public interface HerokuService {
     @GET("/questions/qs?")
     Call<ResponseBody> getQuestionsWithQs(@Query("q1") String q1, @Query("q2") String q2);
 
-    @GET("/items/found/bycategories?")
+    @GET("/items/found/bycategories/")
     Call<ResponseBody> getFoundItemWithCategories(@Query("cc") String q1, @Query("sc") String q2);
+
+    @GET("/items/lost/bycategories/")
+    Call<ResponseBody> getLostItemWithCategories(@Query("cc") String q1, @Query("sc") String q2);
 
     @GET("/user/{username}")
     Call<ResponseBody> getUsersByUsername(@Path("username") String username);
@@ -75,7 +78,8 @@ public interface HerokuService {
     Call<ResponseBody> updateUserQueryFound(@Path("username") String username, @QueryMap Map<String, String> params);
 
     //Updates the query_lost_count, query_found_count, and the last_accessed fields in the database
-    //Must sends ALL 3 in the Map<String, String> for it to work properly 
+    //Must sends ALL 3 in the Map<String, String> for it to work properly
+    // PUT operation for updating the date the app was last accessed by a user
     @PUT("/user/lastAccessed/{:username?}")
     Call<ResponseBody> updateUserLastAccessed(@Path("username") String username, @QueryMap Map<String, String> params);
 
