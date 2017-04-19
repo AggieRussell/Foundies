@@ -41,7 +41,7 @@ public class LostModel {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
                     String strResponseBody = response.body().string();
-                    return parseJSONUserFound(strResponseBody);
+                    return parseJSONUserLost(strResponseBody);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -50,16 +50,17 @@ public class LostModel {
         return null;
     }
 
-    public ArrayList<Item> parseJSONUserFound(String response_str) {
+    public ArrayList<Item> parseJSONUserLost(String response_str) {
         JSONObject jObject;
         JSONArray jArray;
         try {
             jObject = new JSONObject(response_str);
-            jArray = jObject.getJSONArray("item");
+            jArray = jObject.getJSONArray("items");
             ArrayList<Item> items = new ArrayList<Item>();
             if(jArray.isNull(0)){
                 return null;
             }
+
             for(int i = 0; i < jArray.length(); i++) {
                 JSONObject curr = new JSONObject(jArray.getString(i));
                 Item item = new Item();

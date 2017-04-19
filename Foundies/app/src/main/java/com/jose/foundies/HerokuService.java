@@ -42,7 +42,7 @@ public interface HerokuService {
     @GET("/items/found")
     Call<ResponseBody> getFoundItems();
 
-    @GET("/items/lost/username")
+    @GET("/items/lost/{username}")
     Call<ResponseBody> getItemsByUser(@Path("username") String username);
 
     //FormUrlEncoded
