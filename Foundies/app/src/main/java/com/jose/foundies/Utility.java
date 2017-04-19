@@ -35,7 +35,7 @@ public final class Utility {
     }
 
     public static String getDate(){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MMMMM.dd GGG hh:mm aaa", Locale.ENGLISH);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date now = new Date();
         String date = formatter.format(now);
         return date;

@@ -38,7 +38,7 @@ public class Login extends Activity {
                         Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
                     } else {
                         controller.setUserID(email.getText().toString());
-                        Intent i = new Intent(getBaseContext(), LostorFound.class);
+                        Intent i = new Intent(getBaseContext(), ProfilePage.class);
                         startActivity(i);
                         finish();
                     }

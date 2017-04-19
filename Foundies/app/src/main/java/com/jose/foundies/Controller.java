@@ -148,9 +148,9 @@ public class Controller extends Application {
 
     public void updateLastAccessed(){
         //System.out.println("THis is the check: ");
-        //if(!(user.last_accessed.equals(Utility.getDate()))) {
-        //System.out.println("in side update");
-        um.updateLastAccessed(user.getEmail(), user.updateLastAccessed());
+        if(!(user.last_accessed.equals(Utility.getDate()))) {
+            um.updateLastAccessed(user.getEmail(), user.updateLastAccessed());
+        }
     }
 
     private boolean isValidEmail(CharSequence target) {
@@ -213,6 +213,10 @@ public class Controller extends Application {
     public String getNameOfUser(){
         return user.first_name + " " + user.last_name;
     }
+
+    public Boolean checkQueryLostCount() { return Integer.parseInt(user.getQuery_count_lost()) < 3;}
+
+    public Boolean checkQueryFoundCount() { return Integer.parseInt(user.getQuery_count_found()) < 3;}
 
 
     /* --------------------------------- Question Controller Functionality --------------------------------- */

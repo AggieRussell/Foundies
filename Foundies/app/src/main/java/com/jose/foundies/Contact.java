@@ -140,10 +140,13 @@ public class Contact {
     }
 
     public Map<String, String> updateLastAccessed(){
+        this.query_count_found = "0";
+        this.query_count_lost = "0";
+        this.last_accessed = Utility.getDate();
         Map<String, String> contactMap = new HashMap<>();
-        contactMap.put("query_count_found", "0");
-        contactMap.put("query_count_lost", "0");
-        contactMap.put("last_accessed", Utility.getDate());
+        contactMap.put("query_count_found", this.query_count_found);
+        contactMap.put("query_count_lost", this.query_count_lost);
+        contactMap.put("last_accessed", this.last_accessed);
         return contactMap;
     }
 
