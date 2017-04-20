@@ -25,8 +25,6 @@ import retrofit2.Retrofit;
 
 public class LostModel {
 
-
-
     public void LostItemModel(){}
 
     public String jsonLostPost(Item f) {
@@ -74,7 +72,6 @@ public class LostModel {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
                     String strResponseBody = response.body().string();
-                    System.out.println("This is the response body" + strResponseBody);
                     return parseJSONUserLost(strResponseBody);
                 }
             } catch (IOException e) {
@@ -105,16 +102,90 @@ public class LostModel {
                 item.setLatitude(curr.getString("latitude"));
                 item.setLongitude(curr.getString("longitude"));
                 item.setTimestamp(curr.getString("timestamp"));
-                System.out.println("This is item " + i + " . With _id: " + item.getItemID());
                 items.add(item);
             }
-            System.out.println("This is the items arrayList: " + items.get(0).getCategory() + "-- \n this is the other -- " + items.get(1).getCategory());
             return items;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
 
+    }
+
+    public ArrayList<Item> parseJSON(String strResponseBodyLost) {
+        JSONObject jObject;
+        JSONArray jArray;
+        try {
+            jObject = new JSONObject(strResponseBodyLost);
+            jArray = jObject.getJSONArray("lost");
+            ArrayList<Item> lostItems = new ArrayList<Item>();
+            for (int i = 0; i < jArray.length(); ++i) {
+                Item lost = new Item();
+                JSONObject curr = new JSONObject(jArray.getString(i));
+                if (curr.getString("_id").isEmpty()) {
+                    return null;
+                } else {
+                    lost.setItemID(curr.getString("_id"));
+                    lost.setCategory(curr.getString("category1"));
+                    lost.setSubcategory(curr.getString("category2"));
+                    lost.setAnswers(curr.getString("category3"));
+                    lost.setLatitude(curr.getString("latitude"));
+                    lost.setLongitude(curr.getString("longitude"));
+                    lost.setTimestamp(curr.getString("timestamp"));
+                    lost.setUserID(curr.getString("username"));
+                    lostItems.add(lost);
+                }
+            }
+            return lostItems;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+
+    public ArrayList<Item> getLostItemWithCategories(Item item) {
+        final HerokuService service = Utility.connectAPI();
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Call<ResponseBody> call = service.getLostItemWithCategories(item.getCategory(), item.getSubcategory());
+            try {
+                Response<ResponseBody> response = call.execute();
+                if (response.isSuccessful()) {
+                    String strResponseBodyLost = response.body().string();
+                    ArrayList<Item> items = parseJSON(strResponseBodyLost);
+                    return findMatches(items, item);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Item> findMatches(ArrayList<Item> items, Item itemToMatch) {
+        ArrayList<String> answers = itemToMatch.getAnswers();
+        for (int i=items.size()-1; i>=0; --i) {
+            ArrayList<String> currentAnswers = items.get(i).getAnswers();
+            int matches = 0;
+            for(int j=0; j<answers.size(); ++j) {
+                if(answers.get(j).equals(currentAnswers.get(j)) || answers.get(j).equals("Other") ||
+                        currentAnswers.get(j).equals("Other")) {
+                    ++matches;
+                }
+            }
+            if ((double)(matches/answers.size()) < 0.75)
+                items.remove(i);
+        }
+        for (int i=0; i<items.size(); ++i) {
+            items.get(i).printItem();
+        }
+        return items;
     }
 
 }

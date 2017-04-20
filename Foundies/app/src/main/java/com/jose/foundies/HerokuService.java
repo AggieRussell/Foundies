@@ -83,5 +83,8 @@ public interface HerokuService {
     @PUT("/user/lastAccessed/{username}?")
     Call<ResponseBody> updateUserLastAccessed(@Path("username") String username, @QueryMap Map<String, String> params);
 
+    @PUT("/user/update/{username}?")
+    Call<ResponseBody> updateUserInfo(@Path("username") String username, @QueryMap Map<String, String> params);
+
 
 }

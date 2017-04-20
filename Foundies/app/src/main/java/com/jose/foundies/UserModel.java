@@ -141,30 +141,6 @@ public class UserModel {
         }
     }
 
-    //Added user to database
-    public void updateUserInfo(String username, Map<String, String> updatedParams){
-
-        final HerokuService service = Utility.connectAPI();
-
-        //Used for connecting to the network so that Post can go through
-        int SDK_INT = android.os.Build.VERSION.SDK_INT;
-        if (SDK_INT > 8) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            Call<ResponseBody> call = service.updateUser(username, updatedParams);
-            try {
-                Response<ResponseBody> response = call.execute();
-
-                if (response.isSuccessful()) {
-                    String strResponseBody = response.body().string();
-                }
-            } catch (IOException e) {
-                // ...
-            }
-        }
-    }
-
     public void updateLastAccessed(String username, Map<String, String> updatedParams){
 
         final HerokuService service = Utility.connectAPI();
@@ -219,6 +195,28 @@ public class UserModel {
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Call<ResponseBody> call = service.updateUserQueryFound(username, updatedParams);
+            try {
+                Response<ResponseBody> response = call.execute();
+
+                if (response.isSuccessful()) {
+                    String strResponseBody = response.body().string();
+                }
+            } catch (IOException e) {
+                // ...
+            }
+        }
+    }
+
+    public void updateUserInfo(String username, Map<String, String> updatedParams){
+
+        final HerokuService service = Utility.connectAPI();
+        //Used for connecting to the network so that Post can go through
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Call<ResponseBody> call = service.updateUserInfo(username, updatedParams);
             try {
                 Response<ResponseBody> response = call.execute();
 

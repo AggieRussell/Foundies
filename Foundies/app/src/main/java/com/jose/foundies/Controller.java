@@ -90,17 +90,6 @@ public class Controller extends Application {
         }
 
     }
-/*
-    public void updateUserInfo(){
-        um.updateUserInfo(user.getEmail(), user.testForUsername("jd@test.com"));
-        System.out.println("New user email = " + user.getEmail());
-    }
-*/
-
-    public void updateUserInfo() {
-        um.updateUserInfo(user.getEmail(), user.testForUsername());
-        System.out.println("New user email = " + user.getEmail());
-    }
 
     public boolean isEmptyField(EditText fname, EditText lname, EditText email, EditText pass) {
         if (fname.getText().toString().length() <= 0) {
@@ -151,6 +140,11 @@ public class Controller extends Application {
         if(!(user.last_accessed.equals(Utility.getDate()))) {
             um.updateLastAccessed(user.getEmail(), user.updateLastAccessed());
         }
+    }
+
+    //Once the user has had it's elements updated, this function will PUT those changes in the database
+    public void updateUserInfo() {
+        um.updateUserInfo(user.getEmail(), user.updateUserInfo());
     }
 
     private boolean isValidEmail(CharSequence target) {
@@ -333,6 +327,11 @@ public class Controller extends Application {
 
     public ArrayList<Item> getUsersLostItems(){
         return lm.getLostItemsByUsername(user.getEmail());
+    }
+
+    //Used for filtering the matches of a found item and the lost items
+    public ArrayList<Item> getLostItems(){
+        return lm.getLostItemWithCategories(currentItem);
     }
 
     public void postLostItem(){

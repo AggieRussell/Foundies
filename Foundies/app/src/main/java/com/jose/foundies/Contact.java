@@ -132,10 +132,12 @@ public class Contact {
         return contactMap;
     }
 
-    public Map<String, String> testForUsername(){
+    public Map<String, String> updateUserInfo(){
         Map<String, String> contactMap = new HashMap<>();
-        contactMap.put("query_count_found", "0");
-        contactMap.put("query_count_lost", "0");
+        contactMap.put("first_name", this.first_name);
+        contactMap.put("last_name", this.last_name);
+        contactMap.put("email", this.email);
+        contactMap.put("password", this.pass);
         return contactMap;
     }
 
