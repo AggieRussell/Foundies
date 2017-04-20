@@ -64,6 +64,10 @@ public interface HerokuService {
     @POST("/items/found")
     Call<ResponseBody> createFoundItem(@Body RequestBody user);
 
+    //FormUrlEncoded
+    @POST("/items/lost")
+    Call<ResponseBody> createLostItem(@Body RequestBody user);
+
     @DELETE("/user/{id}")
     Call<ResponseBody> deleteUser(@Path("id") String username);
 

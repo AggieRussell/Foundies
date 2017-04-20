@@ -33,11 +33,11 @@ public class Login extends Activity {
                 if(view.getId()== R.id.login_button) {
 
                     String check = controller.checkCredentials(email, password);
-                    controller.updateLastAccessed();
                     if (check != null) {
                         Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
                     } else {
                         controller.setUserID(email.getText().toString());
+                        controller.updateLastAccessed();
                         Intent i = new Intent(getBaseContext(), ProfilePage.class);
                         startActivity(i);
                         finish();

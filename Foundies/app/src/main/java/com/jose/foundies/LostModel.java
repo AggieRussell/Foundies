@@ -46,7 +46,7 @@ public class LostModel {
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
             RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), jsonPost);
-            Call<ResponseBody> call = service.createFoundItem(requestBody);
+            Call<ResponseBody> call = service.createLostItem(requestBody);
             try {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
