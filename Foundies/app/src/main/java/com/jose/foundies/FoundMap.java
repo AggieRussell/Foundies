@@ -1,9 +1,8 @@
 package com.jose.foundies;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -11,10 +10,10 @@ import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +29,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -117,14 +117,36 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        // Create the AlertDialog
+        final AlertDialog dialog = builder.create();
+
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.cancel();
+            }
+        });
+
+        mMap = googleMap;
         if(myLocation != null) {
             LatLng currentLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 10));
         }
-
-        mMap = googleMap;
         controller = (Controller) getApplicationContext();
+        System.out.println("Jason: " + controller.getLatitude() + " " + controller.getLongitude());
+        if(controller.getLatitude() != 0.0 && controller.getLongitude() != 0.0){
+            LatLng currentLocation = new LatLng(controller.getLatitude(), controller.getLongitude());
+            if(currentLocation != null) {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 13));
+                center.setLatitude(controller.getLatitude());
+                center.setLongitude(controller.getLongitude());
+                foundItems(center);
+            }
+        }
+
+
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -152,7 +174,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
         mileValue.setVisibility(View.GONE);
 
         Button backButton = (Button) findViewById(R.id.backButton);
-        Button nextButton = (Button) findViewById(R.id.nextButton);
+        final Button nextButton = (Button) findViewById(R.id.nextButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,7 +186,10 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
         });
 
         if(isLost) {
-
+            dialog.setMessage("1. Select a location where you lost your item\n\n" +
+                    "2. Click on a marker to see if it is your item\n\n" +
+                    "3. If no red marker is yours, click the next button to post your lost item");
+            dialog.show();
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
@@ -203,7 +228,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     mMap.clear();
-                    lostItems(center);
+                    foundItems(center);
                     //Toast.makeText(getApplicationContext(), String.valueOf(radiusValue),Toast.LENGTH_LONG).show();
                 }
             });
@@ -231,8 +256,11 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                             centerLatLng = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
                             center.setLatitude(centerLatLng.latitude);
                             center.setLongitude(centerLatLng.longitude);
-                            lostItems(center);
+                            controller.setLatLong(centerLatLng.latitude, centerLatLng.longitude);
+                            foundItems(center);
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerLatLng, 13));
+                            mMap.addMarker(new MarkerOptions().position(centerLatLng).title(place.getName().toString())
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                         }
                         catch(NullPointerException e){
 
@@ -255,16 +283,26 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                        Toast toast = Toast.makeText(getApplicationContext(), "TODO: Decide what's after lost map", Toast.LENGTH_SHORT);
+                    FoundConfirmation.setIsLost(true);
+                    if(chosenLocation != null) {
+                        Intent i = new Intent(getBaseContext(), FoundConfirmation.class);
+                        startActivity(i);
+                        finish();
+                    }
+                    else{
+                        Toast toast = Toast.makeText(getApplicationContext(), "Select Location", Toast.LENGTH_SHORT);
                         toast.show();
+                    }
                 }
             });
         }
         else{
-
+            dialog.setMessage("Select the location where you found the item");
+            dialog.show();
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    FoundConfirmation.setIsLost(false);
                     if(chosenLocation != null) {
                         Intent i = new Intent(getBaseContext(), FoundConfirmation.class);
                         startActivity(i);
@@ -291,7 +329,8 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                     if(locationText != null && !locationText.equals("")){
                         try {
                             LatLng dropPin = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
-                            mMap.addMarker(new MarkerOptions().position(dropPin).title(place.getName().toString()));
+                            mMap.addMarker(new MarkerOptions().position(dropPin).title(place.getName().toString())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                             controller.setLatLong(dropPin.latitude, dropPin.longitude);
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dropPin, 15));
                         }
@@ -319,9 +358,10 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
 
 
     }
-    public void lostItems(Location loc)
+    public void foundItems(Location loc)
     {
         ArrayList<Item> itemsFound = controller.getFoundItems();
+        System.out.println("Jason: " + itemsFound.size());
         for(Item item : itemsFound){
             LatLng dropPin = new LatLng(item.getLatitude(), item.getLongitude());
             Location location = new Location("");

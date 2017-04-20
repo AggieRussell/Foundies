@@ -23,6 +23,15 @@ import java.util.Map;
 
 public class FoundConfirmation extends AppCompatActivity {
 
+    public static boolean isLost() {
+        return isLost;
+    }
+
+    public static void setIsLost(boolean isLost) {
+        FoundConfirmation.isLost = isLost;
+    }
+
+    private static boolean isLost = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,16 +87,15 @@ public class FoundConfirmation extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "POSTED TO DATABASE", Toast.LENGTH_SHORT);
-                //TODO: Get rid of print statements
-                System.out.println("This is the user: " + controller.getUserId());
-                System.out.println("This is the lat: " + controller.getLatitude().toString());
-                System.out.println("This is the long: " + controller.getLongitude().toString());
-                System.out.println("This is the answers: " + controller.getAnswersString());
-                System.out.println("This is the category: " + controller.getCategory());
-                System.out.println("This is the suncategory: " + controller.getSubcategory());
-                System.out.println("This is the time: " + Utility.getDate());
-                controller.postFoundItem();
+                Toast toast = null;
+                if(isLost){
+                    toast = Toast.makeText(getApplicationContext(), "POSTED TO LOST DATABASE", Toast.LENGTH_SHORT);
+                    controller.postLostItem();
+                }
+                else {
+                    toast = Toast.makeText(getApplicationContext(), "POSTED TO FOUND DATABASE", Toast.LENGTH_SHORT);
+                    controller.postFoundItem();
+                }
                 toast.show();
                 Intent lostOrFound = new Intent(getBaseContext(), ProfilePage.class);
                 startActivity(lostOrFound);
