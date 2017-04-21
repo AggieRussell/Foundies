@@ -217,4 +217,26 @@ public class FoundModel {
         }
 
     }
+
+    public void deleteFoundItem(Item item) {
+
+        final HerokuService service = Utility.connectAPI();
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            Call<ResponseBody> call = service.deleteFoundItem(item.getItemID());
+            try {
+                Response<ResponseBody> response = call.execute();
+                if (response.isSuccessful()) {
+                    String strResponseBody = response.body().string();
+                }
+            } catch (IOException e) {
+                // ...
+            }
+        }
+    }
 }

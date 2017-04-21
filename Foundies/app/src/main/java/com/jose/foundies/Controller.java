@@ -237,6 +237,10 @@ public class Controller extends Application {
         return false;
     }
 
+    public Contact getUser(){
+        return this.user;
+    }
+
 
     /* --------------------------------- Question Controller Functionality --------------------------------- */
 
@@ -323,6 +327,10 @@ public class Controller extends Application {
         return fm.getFoundItemsByUsername(user.getEmail());
     }
 
+    public void deleteFoundItem(Item item){
+        fm.deleteFoundItem(item);
+    }
+
     /* --------------------------------- Lost Controller Functionality ------------------------------------ */
 
     public ArrayList<Item> getUsersLostItems(){
@@ -337,6 +345,10 @@ public class Controller extends Application {
     public void postLostItem(){
         String jsonPost = lm.jsonLostPost(currentItem);
         lm.postToLost(jsonPost);
+    }
+
+    public void deleteLostItem(Item item){
+        lm.deleteLostItem(item);
     }
 
 
