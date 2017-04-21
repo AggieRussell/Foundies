@@ -106,9 +106,11 @@ public class ProfileTab2 extends Fragment{
                 //}
             }
         });
-        ListView confirmList = (ListView) rootView.findViewById(R.id.foundList);
-        CustomList adapter = new CustomList(this.getContext(), foundItems);
-        confirmList.setAdapter(adapter);
+        if(foundItems != null) {
+            ListView confirmList = (ListView) rootView.findViewById(R.id.foundList);
+            CustomList adapter = new CustomList(this.getContext(), foundItems);
+            confirmList.setAdapter(adapter);
+        }
         //confirmList.setAdapter(listAdapter2);
         return rootView;
     }

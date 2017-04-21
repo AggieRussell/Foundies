@@ -114,9 +114,11 @@ public class ProfileTab3 extends Fragment{
             }
         });
 
-        ListView confirmList = (ListView) rootView.findViewById(R.id.lostList);
-        CustomList2 adapter = new CustomList2(this.getContext(), lostItems);
-        confirmList.setAdapter(adapter);
+        if(lostItems != null) {
+            ListView confirmList = (ListView) rootView.findViewById(R.id.lostList);
+            CustomList2 adapter = new CustomList2(this.getContext(), lostItems);
+            confirmList.setAdapter(adapter);
+        }
         return rootView;
     }
 }
