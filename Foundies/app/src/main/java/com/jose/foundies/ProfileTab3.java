@@ -2,10 +2,12 @@ package com.jose.foundies;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +66,37 @@ class CustomList2 extends BaseAdapter {
         txtListChild2.setText(items.get(i).getSubcategory());
 
         Button listButton = (Button) view.findViewById(R.id.listButton);
+        Button deleteButton = (Button) view.findViewById(R.id.deleteButton);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                // Create the AlertDialog
+                final AlertDialog dialog = builder.create();
+
+                dialog.setMessage("Are you sure you want to delete this item?");
+
+                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        controller.deleteLostItem(items.get(index));
+                        items.remove(index);
+                        notifyDataSetChanged();
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
+            }
+        });
         //listButton.setBackground(ContextCompat.getDrawable(context, R.drawable.small_back));
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override

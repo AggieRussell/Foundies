@@ -87,19 +87,19 @@ public class FoundConfirmation extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = null;
-                if(isLost){
-                    toast = Toast.makeText(getApplicationContext(), "POSTED TO LOST DATABASE", Toast.LENGTH_SHORT);
-                    controller.postLostItem();
-                }
-                else {
-                    toast = Toast.makeText(getApplicationContext(), "POSTED TO FOUND DATABASE", Toast.LENGTH_SHORT);
-                    controller.postFoundItem();
-                }
-                toast.show();
-                Intent lostOrFound = new Intent(getBaseContext(), ProfilePage.class);
-                startActivity(lostOrFound);
-                finish();
+            Toast toast = null;
+            if(isLost){
+                toast = Toast.makeText(getApplicationContext(), "POSTED TO LOST DATABASE", Toast.LENGTH_SHORT);
+                controller.postLostItem();
+            }
+            else {
+                toast = Toast.makeText(getApplicationContext(), "POSTED TO FOUND DATABASE", Toast.LENGTH_SHORT);
+                controller.postFoundItem();
+            }
+            toast.show();
+            Intent lostOrFound = new Intent(getBaseContext(), ProfilePage.class);
+            startActivity(lostOrFound);
+            finish();
             }
         });
 

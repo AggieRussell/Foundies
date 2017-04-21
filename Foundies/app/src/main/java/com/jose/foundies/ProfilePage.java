@@ -133,7 +133,7 @@ public class ProfilePage extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "NOTIFICATIONS";
+                    return "HOME";
                 case 1:
                     return "FOUND ITEMS";
                 case 2:

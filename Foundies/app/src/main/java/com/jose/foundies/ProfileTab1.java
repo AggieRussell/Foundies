@@ -1,5 +1,6 @@
 package com.jose.foundies;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -31,7 +33,27 @@ public class ProfileTab1 extends Fragment{
         final Controller controller = (Controller) getActivity().getApplicationContext();
 
         TextView welcomeText = (TextView) rootView.findViewById(R.id.welcomeText);
+        TextView lostQueryText = (TextView) rootView.findViewById((R.id.lostQueries));
+        TextView foundQueryText = (TextView) rootView.findViewById((R.id.foundQueries));
+        TextView emailText = (TextView) rootView.findViewById((R.id.emailText));
+
+        int queryCountLostLeft = 3 - Integer.parseInt(controller.getUser().getQuery_count_lost());
+        int queryCountFoundLeft = 3 - Integer.parseInt(controller.getUser().getQuery_count_found());
+
         welcomeText.setText("Welcome " + controller.getNameOfUser() + "!");
+        lostQueryText.setText("Lost searches left: " + queryCountLostLeft);
+        foundQueryText.setText("Found searches left: " + queryCountFoundLeft);
+        emailText.setText("Email: " + controller.getUser().getEmail());
+
+        Button logoutButton = (Button) rootView.findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ProfileTab1.this.getContext(), LoadScreen.class);
+                startActivity(i);
+                getActivity().finish();
+            }
+        });
         return rootView;
     }
 }

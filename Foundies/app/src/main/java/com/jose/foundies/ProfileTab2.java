@@ -1,9 +1,11 @@
 package com.jose.foundies;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,9 +69,30 @@ class CustomList extends BaseAdapter {
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.deleteFoundItem(item);
-                items.remove(index);
-                notifyDataSetChanged();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                // Create the AlertDialog
+                final AlertDialog dialog = builder.create();
+
+                dialog.setMessage("Are you sure you want to delete this item?");
+
+                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        controller.deleteFoundItem(item);
+                        items.remove(index);
+                        notifyDataSetChanged();
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
             }
         });
         return view;

@@ -187,8 +187,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
 
         if(isLost) {
             dialog.setMessage("1. Select a location where you lost your item\n\n" +
-                    "2. Click on a marker to see if it is your item\n\n" +
-                    "3. If no red marker is yours, click the next button to post your lost item");
+                    "2. Click on a marker or the save item button to find a match or post an item");
             dialog.show();
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
@@ -283,9 +282,9 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FoundConfirmation.setIsLost(true);
+                    //FoundConfirmation.setIsLost(true);
                     if(chosenLocation != null) {
-                        Intent i = new Intent(getBaseContext(), FoundConfirmation.class);
+                        Intent i = new Intent(getBaseContext(), LostConfirmation.class);
                         startActivity(i);
                         finish();
                     }

@@ -17,11 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:hardwareAccelerated="false">
-        <activity android:name=".LoadScreen">
+        <activity android:name=".LoadScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".Login"
@@ -29,11 +31,16 @@
         <activity
             android:name=".ProfilePage"
             android:screenOrientation="portrait" />
-        <activity android:name=".Register" />
-        <activity android:name=".AdditionalDetails" />
-        <activity android:name=".Categories" />
-        <activity android:name=".SubCategories" />
-        <activity android:name=".Qs" />
+        <activity android:name=".Register"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AdditionalDetails"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Categories"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SubCategories"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Qs"
+            android:screenOrientation="portrait"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

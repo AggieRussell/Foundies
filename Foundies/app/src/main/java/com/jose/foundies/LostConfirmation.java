@@ -1,10 +1,12 @@
 package com.jose.foundies;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -146,6 +148,8 @@ public class LostConfirmation extends AppCompatActivity {
         final TextView selectedItem = (TextView) findViewById(R.id.selectedItem);
         expList.setAdapter(adapter);
 
+
+
         expList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int i) {
@@ -163,25 +167,81 @@ public class LostConfirmation extends AppCompatActivity {
 
         Button nextButton = (Button) findViewById(R.id.nextButton);
         Button backButton = (Button) findViewById(R.id.backButton);
+        Button postButton = (Button) findViewById(R.id.postButton);
+
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(LostConfirmation.this);
+
+                // Create the AlertDialog
+                final AlertDialog dialog = builder.create();
+
+                dialog.setMessage("Send an email to the finder of the item?");
+
+                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        controller.postLostItem();
+                        Toast toast = Toast.makeText(getApplicationContext(), "POSTED TO LOST DATABASE", Toast.LENGTH_SHORT);
+                        controller.setLatLong(0.0, 0.0);
+                        Intent lostOrFound = new Intent(getBaseContext(), ProfilePage.class);
+                        startActivity(lostOrFound);
+                        finish();
+                        toast.show();
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
+            }
+        });
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(itemSelected != null) {
-                    /* Create the Intent */
-                    Intent email = new Intent(android.content.Intent.ACTION_SEND);
+            if(itemSelected != null) {
+                /* Create the Intent */
+                AlertDialog.Builder builder = new AlertDialog.Builder(LostConfirmation.this);
 
+                // Create the AlertDialog
+                final AlertDialog dialog = builder.create();
+
+                dialog.setMessage("Post new lost item?");
+
+                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent email = new Intent(android.content.Intent.ACTION_SEND);
                     /* Fill it with Data */
                     email.setType("plain/text");
                     email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{itemSelected.getUserID()});
                     email.putExtra(android.content.Intent.EXTRA_SUBJECT, "Foundies item match!");
 
                     startActivityForResult(Intent.createChooser(email, "Send email"), 1);
-                }
-                else{
-                    Toast toast = Toast.makeText(getApplicationContext(), "Select an item", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+                    dialog.cancel();
+                    }
+                });
+
+                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
+            }
+            else{
+                Toast toast = Toast.makeText(getApplicationContext(), "Select an item", Toast.LENGTH_SHORT);
+                toast.show();
+            }
             }
         });
 
@@ -199,6 +259,12 @@ public class LostConfirmation extends AppCompatActivity {
                     unfilteredItems.get(i).getLongitude() == controller.getLongitude()){
                 items.add(unfilteredItems.get(i));
             }
+        }
+        if(items.size() == 0){
+            selectedItem.setText("No items at this location!");
+            nextButton.setClickable(false);
+            nextButton.setBackgroundColor(Color.parseColor("#BBBBBB"));
+            nextButton.setTextColor(Color.GRAY);
         }
         makeList();
     }

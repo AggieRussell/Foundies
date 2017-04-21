@@ -23,14 +23,25 @@
 
     <Button
         android:id="@+id/listButton"
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_marginRight="10dp"
         android:background="@drawable/button_selector"
-        android:text="Map"
+        android:text="Search map"
         android:textSize="12dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_toStartOf="@+id/deleteButton"
+        android:layout_centerVertical="true" />
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:paddingTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:text="x"
+        android:textSize="15dp"
+        android:textColor="#BBBBBB"/>
 
 
 </RelativeLayout>
