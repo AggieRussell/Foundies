@@ -45,6 +45,15 @@ public class Controller extends Application {
     private FoundModel fm;
     private QuestionModel qm;
     Contact user;
+
+    public Item getCurrentItem() {
+        return currentItem;
+    }
+
+    public void setCurrentItem(Item currentItem) {
+        this.currentItem = currentItem;
+    }
+
     private Item currentItem;
 
     boolean queryType; // true is lost item; false is found item
