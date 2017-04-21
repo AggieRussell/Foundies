@@ -210,7 +210,7 @@ public class LostConfirmation extends AppCompatActivity {
         for(int i = 0; i < items.size(); ++i){
             List<String> itemList = new ArrayList<>();
             for(int j = 0; j < items.get(i).getAnswers().size(); j++){
-                itemList.add(items.get(i).getAnswers().get(j));
+                itemList.add(controller.getNames().get(j) + ": " + items.get(i).getAnswers().get(j));
             }
             itemList.add(items.get(i).getTimestamp());
             itemInfo.put(items.get(i), itemList);

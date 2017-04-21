@@ -21,7 +21,6 @@ public class Login extends Activity {
         setContentView(R.layout.activity_login);
 
         final Controller controller = (Controller) getApplicationContext();
-
         final Button login = (Button) findViewById(R.id.login_button);
 
 
@@ -36,6 +35,8 @@ public class Login extends Activity {
                     if (check != null) {
                         Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
                     } else {
+                        controller.setCurrentUser(email.getText().toString());
+                        controller.updateLastAccessed();
                         controller.setUserID(email.getText().toString());
                         controller.updateLastAccessed();
                         Intent i = new Intent(getBaseContext(), ProfilePage.class);

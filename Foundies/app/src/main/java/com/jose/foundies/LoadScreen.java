@@ -15,8 +15,6 @@ public class LoadScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_screen);
 
-        final Controller controller = (Controller) getApplicationContext();
-
         final Button join = (Button) findViewById(R.id.join_button);
         final Button signin = (Button) findViewById(R.id.signin_tv);
 

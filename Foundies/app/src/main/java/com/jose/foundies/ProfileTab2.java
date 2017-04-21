@@ -7,10 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.doubleclick.CustomRenderedAd;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -21,6 +25,53 @@ import java.util.Map;
 /**
  * Created by Jason on 4/19/2017.
  */
+
+class CustomList extends BaseAdapter {
+    private ArrayList<Item> items = new ArrayList<>();
+    private Context context;
+
+    public CustomList(Context context, ArrayList<Item> items){
+        this.items = items;
+        this.context = context;
+    }
+
+    @Override
+    public int getCount(){
+        return items.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return items.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.list_with_button, null);
+
+        TextView txtListChild = (TextView) view.findViewById(R.id.listInfo);
+        txtListChild.setText(items.get(i).getCategory());
+
+        TextView txtListChild2 = (TextView) view.findViewById(R.id.listInfo2);
+        txtListChild2.setText(items.get(i).getSubcategory());
+
+        Button listButton = (Button) view.findViewById(R.id.listButton);
+        listButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(context, "Deleting...", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+        return view;
+    }
+}
 
 public class ProfileTab2 extends Fragment{
 
@@ -46,37 +97,19 @@ public class ProfileTab2 extends Fragment{
             public void onClick(View view) {
                 controller.setQueryTypeFound();
                 Intent i = new Intent(ProfileTab2.this.getContext(), Qs.class);
-                if(!controller.checkQueryFoundCount()){
+                /*if(!controller.checkQueryFoundCount()){
                     Toast toast = Toast.makeText(getActivity(), "OVER THE QUERY LIMIT", Toast.LENGTH_SHORT);
                     toast.show();
-                }else {
+                }else {*/
                     startActivity(i);
                     getActivity().finish();
-                }
+                //}
             }
         });
-
-        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
-        Map<String,String> datum2;
-        if(foundItems !=null) {
-            for (int i = 0; i < foundItems.size(); ++i) {
-                System.out.println("SIZE: " + foundItems.size());
-                datum2 = new HashMap<String, String>(2);
-                datum2.put("Question", foundItems.get(i).getCategory());
-                datum2.put("Answer", foundItems.get(i).getSubcategory());
-                data.add(datum2);
-            }
-
-            SimpleAdapter listAdapter2 = new SimpleAdapter(this.getContext(), data, android.R.layout.simple_list_item_2,
-                    new String[]{"Question", "Answer"},
-                    new int[]{android.R.id.text1,
-                            android.R.id.text2});
-
-            ListView confirmList = (ListView) rootView.findViewById(R.id.foundList);
-            confirmList.setAdapter(listAdapter2);
-        }else{
-            System.out.println("NOTHING WAS BROUGHT IN");
-        }
+        ListView confirmList = (ListView) rootView.findViewById(R.id.foundList);
+        CustomList adapter = new CustomList(this.getContext(), foundItems);
+        confirmList.setAdapter(adapter);
+        //confirmList.setAdapter(listAdapter2);
         return rootView;
     }
 }
