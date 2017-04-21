@@ -36,7 +36,7 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:background="#999999"/>
+            android:background="@drawable/button_selector" />
 
         <TextView
             android:text="Sub-Category"
@@ -51,10 +51,11 @@
             android:layout_height="40dp"
             android:id="@+id/spinnerSubcategory"
             android:spinnerMode="dropdown"
-            android:layout_margin="10dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="#999999"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/button_selector"/>
 
         <CalendarView
             android:id="@+id/calendarView"
