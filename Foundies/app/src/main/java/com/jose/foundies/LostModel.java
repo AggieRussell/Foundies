@@ -31,7 +31,7 @@ public class LostModel {
         String jsonPost = "{ \"lost\": { \"_id\": \"" + f.getItemID() + "\", \"category1\":\"" + f.getCategory()
                 + "\", \"category2\":\"" + f.getSubcategory() + "\", \"category3\":\""
                 + f.getAnswersAsString() + "\", \"username\":\"" + f.getUserID() + "\", \"timestamp\":\""
-                + Utility.getDate() + "\", \"latitude\":\""
+                + f.getTimestamp() + "\", \"latitude\":\""
                 + f.getLatitude() + "\", \"longitude\":\"" + f.getLongitude() + "\" } }";
         return jsonPost;
     }

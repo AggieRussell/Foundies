@@ -287,8 +287,8 @@ public class Controller extends Application {
 
     public ArrayList<String> getAnswers(){ return currentItem.getAnswers(); }
 
-    public void sendSelections(String category, String subcategory) {
-        currentItem.setSelections(category, subcategory);
+    public void sendSelections(String category, String subcategory, String date) {
+        currentItem.setSelections(category, subcategory, date);
     }
 
     public String getSubcategory() { return currentItem.getSubcategory(); }

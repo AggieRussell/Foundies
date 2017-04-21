@@ -1,6 +1,10 @@
 package com.jose.foundies;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
 import static java.lang.System.out;
 
 /**
@@ -58,9 +62,10 @@ public class Item {
 
     public void setUserID(String userID) { this.userID = userID; }
 
-    public void setSelections(String category, String subcategory) {
+    public void setSelections(String category, String subcategory, String date) {
         this.category = category;
         this.subcategory = subcategory;
+        timestamp = date;
     }
 
     public void setAnswers(ArrayList<String> answers) { this.answers = answers; }
