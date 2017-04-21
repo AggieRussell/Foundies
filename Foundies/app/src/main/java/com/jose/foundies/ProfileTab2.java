@@ -106,6 +106,7 @@ public class ProfileTab2 extends Fragment{
                 //}
             }
         });
+
         if(foundItems != null) {
             ListView confirmList = (ListView) rootView.findViewById(R.id.foundList);
             CustomList adapter = new CustomList(this.getContext(), foundItems);

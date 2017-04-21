@@ -22,7 +22,7 @@ public class Login extends Activity {
 
         final Controller controller = (Controller) getApplicationContext();
         final Button login = (Button) findViewById(R.id.login_button);
-
+        final Button back = (Button) findViewById(R.id.back_button);
 
         final EditText email = (EditText) findViewById(R.id.email_field);
         final EditText password = (EditText) findViewById(R.id.password_field);
@@ -46,8 +46,15 @@ public class Login extends Activity {
                 }
             }
         });
-    }
 
+        back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), LoadScreen.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
 
     public void showMessage(String title, String Message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
