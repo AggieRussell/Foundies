@@ -54,19 +54,22 @@ class CustomList extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.list_with_button, null);
+        final Controller controller = (Controller) context.getApplicationContext();
 
         TextView txtListChild = (TextView) view.findViewById(R.id.listInfo);
         txtListChild.setText(items.get(i).getCategory());
 
         TextView txtListChild2 = (TextView) view.findViewById(R.id.listInfo2);
         txtListChild2.setText(items.get(i).getSubcategory());
-
+        final Item item = items.get(i);
+        final int index = i;
         Button listButton = (Button) view.findViewById(R.id.listButton);
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(context, "Deleting...", Toast.LENGTH_SHORT);
-                toast.show();
+                controller.deleteFoundItem(item);
+                items.remove(index);
+                notifyDataSetChanged();
             }
         });
         return view;
