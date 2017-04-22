@@ -142,10 +142,12 @@ public class FoundModel {
 
     public ArrayList<Item> findMatches(ArrayList<Item> items, Item itemToMatch) {
         ArrayList<String> answers = itemToMatch.getAnswers();
+        System.out.println("DEVLIN: " + itemToMatch.getAnswersAsString());
         for (int i=items.size()-1; i>=0; --i) {
             ArrayList<String> currentAnswers = items.get(i).getAnswers();
             int matches = 0;
             for(int j=0; j<answers.size(); ++j) {
+                System.out.println("HERE: " + answers.get(j) + " - " + currentAnswers.get(j));
                 if(answers.get(j).equals(currentAnswers.get(j)) || answers.get(j).equals("Other") ||
                         currentAnswers.get(j).equals("Other")) {
                     ++matches;

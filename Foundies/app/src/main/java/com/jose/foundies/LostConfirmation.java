@@ -178,7 +178,7 @@ public class LostConfirmation extends AppCompatActivity {
                 // Create the AlertDialog
                 final AlertDialog dialog = builder.create();
 
-                dialog.setMessage("Send an email to the finder of the item?");
+                dialog.setMessage("Post new lost item?");
 
                 dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
                     @Override
@@ -214,7 +214,7 @@ public class LostConfirmation extends AppCompatActivity {
                 // Create the AlertDialog
                 final AlertDialog dialog = builder.create();
 
-                dialog.setMessage("Post new lost item?");
+                dialog.setMessage("Send an email to the finder of the item?");
 
                 dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
                     @Override

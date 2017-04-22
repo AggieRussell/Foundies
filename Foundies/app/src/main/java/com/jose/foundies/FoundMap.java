@@ -103,6 +103,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_found_map);
+        controller = (Controller) getApplicationContext();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -134,7 +135,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
             LatLng currentLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 10));
         }
-        controller = (Controller) getApplicationContext();
+
         System.out.println("Jason: " + controller.getLatitude() + " " + controller.getLongitude());
         if(controller.getLatitude() != 0.0 && controller.getLongitude() != 0.0){
             LatLng currentLocation = new LatLng(controller.getLatitude(), controller.getLongitude());
@@ -253,9 +254,9 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                     if(locationText != null && !locationText.equals("")){
                         try {
                             centerLatLng = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
-                            center.setLatitude(centerLatLng.latitude);
-                            center.setLongitude(centerLatLng.longitude);
-                            controller.setLatLong(centerLatLng.latitude, centerLatLng.longitude);
+                            center.setLatitude(place.getLatLng().latitude);
+                            center.setLongitude(place.getLatLng().longitude);
+                            controller.setLatLong(place.getLatLng().latitude, place.getLatLng().longitude);
                             foundItems(center);
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerLatLng, 13));
                             mMap.addMarker(new MarkerOptions().position(centerLatLng).title(place.getName().toString())
@@ -359,6 +360,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     }
     public void foundItems(Location loc)
     {
+        System.out.println("JASON " + controller.getAnswersString());
         ArrayList<Item> itemsFound = controller.getFoundItems();
         System.out.println("Jason: " + itemsFound.size());
         for(Item item : itemsFound){
