@@ -77,6 +77,9 @@ public interface HerokuService {
     @DELETE("/remove/found/{id}")
     Call<ResponseBody> deleteFoundItem(@Path("id") String username);
 
+    @DELETE("/remove/user/{id}")
+    Call<ResponseBody> deleteUserById(@Path("id") String id);
+
     //Where the update for the user accessed date will be
     @PUT("/user/{username}?")
     Call<ResponseBody> updateUser(@Path("username") String username, @QueryMap Map<String, String> params);
