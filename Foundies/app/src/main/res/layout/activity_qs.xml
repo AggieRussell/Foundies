@@ -57,6 +57,15 @@
             android:layout_marginBottom="0dp"
             android:background="@drawable/button_selector"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/calendarText"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:text="test"
+            android:layout_marginTop="10dp"/>
+
         <CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"

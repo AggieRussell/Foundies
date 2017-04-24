@@ -268,13 +268,13 @@ public class AdditionalDetails extends Activity {
             switch (questions.get(i).getClass().getSimpleName()) {
                 case "Spinner" :
                     Spinner spinner = (Spinner) questions.get(i);
-                    answers.add(spinner.getSelectedItem().toString());
+                    answers.add(spinner.getSelectedItem().toString().replaceAll(" ", "_"));
                     break;
                 case "RadioGroup" :
                     RadioGroup radioGroup = (RadioGroup) questions.get(i);
                     int radioButtonID = radioGroup.getCheckedRadioButtonId();
                     RadioButton radioButton = (RadioButton) radioGroup.findViewById(radioButtonID);
-                    answers.add(radioButton.getText().toString());
+                    answers.add(radioButton.getText().toString().replaceAll(" ", "_"));
                     break;
                 case "CheckBox" :
                     CheckBox checkBox = (CheckBox) questions.get(i);

@@ -42,7 +42,7 @@ public class Item {
     public String getAnswersAsString() {
         String str = "";
         for (int i=0; i<answers.size(); ++i) {
-            str+=answers.get(i).replaceAll(" ", "_");
+            str+=answers.get(i);
             if(i<answers.size()-1) {
                 str+=",";
             }

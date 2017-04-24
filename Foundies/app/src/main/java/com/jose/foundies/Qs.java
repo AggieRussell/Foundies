@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +32,11 @@ public class Qs extends Activity {
         Spinner spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         spinnerCategory.setBackgroundColor(Color.DKGRAY);
         ArrayList<String> categories = controller.getCategories();
+        TextView calendarText = (TextView) findViewById(R.id.calendarText);
+        if (controller.getQueryType())
+            calendarText.setText("Date item was lost:");
+        else
+            calendarText.setText("Date item was found:");
         final CalendarView calendar = (CalendarView) findViewById(R.id.calendarView);
 
         // set categories in question 1
