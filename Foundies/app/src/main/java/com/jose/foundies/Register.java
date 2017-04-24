@@ -6,6 +6,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.BoolRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,43 @@ public class Register extends Activity {
         final EditText email = (EditText) findViewById(R.id.email_field);
         final EditText password = (EditText) findViewById(R.id.password_field);
 
+        password.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            String fnamestr = fname.getText().toString();
+                            String lnamestr = lname.getText().toString();
+                            String emailstr = email.getText().toString();
+                            String passstr = password.getText().toString();
+
+                            if (!(controller.isEmptyField(fname, lname, email, password))) {
+                                Toast.makeText(getApplicationContext(), "Field Missing!", Toast.LENGTH_SHORT).show();
+                            } else {
+
+                                //Send details to database
+                                String checkEmail = controller.createUser(fnamestr, lnamestr, emailstr, passstr, Utility.getDate(), "0", "0");
+                                if (checkEmail == null) {
+                                    Intent i = new Intent(getBaseContext(), ProfilePage.class);
+                                    startActivity(i);
+                                    finish();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), checkEmail, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
 
         register.setOnClickListener(new View.OnClickListener() {
 

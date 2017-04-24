@@ -34,9 +34,9 @@ public class Qs extends Activity {
         ArrayList<String> categories = controller.getCategories();
         TextView calendarText = (TextView) findViewById(R.id.calendarText);
         if (controller.getQueryType())
-            calendarText.setText("Date item was lost:");
+            calendarText.setText("Please select the date the item was lost:");
         else
-            calendarText.setText("Date item was found:");
+            calendarText.setText("Please select the date the item was found:");
         final CalendarView calendar = (CalendarView) findViewById(R.id.calendarView);
 
         // set categories in question 1

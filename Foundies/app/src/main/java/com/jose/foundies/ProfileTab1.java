@@ -41,8 +41,8 @@ public class ProfileTab1 extends Fragment{
         int queryCountFoundLeft = 3 - Integer.parseInt(controller.getUser().getQuery_count_found());
 
         welcomeText.setText("Welcome " + controller.getNameOfUser() + "!");
-        lostQueryText.setText("Lost searches left: " + queryCountLostLeft);
-        foundQueryText.setText("Found searches left: " + queryCountFoundLeft);
+        lostQueryText.setText("Lost searches left today: " + queryCountLostLeft);
+        foundQueryText.setText("Found searches left today: " + queryCountFoundLeft);
         emailText.setText("Email: " + controller.getUser().getEmail());
 
         Button logoutButton = (Button) rootView.findViewById(R.id.logoutButton);
