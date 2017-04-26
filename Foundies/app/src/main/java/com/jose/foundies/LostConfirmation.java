@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -141,7 +142,11 @@ public class LostConfirmation extends AppCompatActivity {
         setContentView(R.layout.activity_lost_confirmation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        unfilteredItems = controller.getFoundItems();
+        try {
+            unfilteredItems = controller.getFoundItems();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         expList = (ExpandableListView) findViewById(R.id.matchResponses);
         adapter = new CustomExpandableList(this, items, itemInfo);

@@ -12,8 +12,11 @@ import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
 import static java.lang.System.out;
 
 public class Qs extends Activity {
@@ -68,6 +71,8 @@ public class Qs extends Activity {
         minDate.add(Calendar.WEEK_OF_YEAR, -4);
         out.println(minDate.get(Calendar.WEEK_OF_YEAR));
         calendar.setMinDate(minDate.getTimeInMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        date = sdf.format(new Date(calendar.getDate()));
 
         final Button next = (Button) findViewById(R.id.next_button);
         final Button back = (Button) findViewById(R.id.backButton);

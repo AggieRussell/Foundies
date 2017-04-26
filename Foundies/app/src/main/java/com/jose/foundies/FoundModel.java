@@ -7,7 +7,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -94,7 +97,7 @@ public class FoundModel {
     }
 
     // use to get found items in matching Category and Subcategory
-    public ArrayList<Item> getFoundItemWithCategories(Item item) {
+    public ArrayList<Item> getFoundItemWithCategories(Item item) throws ParseException {
         final HerokuService service = Utility.connectAPI();
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
@@ -140,21 +143,29 @@ public class FoundModel {
         }
     }
 
-    public ArrayList<Item> findMatches(ArrayList<Item> items, Item itemToMatch) {
+    public ArrayList<Item> findMatches(ArrayList<Item> items, Item itemToMatch) throws ParseException {
         ArrayList<String> answers = itemToMatch.getAnswers();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateLost = sdf.parse(itemToMatch.getTimestamp());
         System.out.println("DEVLIN: " + itemToMatch.getAnswersAsString());
         for (int i=items.size()-1; i>=0; --i) {
-            ArrayList<String> currentAnswers = items.get(i).getAnswers();
-            int matches = 0;
-            for(int j=0; j<answers.size(); ++j) {
-                System.out.println("HERE: " + answers.get(j) + " - " + currentAnswers.get(j));
-                if(answers.get(j).equals(currentAnswers.get(j)) || answers.get(j).equals("Other") ||
-                        currentAnswers.get(j).equals("Other")) {
-                    ++matches;
-                }
-            }
-            if ((double)(matches/answers.size()) < 0.75)
+            Date dateCurrentFound = sdf.parse(items.get(i).getTimestamp());
+            if (dateLost.after(dateCurrentFound)) {
                 items.remove(i);
+            }
+            else {
+                ArrayList<String> currentAnswers = items.get(i).getAnswers();
+                int matches = 0;
+                for(int j=0; j<answers.size(); ++j) {
+                    System.out.println("HERE: " + answers.get(j) + " - " + currentAnswers.get(j));
+                    if(answers.get(j).equals(currentAnswers.get(j)) || answers.get(j).equals("Other") ||
+                            currentAnswers.get(j).equals("Other")) {
+                        ++matches;
+                    }
+                }
+                if ((double)(matches/answers.size()) < 0.75)
+                    items.remove(i);
+            }
         }
         out.println("\n\nMATCHING ITEMS\n");
         for (int i=0; i<items.size(); ++i) {

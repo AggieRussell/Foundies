@@ -7,15 +7,20 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +57,7 @@ public class AdditionalDetails extends Activity {
 
         final Button next = (Button) findViewById(R.id.button);
         final Button back = (Button) findViewById(R.id.backButton);
+        final EditText extraDetails = (EditText) findViewById(R.id.extraDetails);
 
         next.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -62,8 +68,10 @@ public class AdditionalDetails extends Activity {
                     finish();
                 }
                 else {
-                    String text = "Please select an answer for each question.";
+                    String text = "Please select an answer\nfor each question.";
                     Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+                    TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                    if( v != null) v.setGravity(Gravity.CENTER);
                     toast.show();
                 }
 
@@ -77,6 +85,20 @@ public class AdditionalDetails extends Activity {
                 finish();
             }
         });
+
+        extraDetails.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     protected void displayQuestions() {
@@ -187,6 +209,7 @@ public class AdditionalDetails extends Activity {
     }
 
     protected void createRadio(int i) {
+        HorizontalScrollView scrollView = new HorizontalScrollView(this);
         RadioGroup rg = new RadioGroup(this);
         rg.setPadding(convertToDps(10), convertToDps(5), convertToDps(10), convertToDps(5));
         rg.setOrientation(LinearLayout.HORIZONTAL);
@@ -200,10 +223,12 @@ public class AdditionalDetails extends Activity {
             rg.addView(rb);
         }
         questions.add(rg);
-        linearLayout.addView(rg);
+        scrollView.addView(rg);
+        linearLayout.addView(scrollView);
     }
 
     protected void createContingentRadio(int i) {
+        HorizontalScrollView scrollView = new HorizontalScrollView(this);
         final RadioGroup rg = new RadioGroup(this);
         rg.setVisibility(GONE);
         rg.setPadding(convertToDps(10), convertToDps(5), convertToDps(10), convertToDps(5));
@@ -226,7 +251,8 @@ public class AdditionalDetails extends Activity {
             }
         });
         questions.add(rg);
-        linearLayout.addView(rg);
+        scrollView.addView(rg);
+        linearLayout.addView(scrollView);
     }
 
     protected void createCheck(int i) {

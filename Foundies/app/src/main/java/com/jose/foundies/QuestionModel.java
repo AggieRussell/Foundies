@@ -47,6 +47,7 @@ public class QuestionModel {
                 if (response.isSuccessful()) {
                     strResponseBody = response.body().string();
                     parseJSON();
+                    sortQuestionsAlphabetically();
                     out.println(strResponseBody);
                 }
             } catch (IOException e) {
@@ -134,6 +135,25 @@ public class QuestionModel {
             e.printStackTrace();
         }
         out.println("Ending parse JSON...");
+    }
+
+    protected void sortQuestionsAlphabetically() {
+        out.println("SORTING QUESTIONS:");
+        ArrayList<Question> sorted = new ArrayList<Question>();
+        while(!questions.isEmpty()) {
+            int smallestLoc = 0;
+            for (int i=1; i<questions.size(); ++i)  {
+                out.printf("%s compareTo %s\n",questions.get(i).getQ1(),questions.get(smallestLoc).getQ1());
+                if (questions.get(i).getQ1().compareTo(questions.get(smallestLoc).getQ1()) < 0)
+                    smallestLoc = i;
+                else if (questions.get(i).getQ1().compareTo(questions.get(smallestLoc).getQ1()) == 0)
+                    if (questions.get(i).getQ2().compareTo(questions.get(smallestLoc).getQ2()) < 0)
+                        smallestLoc = i;
+            }
+            sorted.add(questions.get(smallestLoc));
+            questions.remove(smallestLoc);
+        }
+        questions = sorted;
     }
 
     public ArrayList<String> getCategories() {

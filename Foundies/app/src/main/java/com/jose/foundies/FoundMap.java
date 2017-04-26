@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -143,7 +144,11 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 13));
                 center.setLatitude(controller.getLatitude());
                 center.setLongitude(controller.getLongitude());
-                foundItems(center);
+                try {
+                    foundItems(center);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -228,7 +233,11 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     mMap.clear();
-                    foundItems(center);
+                    try {
+                        foundItems(center);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     //Toast.makeText(getApplicationContext(), String.valueOf(radiusValue),Toast.LENGTH_LONG).show();
                 }
             });
@@ -257,7 +266,11 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                             center.setLatitude(place.getLatLng().latitude);
                             center.setLongitude(place.getLatLng().longitude);
                             controller.setLatLong(place.getLatLng().latitude, place.getLatLng().longitude);
-                            foundItems(center);
+                            try {
+                                foundItems(center);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerLatLng, 13));
                             mMap.addMarker(new MarkerOptions().position(centerLatLng).title(place.getName().toString())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
@@ -352,14 +365,9 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 }
             });
         }
-
-
-
-
-
     }
-    public void foundItems(Location loc)
-    {
+
+    public void foundItems(Location loc) throws ParseException {
         System.out.println("JASON " + controller.getAnswersString());
         ArrayList<Item> itemsFound = controller.getFoundItems();
         System.out.println("Jason: " + itemsFound.size());
