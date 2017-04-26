@@ -23,8 +23,6 @@ public class Item {
     private Double longitude = 0.0;
     private String timestamp;
 
-    //TODO: add date to the Item class
-
     public Item() {
         itemID = Utility.uniqueID();
     }
