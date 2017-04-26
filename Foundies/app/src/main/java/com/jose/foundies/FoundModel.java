@@ -122,6 +122,7 @@ public class FoundModel {
 
 
     public void postToFound(String jsonPost) {
+        System.out.println("POSTING FOUND ITEM ");
         final HerokuService service = Utility.connectAPI();
 
         //Used for connecting to the network so that Post can go through
@@ -136,6 +137,7 @@ public class FoundModel {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
                     String strResponseBody = response.body().string();
+                    System.out.println(" !!!THIS IS THE FOUND ITEM RESPONSE: !!!" + strResponseBody);
                 }
             } catch (IOException e) {
                 // ...
