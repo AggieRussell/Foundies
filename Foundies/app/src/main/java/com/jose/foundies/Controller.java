@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.Base64;
 import android.util.Log;
 import static java.lang.System.out;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import android.widget.EditText;
 
@@ -328,7 +330,7 @@ public class Controller extends Application {
         fm.postToFound(jsonPost);
     }
 
-    public ArrayList<Item> getFoundItems(){
+    public ArrayList<Item> getFoundItems() throws ParseException {
         return fm.getFoundItemWithCategories(currentItem);
     }
 
