@@ -23,7 +23,7 @@ package com.jose.foundies;
 public class Chats extends Fragment {
 
     private EditText msg_edittext;
-    private String user1 = "khushi", user2 = "khushi1";
+    private String user1 = "bob", user2 = "john";
     private Random random;
     public static ArrayList<ChatMessage> chatlist;
     public static ChatAdapter chatAdapter;
@@ -32,10 +32,10 @@ public class Chats extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         View view = inflater.inflate(R.layout.chat_layout, container, false);
         final Controller controller = (Controller) getActivity().getApplicationContext();
+
+
         random = new Random();
 
         msg_edittext = (EditText) view.findViewById(R.id.messageEditText);
@@ -55,7 +55,17 @@ public class Chats extends Fragment {
         msgListView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         msgListView.setStackFromBottom(true);
 
+
+        final ChatMessage MessageA = new ChatMessage("A","B","Hello","123",true);
+        final ChatMessage MessageB = new ChatMessage("A","B","Hi","123",false);
+        final ChatMessage MessageC = new ChatMessage("A","B","How are you?","123",true);
+        final ChatMessage MessageD = new ChatMessage("A","B","Great! and you?","123",false);
         chatlist = new ArrayList<ChatMessage>();
+        chatlist.add(MessageA);
+        chatlist.add(MessageB);
+        chatlist.add(MessageC);
+        chatlist.add(MessageD);
+
         chatAdapter = new ChatAdapter(getActivity(), chatlist);
         msgListView.setAdapter(chatAdapter);
         return view;
@@ -68,7 +78,8 @@ public class Chats extends Fragment {
 
         String message = msg_edittext.getEditableText().toString();
         if (!message.equalsIgnoreCase("")) {
-            final ChatMessage chatMessage = new ChatMessage(user1, user2,message, "" + random.nextInt(1000), true);
+            final ChatMessage chatMessage = new ChatMessage(user1, user2,
+                    message, "" + random.nextInt(1000), true);
             chatMessage.setMsgID();
             chatMessage.body = message;
             chatMessage.Date = CommonMethods.getCurrentDate();

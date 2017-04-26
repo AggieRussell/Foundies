@@ -23,6 +23,7 @@ import static com.jose.foundies.Chats.chatlist;
 
 public class ChatAdapter extends BaseAdapter {
 
+
     private static LayoutInflater inflater = null;
     ArrayList<ChatMessage> chatMessageList;
 

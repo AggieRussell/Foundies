@@ -1,5 +1,6 @@
 package com.jose.foundies;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -47,7 +48,9 @@ public class ProfileTab4 extends Fragment{
         View rootView = inflater.inflate(R.layout.tab4_chats, container, false);
         final Controller controller = (Controller) getActivity().getApplicationContext();
 
-        final Button view = (Button) rootView.findViewById(R.id.view_button);
+        final Button message = (Button) rootView.findViewById(R.id.message_button);
+        final Button chatRoom = (Button) rootView.findViewById(R.id.chatRoom_button);
+        final Button view = (Button) rootView.findViewById(R.id.message_button);
         final ListView notificationList = (ListView) rootView.findViewById(R.id.notifyList);
 
         //Fill list view with strings
@@ -74,7 +77,30 @@ public class ProfileTab4 extends Fragment{
         });
 
         //pop up message dialog
-        view.setOnClickListener(new View.OnClickListener() {
+        message.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                //Create Dialog
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(ProfileTab4.this.getContext());
+                View mView = inflater.inflate(R.layout.dialog_message, null);
+                TextView firstName = (TextView) mView.findViewById(R.id.userFirst_tv);
+                firstName.setText("Send " + controller.getNameOfUser().toString() + " a message");
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+            }
+        });
+        chatRoom.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                controller.setQueryTypeFound();
+                Intent i = new Intent(ProfileTab4.this.getContext(), Chats.class);
+                startActivity(i);
+                getActivity().finish();
+
+            }
+        });
+        message.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
                 //Create Dialog

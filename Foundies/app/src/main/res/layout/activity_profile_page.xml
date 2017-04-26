@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@drawable/small_back"
+    android:background="@drawable/base"
     tools:context="com.jose.foundies.ProfilePage">
 
     <android.support.design.widget.AppBarLayout
