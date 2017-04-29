@@ -25,6 +25,7 @@ public final class Utility {
                 .build();
 
         final HerokuService service = retrofit.create(HerokuService.class);
+        System.out.println("Connecting to API");
         return service;
     }
 
