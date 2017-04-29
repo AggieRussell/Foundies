@@ -178,34 +178,38 @@ public class LostConfirmation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(LostConfirmation.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(LostConfirmation.this);
+            LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View dialogView = inflate.inflate(R.layout.dialog_box, null);
+            builder.setView(dialogView);
+            // Create the AlertDialog
+            final AlertDialog dialog = builder.create();
 
-                // Create the AlertDialog
-                final AlertDialog dialog = builder.create();
+            dialog.setMessage("Post item as a new lost item?");
 
-                dialog.setMessage("Post new lost item?");
+            Button yesButton = (Button) dialogView.findViewById(R.id.dialogButtonYes);
+            Button noButton = (Button) dialogView.findViewById(R.id.dialogButtonNo);
 
-                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        controller.postLostItem();
-                        Toast toast = Toast.makeText(getApplicationContext(), "POSTED TO LOST DATABASE", Toast.LENGTH_SHORT);
-                        controller.setLatLong(0.0, 0.0);
-                        Intent lostOrFound = new Intent(getBaseContext(), ProfilePage.class);
-                        startActivity(lostOrFound);
-                        finish();
-                        toast.show();
-                        dialog.cancel();
-                    }
-                });
-
-                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialog.cancel();
-                    }
-                });
-                dialog.show();
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    controller.postLostItem();
+                    Toast toast = Toast.makeText(getApplicationContext(), "POSTED TO LOST DATABASE", Toast.LENGTH_SHORT);
+                    controller.setLatLong(0.0, 0.0);
+                    Intent lostOrFound = new Intent(getBaseContext(), ProfilePage.class);
+                    startActivity(lostOrFound);
+                    finish();
+                    toast.show();
+                    dialog.cancel();
+                }
+            });
+            noButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                }
+            });
+            dialog.show();
             }
         });
 
@@ -215,29 +219,32 @@ public class LostConfirmation extends AppCompatActivity {
             if(itemSelected != null) {
                 /* Create the Intent */
                 AlertDialog.Builder builder = new AlertDialog.Builder(LostConfirmation.this);
-
+                LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View dialogView = inflate.inflate(R.layout.dialog_box, null);
+                builder.setView(dialogView);
                 // Create the AlertDialog
                 final AlertDialog dialog = builder.create();
 
-                dialog.setMessage("Send an email to the finder of the item?");
+                dialog.setMessage("Send an email to the user?");
+                Button yesButton = (Button) dialogView.findViewById(R.id.dialogButtonYes);
+                Button noButton = (Button) dialogView.findViewById(R.id.dialogButtonNo);
 
-                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                yesButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent email = new Intent(android.content.Intent.ACTION_SEND);
+                    public void onClick(View view) {
+                        Intent email = new Intent(android.content.Intent.ACTION_SEND);
                     /* Fill it with Data */
-                    email.setType("plain/text");
-                    email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{itemSelected.getUserID()});
-                    email.putExtra(android.content.Intent.EXTRA_SUBJECT, "Foundies item match!");
+                        email.setType("plain/text");
+                        email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{itemSelected.getUserID()});
+                        email.putExtra(android.content.Intent.EXTRA_SUBJECT, "Foundies item match!");
 
-                    startActivityForResult(Intent.createChooser(email, "Send email"), 1);
-                    dialog.cancel();
+                        startActivityForResult(Intent.createChooser(email, "Send email"), 1);
+                        dialog.cancel();
                     }
                 });
-
-                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                noButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         dialog.cancel();
                     }
                 });

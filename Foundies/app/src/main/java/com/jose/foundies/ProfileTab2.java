@@ -70,25 +70,29 @@ class CustomList extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
+                LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View dialogView = inflate.inflate(R.layout.dialog_box, null);
+                builder.setView(dialogView);
                 // Create the AlertDialog
                 final AlertDialog dialog = builder.create();
 
                 dialog.setMessage("Are you sure you want to delete this item?");
 
-                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                Button yesButton = (Button) dialogView.findViewById(R.id.dialogButtonYes);
+                Button noButton = (Button) dialogView.findViewById(R.id.dialogButtonNo);
+
+                yesButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         controller.deleteFoundItem(item);
                         items.remove(index);
                         notifyDataSetChanged();
                         dialog.cancel();
                     }
                 });
-
-                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                noButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         dialog.cancel();
                     }
                 });

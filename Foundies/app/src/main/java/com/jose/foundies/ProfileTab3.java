@@ -71,43 +71,47 @@ class CustomList2 extends BaseAdapter {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View dialogView = inflate.inflate(R.layout.dialog_box, null);
+            builder.setView(dialogView);
+            // Create the AlertDialog
+            final AlertDialog dialog = builder.create();
 
-                // Create the AlertDialog
-                final AlertDialog dialog = builder.create();
+            dialog.setMessage("Are you sure you want to delete this item?");
 
-                dialog.setMessage("Are you sure you want to delete this item?");
+            Button yesButton = (Button) dialogView.findViewById(R.id.dialogButtonYes);
+            Button noButton = (Button) dialogView.findViewById(R.id.dialogButtonNo);
 
-                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        controller.deleteLostItem(items.get(index));
-                        items.remove(index);
-                        notifyDataSetChanged();
-                        dialog.cancel();
-                    }
-                });
-
-                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialog.cancel();
-                    }
-                });
-                dialog.show();
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    controller.deleteFoundItem(items.get(index));
+                    items.remove(index);
+                    notifyDataSetChanged();
+                    dialog.cancel();
+                }
+            });
+            noButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                }
+            });
+            dialog.show();
             }
         });
         //listButton.setBackground(ContextCompat.getDrawable(context, R.drawable.small_back));
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.setCurrentItem(items.get(index));
-                controller.setQueryTypeLost();
-                Intent i = new Intent(context, FoundMap.class);
-                context.startActivity(i);
-                ((Activity)context).finish();
-                Toast toast = Toast.makeText(context, "Sending to Map...", Toast.LENGTH_SHORT);
-                toast.show();
+            controller.setCurrentItem(items.get(index));
+            controller.setQueryTypeLost();
+            Intent i = new Intent(context, FoundMap.class);
+            context.startActivity(i);
+            ((Activity)context).finish();
+            Toast toast = Toast.makeText(context, "Sending to Map...", Toast.LENGTH_SHORT);
+            toast.show();
             }
         });
         return view;
@@ -135,19 +139,19 @@ public class ProfileTab3 extends Fragment{
         final Button lost = (Button) rootView.findViewById(R.id.lost_button);
         lost.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                controller.setQueryTypeLost();
-                Intent i = new Intent(ProfileTab3.this.getContext(), Qs.class);
-    /*
-                if(!controller.checkQueryLostCount()){
-                    Toast toast = Toast.makeText(getActivity(), "OVER THE QUERY LIMIT", Toast.LENGTH_SHORT);
-                    toast.show();
-                }else {
-                    startActivity(i);
-                    getActivity().finish();
-                }
-*/
+            controller.setQueryTypeLost();
+            Intent i = new Intent(ProfileTab3.this.getContext(), Qs.class);
+/*
+            if(!controller.checkQueryLostCount()){
+                Toast toast = Toast.makeText(getActivity(), "OVER THE QUERY LIMIT", Toast.LENGTH_SHORT);
+                toast.show();
+            }else {
                 startActivity(i);
                 getActivity().finish();
+            }
+*/
+            startActivity(i);
+            getActivity().finish();
             }
         });
 

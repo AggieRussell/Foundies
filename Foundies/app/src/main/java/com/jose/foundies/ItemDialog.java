@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -45,18 +47,30 @@ public class ItemDialog extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Was the item lost at " + address + "?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent i = new Intent(ItemDialog.this.getContext(), LostConfirmation.class);
-                        startActivity(i);
-                    }
-                });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        ItemDialog.this.getDialog().cancel();
-                    }
-                });
+
+        LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflate.inflate(R.layout.dialog_box, null);
+        builder.setView(dialogView);
+
+        Button yesButton = (Button) dialogView.findViewById(R.id.dialogButtonYes);
+        Button noButton = (Button) dialogView.findViewById(R.id.dialogButtonNo);
+
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ItemDialog.this.getContext(), LostConfirmation.class);
+                startActivity(i);
+            }
+        });
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ItemDialog.this.getDialog().cancel();
+            }
+        });
+        
         // Create the AlertDialog object and return it
         return builder.create();
     }
+
 }
