@@ -7,6 +7,7 @@ package com.jose.foundies;
 import java.util.Map;
 import java.util.Observable;
 
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -49,6 +50,9 @@ public interface HerokuService {
     @GET("/items/found")
     Call<ResponseBody> getFoundItems();
 
+    @GET("/chatMessage")
+    Call<ResponseBody> getMessage();
+
     //Todo: Finish implementing getFoundItemsByUser
     @GET("/items/found/{username}")
     Call<ResponseBody> getFoundItemsByUser(@Path("username") String username);
@@ -68,6 +72,9 @@ public interface HerokuService {
     @POST("/items/lost")
     Call<ResponseBody> createLostItem(@Body RequestBody user);
 
+    @POST("/chatMessage")
+    Call<ResponseBody> createMessage(@Body RequestBody chatMessage);
+
     @DELETE("/user/{id}")
     Call<ResponseBody> deleteUser(@Path("id") String username);
 
@@ -79,6 +86,9 @@ public interface HerokuService {
 
     @DELETE("/remove/user/{id}")
     Call<ResponseBody> deleteUserById(@Path("id") String id);
+
+    @DELETE("/remove/chatMessage/{id}")
+    Call<ResponseBody> deleteMessage(@Path("id") String id);
 
     //Where the update for the user accessed date will be
     @PUT("/user/{username}?")
