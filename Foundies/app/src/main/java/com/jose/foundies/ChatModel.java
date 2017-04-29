@@ -27,8 +27,8 @@ public class ChatModel {
     private String strResponseBody = "";
 
     //Creates a json object to add message to the mongo database
-    public String jsonUserPost(ChatMessage m){
-        String jsonPost  = "{ \"user\": { \"_id\": \"" + m.getId() + "\", \"sender\":\"" + m.getSender() + "\", \"receiver\":\"" + m.getReceiver() + "\", \"body\":\"" + m.getBody()
+    public String jsonMessagePost(ChatMessage m){
+        String jsonPost  = "{ \"chatMessage\": { \"_id\": \"" + m.getId() + "\", \"sender\":\"" + m.getSender() + "\", \"receiver\":\"" + m.getReceiver() + "\", \"body\":\"" + m.getBody()
                 + "\", \"notificationType\":\"" + m.getNotificationType() + "\", \"timestamp\":\"" + m.getTimestamp() + "\" } }";
         return jsonPost;
     }
@@ -87,7 +87,7 @@ public class ChatModel {
     public void postToMessages(ChatMessage message){
 
         final HerokuService service = Utility.connectAPI();
-        String jsonPost = jsonUserPost(message);
+        String jsonPost = jsonMessagePost(message);
 
         //Used for connecting to the network so that Post can go through
         int SDK_INT = android.os.Build.VERSION.SDK_INT;

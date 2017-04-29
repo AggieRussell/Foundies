@@ -70,12 +70,14 @@ public class Chats extends Fragment {
     public void onSaveInstanceState(Bundle outState) {}
 
     public void sendTextMessage(View v) {
-
+        final Controller controller = (Controller) getActivity().getApplicationContext();
         String message = msg_edittext.getEditableText().toString();
         if (!message.equalsIgnoreCase("")) {
-            final ChatMessage chatMessage = new ChatMessage(id, user1, user2,
+            final ChatMessage chatMessage = new ChatMessage(id,controller.getUser().getEmail(), "b@c.com",
                     message, 1, "2017-04-28");
             chatMessage.body = message;
+            controller.createMessage(id,controller.getUser().getEmail(), "b@c.com",
+                    message, 1, "2017-04-28");
             msg_edittext.setText("");
             chatAdapter.add(chatMessage);
             chatAdapter.notifyDataSetChanged();

@@ -18,6 +18,7 @@ class PostClass extends Thread{
     UserModel um = new UserModel();
     LostModel lm = new LostModel();
     FoundModel fm = new FoundModel();
+
     Contact c = null;
     public PostClass(Contact c){
         this.c = c;
@@ -25,6 +26,14 @@ class PostClass extends Thread{
     public void run (){
         um.postToAPI(c);
     }
+}
+
+class PostMessageClass extends Thread{
+    UserModel um = new UserModel();
+    ChatModel cm = new ChatModel();
+    ChatMessage m = null;
+    public PostMessageClass(ChatMessage m){this.m = m;}
+    public void run(){cm.postToMessages(m);}
 }
 
 class PostItemClass extends Thread{
@@ -60,7 +69,9 @@ public class Controller extends Application {
     private LostModel lm;
     private FoundModel fm;
     private QuestionModel qm;
+    private ChatModel cm;
     Contact user;
+    ChatMessage message;
 
     public Item getCurrentItem() {
         return currentItem;
@@ -382,4 +393,20 @@ public class Controller extends Application {
     public void setUserID(String userID) {
         currentItem.setUserID(userID);
     }
+
+
+        /* --------------------------------- Item Controller Functionality ------------------------------------ */
+
+
+    public String createMessage(String id, String sender, String receiver, String body, int notificationType, String timestamp){
+                message = new ChatMessage(id,sender,receiver,body,notificationType,timestamp);
+                PostMessageClass post = new PostMessageClass(message);
+                post.start();
+                return null;
+        }
+
+
 }
+
+
+
