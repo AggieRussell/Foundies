@@ -58,6 +58,31 @@ public class ChatModel {
 
     }
 
+    //Make sure to implement
+    //Looking message by sender
+    public ChatMessage getMessagesbyUsername(String id){
+
+        final HerokuService service = Utility.connectAPI();
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Call<ResponseBody> call = service.getMessagesbyUsername(id);
+            try {
+                Response<ResponseBody> response = call.execute();
+                if (response.isSuccessful()) {
+                    String strResponseBody = response.body().string();
+                    return parseJSONmessage(strResponseBody);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
 
     // use to get messages matching sender and reciever
     public ArrayList<ChatMessage> getMessages(ChatMessage message) throws ParseException {

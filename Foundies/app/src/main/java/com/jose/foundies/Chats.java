@@ -23,7 +23,10 @@ package com.jose.foundies;
 public class Chats extends Fragment {
 
     private EditText msg_edittext;
-    private String user1 = "bob", user2 = "john";
+
+
+
+
     private String id = "0001";
     private Random random;
     public static ArrayList<ChatMessage> chatlist;

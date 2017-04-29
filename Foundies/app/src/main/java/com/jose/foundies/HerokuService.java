@@ -53,6 +53,10 @@ public interface HerokuService {
     @GET("/chatMessage")
     Call<ResponseBody> getMessage();
 
+    //Make sure to implement
+    @GET("/chatMessage/{sender}")
+    Call<ResponseBody> getMessagesbyUsername(@Path("sender") String sender);
+
     //Todo: Finish implementing getFoundItemsByUser
     @GET("/items/found/{username}")
     Call<ResponseBody> getFoundItemsByUser(@Path("username") String username);

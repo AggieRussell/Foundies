@@ -394,8 +394,7 @@ public class Controller extends Application {
         currentItem.setUserID(userID);
     }
 
-
-        /* --------------------------------- Item Controller Functionality ------------------------------------ */
+    /* --------------------------------- Message Controller Functionality ------------------------------------ */
 
 
     public String createMessage(String id, String sender, String receiver, String body, int notificationType, String timestamp){
@@ -405,6 +404,13 @@ public class Controller extends Application {
                 return null;
         }
 
+    //Make sure to implement
+    public void setMessageInbox(String username){
+        this.message = cm.getMessagesbyUsername(username);
+    }
+    public ArrayList<ChatMessage> getMessage() throws ParseException {
+        return cm.getMessages(message);
+    }
 
 }
 
