@@ -27,7 +27,7 @@ public class Chats extends Fragment {
 
 
 
-    private String id = "0001";
+    private String id = "1111";
     private Random random;
     public static ArrayList<ChatMessage> chatlist;
     public static ChatAdapter chatAdapter;
@@ -74,13 +74,16 @@ public class Chats extends Fragment {
 
     public void sendTextMessage(View v) {
         final Controller controller = (Controller) getActivity().getApplicationContext();
+
+        controller.createMessage(id,controller.getUser().getEmail(), "b@c.com",
+                "hello", 1, "2017-04-28");
+
         String message = msg_edittext.getEditableText().toString();
         if (!message.equalsIgnoreCase("")) {
             final ChatMessage chatMessage = new ChatMessage(id,controller.getUser().getEmail(), "b@c.com",
                     message, 1, "2017-04-28");
             chatMessage.body = message;
-            controller.createMessage(id,controller.getUser().getEmail(), "b@c.com",
-                    message, 1, "2017-04-28");
+
             msg_edittext.setText("");
             chatAdapter.add(chatMessage);
             chatAdapter.notifyDataSetChanged();

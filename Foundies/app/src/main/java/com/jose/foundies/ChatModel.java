@@ -33,24 +33,29 @@ public class ChatModel {
         return jsonPost;
     }
 
-    public ChatMessage parseJSONmessage(String response_str) {
+    public ArrayList<ChatMessage> parseJSONmessage(String response_str) {
         JSONObject jObject;
         JSONArray jArray;
         try {
-            jObject = new JSONObject(response_str);
+            jObject = new JSONObject(strResponseBody);
             jArray = jObject.getJSONArray("chatMessage");
-            ChatMessage message = new ChatMessage();
-            if(jArray.isNull(0)){
-                return null;
+            ArrayList<ChatMessage> messages = new ArrayList<>();
+            for (int i = 0; i < jArray.length(); ++i) {
+                ChatMessage msg = new ChatMessage();
+                JSONObject curr = new JSONObject(jArray.getString(i));
+                if (curr.getString("_id").isEmpty()) {
+                    return null;
+                } else {
+                    msg.setId(curr.getString("_id"));
+                    msg.setSender(curr.getString("sender"));
+                    msg.setReceiver(curr.getString("receiver"));
+                    msg.setBody(curr.getString("body"));
+                    msg.setNotificationType(curr.getInt("notificationType"));
+                    msg.setTimestamp(curr.getString("timestamp"));
+                    messages.add(msg);
+                }
             }
-            JSONObject curr = new JSONObject(jArray.getString(0));
-            message.setId(curr.getString("_id"));
-            message.setSender(curr.getString("sender"));
-            message.setReceiver(curr.getString("receiver"));
-            message.setBody(curr.getString("body"));
-            message.setNotificationType(curr.getInt("notificationType"));
-            message.setTimestamp(curr.getString("timestamp"));
-            return message;
+            return messages;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -60,7 +65,7 @@ public class ChatModel {
 
     //Make sure to implement
     //Looking message by sender
-    public ChatMessage getMessagesbyUsername(String id){
+    public ArrayList<ChatMessage> getMessagesbyUsername(String receiver){
 
         final HerokuService service = Utility.connectAPI();
 
@@ -69,11 +74,12 @@ public class ChatModel {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            Call<ResponseBody> call = service.getMessagesbyUsername(id);
+            Call<ResponseBody> call = service.getMessagesbyUser(receiver);
             try {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
                     String strResponseBody = response.body().string();
+                    System.out.println("This is the response body" + strResponseBody);
                     return parseJSONmessage(strResponseBody);
                 }
             } catch (IOException e) {

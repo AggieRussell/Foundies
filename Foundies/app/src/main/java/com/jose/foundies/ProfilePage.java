@@ -119,8 +119,11 @@ public class ProfilePage extends AppCompatActivity {
                     tab3.setLostItems(lostItems);
                     return tab3;
                 case 3:
-                    Chats tab4 = new Chats();
+                    ProfileTab4 tab4 = new ProfileTab4();
                     return tab4;
+                case 4:
+                    Chats tab5 = new Chats();
+                    return tab5;
                 default:
                     return null;
             }
@@ -128,8 +131,8 @@ public class ProfilePage extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 4;
+            // Show 5 total pages.
+            return 5;
         }
 
         @Override
@@ -142,6 +145,8 @@ public class ProfilePage extends AppCompatActivity {
                 case 2:
                     return "LOST AN ITEM";
                 case 3:
+                    return "Notifications";
+                case 4:
                     return "Chats";
             }
             return null;

@@ -212,41 +212,51 @@ public class LostConfirmation extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            if(itemSelected != null) {
-                /* Create the Intent */
-                AlertDialog.Builder builder = new AlertDialog.Builder(LostConfirmation.this);
 
-                // Create the AlertDialog
-                final AlertDialog dialog = builder.create();
-
-                dialog.setMessage("Send an email to the finder of the item?");
-
-                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent email = new Intent(android.content.Intent.ACTION_SEND);
-                    /* Fill it with Data */
-                    email.setType("plain/text");
-                    email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{itemSelected.getUserID()});
-                    email.putExtra(android.content.Intent.EXTRA_SUBJECT, "Foundies item match!");
-
-                    startActivityForResult(Intent.createChooser(email, "Send email"), 1);
-                    dialog.cancel();
-                    }
-                });
-
-                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialog.cancel();
-                    }
-                });
-                dialog.show();
-            }
-            else{
-                Toast toast = Toast.makeText(getApplicationContext(), "Select an item", Toast.LENGTH_SHORT);
+            //Send Notification
+            controller.createMessage(Utility.uniqueID(),controller.getUser().getEmail(), itemSelected.getUserID(),
+                        controller.getUser().first_name + " wants to contact you!", 1, Utility.getDate());
+                Toast toast = Toast.makeText(getApplicationContext(), "Request has been sent!", Toast.LENGTH_SHORT);
                 toast.show();
-            }
+
+
+//            if(itemSelected != null) {
+//                /* Create the Intent */
+//                AlertDialog.Builder builder = new AlertDialog.Builder(LostConfirmation.this);
+//
+//                // Create the AlertDialog
+//                final AlertDialog dialog = builder.create();
+//
+//                dialog.setMessage("Send an email to the finder of the item?");
+//
+//                dialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                    Intent email = new Intent(android.content.Intent.ACTION_SEND);
+//                    /* Fill it with Data */
+//                    email.setType("plain/text");
+//                    email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{itemSelected.getUserID()});
+//                    email.putExtra(android.content.Intent.EXTRA_SUBJECT, "Foundies item match!");
+//
+//                    startActivityForResult(Intent.createChooser(email, "Send email"), 1);
+//                    dialog.cancel();
+//                    }
+//                });
+//
+//                dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialog.cancel();
+//                    }
+//                });
+//                dialog.show();
+//            }
+//            else{
+//                Toast toast = Toast.makeText(getApplicationContext(), "Select an item", Toast.LENGTH_SHORT);
+//                toast.show();
+//            }
+
+
             }
         });
 

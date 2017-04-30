@@ -403,12 +403,10 @@ public class Controller extends Application {
                 post.start();
                 return null;
         }
-
-    //Make sure to implement
-    public void setMessageInbox(String username){
-        this.message = cm.getMessagesbyUsername(username);
+    public ArrayList<ChatMessage> getUsersMessages() throws ParseException {
+        return cm.getMessagesbyUsername(message.getReceiver());
     }
-    public ArrayList<ChatMessage> getMessage() throws ParseException {
+    public ArrayList<ChatMessage> getMessages() throws ParseException {
         return cm.getMessages(message);
     }
 
