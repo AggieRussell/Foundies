@@ -114,6 +114,7 @@ public class Controller extends Application {
             String passwordHash = computeSHAHash(password);
             user = new Contact(first_name, last_name, email, passwordHash, Utility.uniqueID(), last_accessed, query_found, query_lost);
             PostClass post = new PostClass(user);
+            um.setUser(user);
             post.start();
             System.out.println("THIS IS THE USER EMAIL: " + user.getEmail());
             //um.postToAPI(c);
