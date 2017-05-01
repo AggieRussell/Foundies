@@ -127,7 +127,6 @@ public class ProfileTab2 extends Fragment{
             public void onClick(View view) {
                 controller.setQueryTypeFound();
                 Intent i = new Intent(ProfileTab2.this.getContext(), Qs.class);
-         /*
                 if(!controller.checkQueryFoundCount()){
                     Toast toast = Toast.makeText(getActivity(), "OVER THE QUERY LIMIT", Toast.LENGTH_SHORT);
                     toast.show();
@@ -135,9 +134,6 @@ public class ProfileTab2 extends Fragment{
                     startActivity(i);
                     getActivity().finish();
                 }
-*/
-                startActivity(i);
-                getActivity().finish();
             }
         });
 
