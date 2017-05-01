@@ -177,13 +177,18 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 toast.show();
             }
         });
+        System.out.println("KYLEWTF: " + controller.isLocationEnabled());
+        if(controller.isLocationEnabled()) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mMap.setMyLocationEnabled(true);
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-
-        } else {
-            //TODO: Need to figure out how to ask user for permission
+            } else {
+                //TODO: Need to figure out how to ask user for permission
+            }
+        }
+        else{
+            mMap.setMyLocationEnabled(false);
         }
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.address);

@@ -58,6 +58,16 @@ public class Controller extends Application {
     private LostModel lm;
     private FoundModel fm;
     private QuestionModel qm;
+
+    public boolean isLocationEnabled() {
+        return locationEnabled;
+    }
+
+    public void setLocationEnabled(boolean locationEnabled) {
+        this.locationEnabled = locationEnabled;
+    }
+
+    private boolean locationEnabled = false;
     Contact user;
 
     public Item getCurrentItem() {
