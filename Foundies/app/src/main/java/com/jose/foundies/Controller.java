@@ -403,12 +403,13 @@ public class Controller extends Application {
                 post.start();
                 return null;
         }
-    public ArrayList<ChatMessage> getUsersMessages() throws ParseException {
-        return cm.getMessagesbyUsername(message.getReceiver());
+
+
+    public void deleteMessage(ChatMessage message){
+        cm.deleteToMessage(message);
     }
-    public ArrayList<ChatMessage> getMessages() throws ParseException {
-        return cm.getMessages(message);
-    }
+
+
 
 }
 

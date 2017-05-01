@@ -11,8 +11,7 @@ public class ChatMessage {
     public String id, sender, receiver, body, timestamp;
     public int notificationType;
 
-
-    public boolean isMine;// Did I send the message.
+    public boolean isMine = false;
 
     public ChatMessage(String id, String sender, String receiver,
                        String body, int notificationType, String timestamp) {
@@ -25,7 +24,7 @@ public class ChatMessage {
     }
 
 
-    public ChatMessage(){}
+    public ChatMessage(){id = Utility.uniqueID();}
 
 
     public void setId(String id) {this.id = id;}

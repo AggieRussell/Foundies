@@ -25,4 +25,3 @@ public class CommonMethods {
         return dateFormat.format(today);
     }
 }
-

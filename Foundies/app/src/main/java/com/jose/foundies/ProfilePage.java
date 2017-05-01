@@ -44,6 +44,7 @@ public class ProfilePage extends AppCompatActivity {
     private ViewPager mViewPager;
     private ArrayList<Item> foundItems;
     private ArrayList<Item> lostItems;
+    private ArrayList<ChatMessage> messages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class ProfilePage extends AppCompatActivity {
         final Controller controller = (Controller) getApplicationContext();
         foundItems = controller.getUsersFoundItems();
         lostItems = controller.getUsersLostItems();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("My Profile");
         setSupportActionBar(toolbar);
@@ -131,7 +133,7 @@ public class ProfilePage extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 5 total pages.
+            // Show 3 total pages.
             return 5;
         }
 

@@ -1,15 +1,12 @@
 package com.jose.foundies;
 
 import android.os.StrictMode;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -23,17 +20,29 @@ import static java.lang.System.out;
  */
 
 public class ChatModel {
-    private ChatMessage message;
+
+    private ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
+
+    public ArrayList<ChatMessage> getMsg(){ return messages; }
+
     private String strResponseBody = "";
+
+    public ChatModel(){
+    }
 
     //Creates a json object to add message to the mongo database
     public String jsonMessagePost(ChatMessage m){
-        String jsonPost  = "{ \"chatMessage\": { \"_id\": \"" + m.getId() + "\", \"sender\":\"" + m.getSender() + "\", \"receiver\":\"" + m.getReceiver() + "\", \"body\":\"" + m.getBody()
-                + "\", \"notificationType\":\"" + m.getNotificationType() + "\", \"timestamp\":\"" + m.getTimestamp() + "\" } }";
+        String jsonPost  =
+                "{ \"chatMessage\": { \"_id\": \"" + m.getId()
+                + "\", \"sender\":\"" + m.getSender()
+                + "\", \"receiver\":\""+ m.getReceiver()
+                + "\", \"body\":\"" + m.getBody()
+                + "\", \"notificationType\":\"" + m.getNotificationType()
+                + "\", \"timestamp\":\"" + m.getTimestamp() + "\" } }";
         return jsonPost;
     }
 
-    public ArrayList<ChatMessage> parseJSONmessage(String response_str) {
+    public ArrayList<ChatMessage> parseJSONmessage() {
         JSONObject jObject;
         JSONArray jArray;
         try {
@@ -46,6 +55,7 @@ public class ChatModel {
                 if (curr.getString("_id").isEmpty()) {
                     return null;
                 } else {
+
                     msg.setId(curr.getString("_id"));
                     msg.setSender(curr.getString("sender"));
                     msg.setReceiver(curr.getString("receiver"));
@@ -60,59 +70,60 @@ public class ChatModel {
             e.printStackTrace();
         }
         return null;
-
     }
 
-    //Make sure to implement
+
     //Looking message by sender
-    public ArrayList<ChatMessage> getMessagesbyUsername(String receiver){
-
-        final HerokuService service = Utility.connectAPI();
-
-        int SDK_INT = android.os.Build.VERSION.SDK_INT;
-        if (SDK_INT > 8) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            Call<ResponseBody> call = service.getMessagesbyUser(receiver);
-            try {
-                Response<ResponseBody> response = call.execute();
-                if (response.isSuccessful()) {
-                    String strResponseBody = response.body().string();
-                    System.out.println("This is the response body" + strResponseBody);
-                    return parseJSONmessage(strResponseBody);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-
-    // use to get messages matching sender and reciever
-    public ArrayList<ChatMessage> getMessages(ChatMessage message) throws ParseException {
-        final HerokuService service = Utility.connectAPI();
-
-        int SDK_INT = android.os.Build.VERSION.SDK_INT;
-        if (SDK_INT > 8) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            Call<ResponseBody> call = service.getMessage();
-            try {
-                Response<ResponseBody> response = call.execute();
-                if (response.isSuccessful()) {
-                    strResponseBody = response.body().string();
-                    out.println("    RESPONSE FOR getMessage:" + strResponseBody);
-                    parseJSONmessage(strResponseBody);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
+//    public ArrayList<ChatMessage> getMessagesbyUsername(String receiver){
+//
+//        final HerokuService service = Utility.connectAPI();
+//
+//        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+//        if (SDK_INT > 8) {
+//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+//                    .permitAll().build();
+//            StrictMode.setThreadPolicy(policy);
+//            Call<ResponseBody> call = service.getMessagesbyUser(receiver);
+//            try {
+//                Response<ResponseBody> response = call.execute();
+//                if (response.isSuccessful()) {
+//                    String strResponseBody = response.body().string();
+//                    System.out.println("This is the response body" + strResponseBody);
+//                    return parseJSONmessage();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return null;
+//    }
+//    private ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
+//
+//    public ArrayList<ChatMessage> getMsgs(){ return messages; }
+//
+//    // use to get messages matching sender and reciever
+//    public void getMessages(){
+//        final HerokuService service = Utility.connectAPI();
+//
+//        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+//        if (SDK_INT > 8) {
+//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+//                    .permitAll().build();
+//            StrictMode.setThreadPolicy(policy);
+//            Call<ResponseBody> call = service.getMessage();
+//            try {
+//                Response<ResponseBody> response = call.execute();
+//                if (response.isSuccessful()) {
+//                    strResponseBody = response.body().string();
+//                    out.println("    RESPONSE FOR getMessage:" + strResponseBody);
+//                    parseJSONmessage();
+//                    out.println(strResponseBody);
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     //Added message to database
     public void postToMessages(ChatMessage message){
@@ -142,7 +153,7 @@ public class ChatModel {
     }
 
     //Delete message from database
-    public void deleteToMessage(String id) {
+    public void deleteToMessage(ChatMessage m) {
 
         final HerokuService service = Utility.connectAPI();
 
@@ -152,7 +163,7 @@ public class ChatModel {
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            Call<ResponseBody> call = service.deleteMessage(id);
+            Call<ResponseBody> call = service.deleteMessage(m.getId());
             try {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
@@ -163,5 +174,4 @@ public class ChatModel {
             }
         }
     }
-
 }
