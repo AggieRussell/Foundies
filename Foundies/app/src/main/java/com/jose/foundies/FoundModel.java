@@ -137,7 +137,7 @@ public class FoundModel {
                 Response<ResponseBody> response = call.execute();
                 if (response.isSuccessful()) {
                     String strResponseBody = response.body().string();
-                    System.out.println(" !!!THIS IS THE FOUND ITEM RESPONSE: !!!" + strResponseBody);
+                    System.out.println(" !!!THIS IS THE FOUND ITEM RESPONSE: !!!" + response);
                 }
             } catch (IOException e) {
                 // ...

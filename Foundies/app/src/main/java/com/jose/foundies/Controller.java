@@ -28,8 +28,6 @@ class PostClass extends Thread{
 }
 
 class PostItemClass extends Thread{
-    UserModel um = new UserModel();
-    LostModel lm = new LostModel();
     FoundModel fm = new FoundModel();
     Item t = null;
     public PostItemClass(Item t){
