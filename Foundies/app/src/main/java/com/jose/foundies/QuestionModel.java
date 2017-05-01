@@ -105,7 +105,6 @@ public class QuestionModel {
     }
 
     public void parseJSON() {
-        out.println("Starting parse JSON...");
         questions.clear();
         try {
             JSONObject jObject = new JSONObject(strResponseBody);
@@ -134,16 +133,13 @@ public class QuestionModel {
         catch (JSONException e) {
             e.printStackTrace();
         }
-        out.println("Ending parse JSON...");
     }
 
     protected void sortQuestionsAlphabetically() {
-        out.println("SORTING QUESTIONS:");
         ArrayList<Question> sorted = new ArrayList<Question>();
         while(!questions.isEmpty()) {
             int smallestLoc = 0;
             for (int i=1; i<questions.size(); ++i)  {
-                out.printf("%s compareTo %s\n",questions.get(i).getQ1(),questions.get(smallestLoc).getQ1());
                 if (questions.get(i).getQ1().compareTo(questions.get(smallestLoc).getQ1()) < 0)
                     smallestLoc = i;
                 else if (questions.get(i).getQ1().compareTo(questions.get(smallestLoc).getQ1()) == 0)
@@ -218,11 +214,9 @@ public class QuestionModel {
             concat += allChoices.get(i).replaceAll(" ", "_");
             concat += " ";
         }
-        out.println("CONCAT: " + concat);
         String[] splitByPreviousChoice = concat.split(", ");
         for (int i=0; i<splitByPreviousChoice.length; ++i) {
             ArrayList<String> currSubsequentChoices = new ArrayList<String>();
-            out.println("CURRENT STRING: " + splitByPreviousChoice[i]);
             String[] splitChoices = splitByPreviousChoice[i].split(" ");
             for (int j=0; j<splitChoices.length; ++j) {
                 currSubsequentChoices.add(splitChoices[j].replaceAll("_"," "));

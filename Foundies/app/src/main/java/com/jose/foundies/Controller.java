@@ -27,6 +27,20 @@ class PostClass extends Thread{
     }
 }
 
+class PostItemClass extends Thread{
+    UserModel um = new UserModel();
+    LostModel lm = new LostModel();
+    FoundModel fm = new FoundModel();
+    Item t = null;
+    public PostItemClass(Item t){
+        this.t = t;
+    }
+    public void run (){
+        String jsonPost = fm.jsonFoundPost(t);
+        fm.postToFound(jsonPost);
+    }
+}
+
 
 public class Controller extends Application {
     private String SHAHash;
@@ -326,8 +340,8 @@ public class Controller extends Application {
     /* --------------------------------- Found Controller Functionality ------------------------------------ */
 
     public void postFoundItem(){
-        String jsonPost = fm.jsonFoundPost(currentItem);
-        fm.postToFound(jsonPost);
+        PostItemClass post = new PostItemClass(currentItem);
+        post.start();
     }
 
     public ArrayList<Item> getFoundItems() throws ParseException {
