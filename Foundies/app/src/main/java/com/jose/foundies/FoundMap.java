@@ -70,22 +70,12 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     @Override
     protected void onStart() {
         super.onStart();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mGoogleApiClient.connect();
-            }
-        }).start();
+        mGoogleApiClient.connect();
     }
 
     @Override
     protected void onStop() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mGoogleApiClient.disconnect();
-            }
-        }).start();
+        mGoogleApiClient.disconnect();
         super.onStop();
     }
 
@@ -122,12 +112,7 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mGoogleApiClient.connect();
-            }
-        }).start();
+        mGoogleApiClient.connect();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -175,16 +160,11 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 13));
                 center.setLatitude(controller.getLatitude());
                 center.setLongitude(controller.getLongitude());
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            foundItems(center);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
+                try {
+                    foundItems(center);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
