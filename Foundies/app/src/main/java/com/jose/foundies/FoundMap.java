@@ -1,5 +1,6 @@
 package com.jose.foundies;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -120,13 +122,27 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     @Override
     public void onMapReady(GoogleMap googleMap) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
+        LayoutInflater inflate = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogView = inflate.inflate(R.layout.dialog_box, null);
+        builder.setView(dialogView);
         // Create the AlertDialog
         final AlertDialog dialog = builder.create();
 
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+        Button yesButton = (Button) dialogView.findViewById(R.id.dialogButtonYes);
+        Button noButton = (Button) dialogView.findViewById(R.id.dialogButtonNo);
+
+        yesButton.setText("Ok");
+        noButton.setText("Cancel");
+
+        yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 dialog.cancel();
             }
         });
