@@ -70,12 +70,22 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mGoogleApiClient.connect();
+            }
+        }).start();
     }
 
     @Override
     protected void onStop() {
-        mGoogleApiClient.disconnect();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mGoogleApiClient.disconnect();
+            }
+        }).start();
         super.onStop();
     }
 
@@ -112,7 +122,12 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        mGoogleApiClient.connect();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mGoogleApiClient.connect();
+            }
+        }).start();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -160,15 +175,18 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 13));
                 center.setLatitude(controller.getLatitude());
                 center.setLongitude(controller.getLongitude());
-                try {
-                    foundItems(center);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            foundItems(center);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         }
-
-
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -421,5 +439,5 @@ public class FoundMap extends FragmentActivity implements OnMapReadyCallback, Go
             }*/
 
         }
-    }
+}
 }
