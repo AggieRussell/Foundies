@@ -162,6 +162,7 @@ public class Controller extends Application {
             return "No one by this email";
         }else if(user.getPass().equals(hashedPassword)){
             this.user = user;
+            um.setUser(user);
             currentItem.setUserID(user.getId());
             return null;
         }else{
@@ -232,6 +233,7 @@ public class Controller extends Application {
     public void setCurrentUser(String username){
         Contact user = um.getUserByUsername(username);
         this.user = user;
+        um.setUser(user);
     }
 
     public void setUserEmail(String email){
