@@ -77,33 +77,33 @@
                 android:layout_margin="0dp"
                 android:padding="0dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_selector"
-                    android:id="@+id/backButton"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Back"
-                    android:layout_weight="1"/>
-
-                <Button
-                    android:text="Next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_selector"
-                    android:id="@+id/next_button"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"/>
-
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:id="@+id/backButton"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Back"
+            android:layout_weight="1"/>
+
+        <Button
+            android:text="Next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:id="@+id/next_button"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 </RelativeLayout>
