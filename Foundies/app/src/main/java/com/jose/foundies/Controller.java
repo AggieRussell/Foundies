@@ -115,7 +115,7 @@ public class Controller extends Application {
             user = new Contact(first_name, last_name, email, passwordHash, Utility.uniqueID(), last_accessed, query_found, query_lost);
             PostClass post = new PostClass(user);
             um.setUser(user);
-            currentItem.setUserID(user.getId());
+            currentItem.setUserID(user.getEmail());
             post.start();
             System.out.println("THIS IS THE USER EMAIL: " + user.getEmail());
             //um.postToAPI(c);
@@ -164,7 +164,7 @@ public class Controller extends Application {
         }else if(user.getPass().equals(hashedPassword)){
             this.user = user;
             um.setUser(user);
-            currentItem.setUserID(user.getId());
+            currentItem.setUserID(user.getEmail());
             return null;
         }else{
             return "Password does not match email";
