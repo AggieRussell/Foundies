@@ -273,7 +273,7 @@ public class LostConfirmation extends AppCompatActivity {
             }
         }
         if(items.size() == 0){
-            selectedItem.setText("No items at this location!");
+            selectedItem.setText("No items found at this location\nClick 'Post New Item' to save your item");
             nextButton.setClickable(false);
             nextButton.setBackgroundColor(Color.parseColor("#BBBBBB"));
             nextButton.setTextColor(Color.GRAY);
