@@ -19,9 +19,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-/**
- * Created by kylepreston on 3/27/17.
- */
 
 public class LostModel {
 
